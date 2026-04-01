@@ -13,6 +13,7 @@ backend/__pycache__/
 backend/**/*.pyc
 backend/.pytest_cache/
 backend/.mypy_cache/
+backend/app/data/*.db
 
 # Node / React (frontend)
 frontend/node_modules/

@@ -17,7 +17,14 @@ SUGpa is a project that helps students track graduation requirements, calculate 
 
 ## Run the Project
 
+Requirements:
+- Python `3.10+`
+- Node.js `20.19+` or `22.12+`
+- npm `10+`
+
 ### 1) Backend
+
+macOS/Linux:
 
 ```bash
 cd backend
@@ -27,8 +34,25 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
+Windows (PowerShell):
+
+```powershell
+cd backend
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
+
+If activation is blocked in PowerShell:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
 Backend endpoints:
 - `http://127.0.0.1:8000`
+- `http://127.0.0.1:8000/docs`
 
 ### 2) Frontend
 

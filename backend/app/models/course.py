@@ -6,6 +6,6 @@ class Course(BaseModel):
 
     course: str = Field(alias="Course")
     name: str = Field(alias="Name")
-    ects_credits: float = Field(alias="ECTS Credits")
-    su_credits: float = Field(alias="SU Credits")
-    faculty: str = Field(alias="Faculty")
+    ects_credits: float | None = Field(alias="ECTS Credits", default=None)
+    su_credits: float | None = Field(alias="SU Credits", default=None)
+    faculty: str | None = Field(alias="Faculty", default=None)
