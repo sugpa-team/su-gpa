@@ -182,3 +182,137 @@
     border-right-color: var(--border);
   }
 }
+
+/* Courses Dashboard Styles */
+.courses-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 0 20px;
+}
+
+.filters-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.dropdown-label {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.faculty-dropdown {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  min-width: 180px;
+}
+
+.faculty-dropdown:hover {
+  border-color: var(--accent);
+}
+
+.faculty-dropdown:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.1);
+}
+
+.course-count {
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: auto;
+}
+
+.courses-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.courses-table thead {
+  background: var(--bg);
+  border-bottom: 2px solid var(--border);
+}
+
+.courses-table th {
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.courses-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.2s;
+}
+
+.courses-table tbody tr:hover {
+  background-color: var(--accent-bg);
+}
+
+.courses-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.courses-table td {
+  padding: 14px 16px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.course-code {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.course-name {
+  font-weight: 500;
+}
+
+.credits {
+  text-align: center;
+  font-weight: 500;
+}
+
+.no-results {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 32px !important;
+  font-style: italic;
+}
+
+.status {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 32px;
+  font-size: 16px;
+}
+
+.error {
+  text-align: center;
+  color: #d32f2f;
+  padding: 32px;
+  font-size: 16px;
+  background: rgba(211, 47, 47, 0.1);
+  border-radius: 8px;
+  border: 1px solid #d32f2f;
+}
