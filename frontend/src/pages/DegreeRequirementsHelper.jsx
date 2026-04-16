@@ -110,13 +110,26 @@ function DegreeRequirementsHelper() {
         const completed = section.completed || {}
         const added = simulatedAttempts.filter(item => item.category === sectionName)
         const completedSu = Number(completed.su_credits || 0) + added.reduce((sum, item) => sum + Number(item.su_credits || 0), 0)
+        const completedEcts = Number(completed.ects_credits || 0)
         const completedCourses = Number(completed.courses || 0) + added.length
         const minSu = min.su_credits !== null && min.su_credits !== undefined ? Number(min.su_credits) : null
+        const minEcts = min.ects_credits !== null && min.ects_credits !== undefined ? Number(min.ects_credits) : null
         const minCourses = min.courses !== null && min.courses !== undefined ? Number(min.courses) : null
         const remainingSu = minSu !== null ? Math.max(0, minSu - completedSu) : null
+        const remainingEcts = minEcts !== null ? Math.max(0, minEcts - completedEcts) : null
         const remainingCourses = minCourses !== null ? Math.max(0, minCourses - completedCourses) : null
-        const progressPercent = minSu && minSu > 0 ? Math.min(100, (completedSu / minSu) * 100) : null
-        return { sectionName, completedSu, minSu, completedCourses, minCourses, remainingSu, remainingCourses, progressPercent }
+        const progressCandidates = []
+        if (minSu && minSu > 0) {
+          progressCandidates.push(Math.min(100, (completedSu / minSu) * 100))
+        }
+        if (minEcts && minEcts > 0) {
+          progressCandidates.push(Math.min(100, (completedEcts / minEcts) * 100))
+        }
+        if (minCourses && minCourses > 0) {
+          progressCandidates.push(Math.min(100, (completedCourses / minCourses) * 100))
+        }
+        const progressPercent = progressCandidates.length > 0 ? Math.min(...progressCandidates) : null
+        return { sectionName, completedSu, completedEcts, minSu, minEcts, completedCourses, minCourses, remainingSu, remainingEcts, remainingCourses, progressPercent }
       }),
     [sectionEntries, simulatedAttempts],
   )
@@ -230,8 +243,9 @@ function DegreeRequirementsHelper() {
                     <div className="requirement-card-header"><h3>{item.sectionName}</h3><strong>{item.progressPercent !== null ? `${item.progressPercent.toFixed(1)}%` : '-'}</strong></div>
                     <div className="credit-meter" aria-hidden="true"><span style={{ width: `${item.progressPercent || 0}%` }} /></div>
                     <p>SU Credits: {item.completedSu.toFixed(2)} / {item.minSu ?? '-'}</p>
+                    <p>ECTS Credits: {item.completedEcts.toFixed(2)} / {item.minEcts ?? '-'}</p>
                     <p>Courses: {item.completedCourses} / {item.minCourses ?? '-'}</p>
-                    <p>Remaining: {item.remainingSu ?? '-'} SU / {item.remainingCourses ?? '-'} courses</p>
+                    <p>Remaining: {item.remainingSu ?? '-'} SU / {item.remainingEcts ?? '-'} ECTS / {item.remainingCourses ?? '-'} courses</p>
                   </article>
                 ))}
               </div>

@@ -1,3 +1,4 @@
+import json
 import sqlite3
 from pathlib import Path
 
@@ -6,6 +7,7 @@ from app.utils.loader import DB_PATH as COURSES_DB_PATH
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 PROFILE_DB_PATH = DATA_DIR / "user_profile.db"
+CS_REQUIREMENTS_PATH = DATA_DIR / "cs_bscs_requirements_v1.json"
 
 
 def _connect() -> sqlite3.Connection:
@@ -20,15 +22,43 @@ def _read_program_rows_from_source() -> list[sqlite3.Row]:
     try:
         with sqlite3.connect(COURSES_DB_PATH) as conn:
             conn.row_factory = sqlite3.Row
-            return conn.execute(
+            rows = conn.execute(
                 """
                 SELECT id, faculty, department, program_name
                 FROM programs
                 ORDER BY faculty, department, program_name
                 """
             ).fetchall()
+            if rows:
+                return rows
     except sqlite3.OperationalError:
+        pass
+
+    return _read_program_rows_from_requirements()
+
+
+def _read_program_rows_from_requirements() -> list[dict]:
+    try:
+        with CS_REQUIREMENTS_PATH.open("r", encoding="utf-8") as file:
+            requirements = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
         return []
+
+    program = requirements.get("program") or {}
+    faculty = program.get("faculty_name")
+    department = program.get("department_name")
+    program_name = program.get("program_name")
+    if not faculty or not department or not program_name:
+        return []
+
+    return [
+        {
+            "id": 1,
+            "faculty": faculty,
+            "department": department,
+            "program_name": program_name,
+        }
+    ]
 
 
 def init_profile_db() -> None:

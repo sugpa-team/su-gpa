@@ -1,4 +1,7 @@
+import json
 import re
+from functools import lru_cache
+from pathlib import Path
 
 
 SECTION_NAMES = [
@@ -11,6 +14,53 @@ SECTION_NAMES = [
     "ENGINEERING",
     "BASIC SCIENCE",
 ]
+
+REQUIREMENTS_PATH = Path(__file__).resolve().parent.parent / "data" / "cs_bscs_requirements_v1.json"
+SECTION_TO_REQUIREMENTS_CATEGORY = {
+    "UNIVERSITY COURSES": "University Courses",
+    "REQUIRED COURSES": "Required Courses",
+    "CORE ELECTIVES": "Core Electives",
+    "AREA ELECTIVES": "Area Electives",
+    "FREE ELECTIVES": "Free Electives",
+    "FACULTY COURSES": "Faculty Courses",
+    "ENGINEERING": "Engineering",
+    "BASIC SCIENCE": "Basic Science",
+}
+
+
+@lru_cache(maxsize=1)
+def _default_minimums_by_section() -> dict[str, dict]:
+    try:
+        with REQUIREMENTS_PATH.open("r", encoding="utf-8") as file:
+            requirements = json.load(file)
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+    categories = requirements.get("requirement_summary", {}).get("categories", [])
+    if not isinstance(categories, list):
+        return {}
+
+    defaults = {}
+    for item in categories:
+        if not isinstance(item, dict):
+            continue
+        category_name = item.get("category")
+        section_name = next(
+            (
+                section
+                for section, mapped_category in SECTION_TO_REQUIREMENTS_CATEGORY.items()
+                if mapped_category == category_name
+            ),
+            None,
+        )
+        if section_name is None:
+            continue
+        defaults[section_name] = {
+            "ects_credits": _to_float(item.get("min_ects")),
+            "su_credits": _to_float(item.get("min_su")),
+            "courses": _to_int(item.get("min_courses")),
+        }
+    return defaults
 
 
 def _to_float(value: str | None) -> float | None:
@@ -170,7 +220,8 @@ def parse_bannerweb_degree_evaluation(raw_text: str) -> dict:
         total_courses_parsed += len(courses)
         sections[section_name] = {
             "courses": courses,
-            "minimum_required": minimum_required,
+            "minimum_required": minimum_required
+            or _default_minimums_by_section().get(section_name),
             "completed": completed,
         }
 
