@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
+import { apiRequest } from '../lib/api'
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000'
 const EMPTY_SUMMARY = {
   semesters: [],
   cumulative_gpa: 0,
@@ -10,30 +10,6 @@ const EMPTY_SUMMARY = {
 }
 const GRADE_OPTIONS = ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F']
 
-async function apiRequest(path, options = {}) {
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-    ...options,
-  })
-
-  if (response.status === 204) {
-    return null
-  }
-
-  const data = await response.json()
-  if (!response.ok) {
-    const message = Array.isArray(data.detail)
-      ? data.detail.map(item => item.msg).join(', ')
-      : data.detail || 'Request failed'
-    throw new Error(message)
-  }
-
-  return data
-}
-
 function formatNumber(value) {
   return Number(value || 0).toFixed(2)
 }
@@ -42,7 +18,7 @@ function formatCredit(value) {
   return value === null || value === undefined ? '-' : Number(value).toFixed(2)
 }
 
-function MainPage() {
+function MainPage({ profile, onProfileUpdated, programs }) {
   const [courses, setCourses] = useState([])
   const [summary, setSummary] = useState(EMPTY_SUMMARY)
   const [loading, setLoading] = useState(true)
@@ -52,6 +28,11 @@ function MainPage() {
   const [courseSearch, setCourseSearch] = useState('')
   const [selectedFaculty, setSelectedFaculty] = useState('all')
   const [selectedCourses, setSelectedCourses] = useState({})
+  const [programDraftId, setProgramDraftId] = useState(profile.program_id ? String(profile.program_id) : '')
+
+  useEffect(() => {
+    setProgramDraftId(profile.program_id ? String(profile.program_id) : '')
+  }, [profile.program_id])
 
   useEffect(() => {
     let ignore = false
@@ -110,6 +91,10 @@ function MainPage() {
     [summary.semesters],
   )
   const cgpa = summary.cgpa ?? summary.cumulative_gpa
+  const currentProgram = useMemo(
+    () => programs.find(program => program.id === profile.program_id),
+    [profile.program_id, programs],
+  )
 
   async function runAction(action) {
     setSaving(true)
@@ -185,6 +170,41 @@ function MainPage() {
     })
   }
 
+  async function handleProgramUpdate(event) {
+    event.preventDefault()
+    if (!programDraftId) {
+      return
+    }
+    if (Number(programDraftId) === profile.program_id) {
+      return
+    }
+
+    const confirmed = window.confirm('This will reset your graduation tracking. Continue?')
+    if (!confirmed) {
+      return
+    }
+
+    const selectedProgram = programs.find(program => program.id === Number(programDraftId))
+    if (!selectedProgram) {
+      setError('Selected program was not found.')
+      return
+    }
+
+    await runAction(async () => {
+      const result = await apiRequest('/api/profile', {
+        method: 'PATCH',
+        body: JSON.stringify({
+          faculty: selectedProgram.faculty,
+          program_id: selectedProgram.id,
+          entry_term: profile.entry_term,
+        }),
+      })
+      onProfileUpdated(result.profile)
+      const nextSummary = await apiRequest('/api/gpa')
+      updateSummary(nextSummary)
+    })
+  }
+
   function courseOptionsForSemester(semester) {
     const usedCourseCodes = new Set(semester.courses.map(course => course.course_code))
     const remainingCredits = summary.max_semester_su_credits - semester.total_su_credits
@@ -206,12 +226,41 @@ function MainPage() {
           <div>
             <p className="eyebrow">Sabanci University</p>
             <h1 id="planner-title">GPA Planner</h1>
+            <p className="program-context">
+              {currentProgram
+                ? `${currentProgram.faculty} / ${currentProgram.program_name} / ${profile.entry_term || '-'}`
+                : 'Program not selected'}
+            </p>
           </div>
           <div className="gpa-score" aria-live="polite">
             <span>Overall GPA</span>
             <strong>{formatNumber(cgpa)}</strong>
           </div>
         </div>
+
+        <form className="program-update-form" onSubmit={handleProgramUpdate}>
+          <label htmlFor="program-update">Selected Program</label>
+          <div className="program-update-controls">
+            <select
+              id="program-update"
+              value={programDraftId}
+              onChange={event => setProgramDraftId(event.target.value)}
+              disabled={saving}
+            >
+              {programs.map(program => (
+                <option key={program.id} value={program.id}>
+                  {program.faculty} / {program.program_name}
+                </option>
+              ))}
+            </select>
+            <button
+              type="submit"
+              disabled={saving || !programDraftId || Number(programDraftId) === profile.program_id}
+            >
+              Update Program
+            </button>
+          </div>
+        </form>
 
         <div className="summary-strip">
           <div>

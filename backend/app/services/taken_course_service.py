@@ -405,6 +405,14 @@ def delete_course_from_semester(semester_id: int, course_code: str) -> dict:
         return _build_semesters_summary(conn)
 
 
+def reset_tracking_data() -> None:
+    init_taken_courses_db()
+    with _connect() as conn:
+        conn.execute("DELETE FROM semester_courses")
+        conn.execute("DELETE FROM semesters")
+        conn.execute("DELETE FROM taken_courses")
+
+
 def parse_taken_courses_cookie(raw_cookie_value: str | None) -> dict[str, str]:
     if not raw_cookie_value:
         return {}

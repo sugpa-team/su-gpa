@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.routes.api import router as api_router
 from app.routes.courses import router as courses_router
+from app.routes.profile import router as profile_router
 from app.routes.taken_courses import router as taken_courses_router
 
 app = FastAPI(title="su-gpa backend")
@@ -19,6 +20,7 @@ app.add_middleware(
 app.include_router(courses_router, prefix="/courses", tags=["courses"])
 app.include_router(taken_courses_router, prefix="/taken-courses", tags=["taken-courses"])
 app.include_router(api_router, prefix="/api", tags=["live-gpa"])
+app.include_router(profile_router, prefix="/api", tags=["profile"])
 
 
 @app.get("/hello")
