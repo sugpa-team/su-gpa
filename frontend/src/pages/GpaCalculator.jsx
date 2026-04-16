@@ -9,6 +9,10 @@ const EMPTY_SUMMARY = {
   cgpa: 0,
   semester_gpa: {},
   max_semester_su_credits: 20,
+  total_planned_su_credits: 0,
+  total_planned_ects_credits: 0,
+  program_required_su_credits: null,
+  program_required_ects_credits: null,
 }
 
 const GRADE_OPTIONS = ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F']
@@ -59,10 +63,38 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
   }, [])
 
   const cgpa = summary.cgpa ?? summary.cumulative_gpa
-  const totalPlannedCredits = useMemo(
-    () => summary.semesters.reduce((total, semester) => total + semester.total_su_credits, 0),
-    [summary.semesters],
-  )
+  const totalPlannedSuCredits = summary.total_planned_su_credits ?? 0
+  const totalPlannedEctsCredits = summary.total_planned_ects_credits ?? 0
+  const semesterHasLatestRetake = useMemo(() => {
+    const attemptsByCourse = new Map()
+    for (const semester of summary.semesters) {
+      for (const course of semester.courses) {
+        const courseCode = String(course.course_code || '').trim().toUpperCase()
+        if (!courseCode) {
+          continue
+        }
+        if (!attemptsByCourse.has(courseCode)) {
+          attemptsByCourse.set(courseCode, [])
+        }
+        attemptsByCourse.get(courseCode).push(semester.id)
+      }
+    }
+
+    const result = {}
+    for (const semester of summary.semesters) {
+      result[semester.id] = false
+    }
+
+    for (const semesterIds of attemptsByCourse.values()) {
+      if (semesterIds.length < 2) {
+        continue
+      }
+      const latestSemesterId = semesterIds[semesterIds.length - 1]
+      result[latestSemesterId] = true
+    }
+
+    return result
+  }, [summary.semesters])
   const currentProgram = useMemo(
     () => programs.find(program => program.id === profile.program_id),
     [profile.program_id, programs],
@@ -123,8 +155,9 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
   }
 
   async function handleAddCourse(semesterId) {
+    const semester = summary.semesters.find(item => item.id === semesterId)
     const courseCode = selectedCourses[semesterId]
-    if (!courseCode) {
+    if (!courseCode || !semester) {
       setError('Select a course before adding it.')
       return
     }
@@ -194,15 +227,26 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
 
   function courseOptionsForSemester(semester) {
     const usedCourseCodes = new Set(semester.courses.map(course => course.course_code))
+    const eligibleCourseCodes = new Set(semester.eligible_course_codes || [])
     const remainingCredits = summary.max_semester_su_credits - semester.total_su_credits
+    const overloadSlotsRemaining = Math.max(0, 2 - (semester.overload_course_count || 0))
 
     return courses.filter(course => {
       if (course.su_credits === null || course.su_credits === undefined) {
         return false
       }
+      if (eligibleCourseCodes.size > 0 && !eligibleCourseCodes.has(course.course)) {
+        return false
+      }
 
       const credits = Number(course.su_credits || 0)
-      return !usedCourseCodes.has(course.course) && credits <= remainingCredits
+      if (usedCourseCodes.has(course.course)) {
+        return false
+      }
+      if (credits <= remainingCredits) {
+        return true
+      }
+      return overloadSlotsRemaining > 0
     })
   }
 
@@ -289,7 +333,7 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
       <div className="planner-header">
         <div>
           <p className="eyebrow">Sabanci University</p>
-          <h1 id="planner-title">GPA Planner</h1>
+          <h1 id="planner-title">SUGpa</h1>
           <p className="program-context">
             {currentProgram
               ? `${currentProgram.faculty} / ${currentProgram.program_name} / ${profile.entry_term || '-'}`
@@ -328,16 +372,16 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
 
       <div className="summary-strip">
         <div>
-          <span>Semesters</span>
+          <span>Total Semesters</span>
           <strong>{summary.semesters.length}</strong>
         </div>
         <div>
-          <span>Planned SU Credits</span>
-          <strong>{formatNumber(totalPlannedCredits)}</strong>
+          <span>SU Credits</span>
+          <strong>{formatNumber(totalPlannedSuCredits)}/{formatNumber(summary.program_required_su_credits ?? 0)}</strong>
         </div>
         <div>
-          <span>Semester Limit</span>
-          <strong>{formatNumber(summary.max_semester_su_credits)}</strong>
+          <span>ECTS Credits</span>
+          <strong>{formatNumber(totalPlannedEctsCredits)}/{formatNumber(summary.program_required_ects_credits ?? 0)}</strong>
         </div>
       </div>
 
@@ -365,6 +409,13 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
       <div className="semesters-grid">
         {summary.semesters.map(semester => {
           const options = courseOptionsForSemester(semester)
+          const selectedCode = selectedCourses[semester.id]
+          const selectedCourse = options.find(course => course.course === selectedCode)
+          const willExceedLimitWithSelection =
+            selectedCourse &&
+            semester.total_su_credits + Number(selectedCourse.su_credits || 0) >
+              summary.max_semester_su_credits
+          const isAlreadyOverLimit = semester.total_su_credits > summary.max_semester_su_credits
           const creditPercent = Math.min(
             100,
             (semester.total_su_credits / summary.max_semester_su_credits) * 100,
@@ -465,6 +516,16 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
                   Add
                 </button>
               </div>
+              {(isAlreadyOverLimit || willExceedLimitWithSelection) && (
+                <p className="error" role="status">
+                  This semester has exceeded the 20 SU credit limit. You must request an overload.
+                </p>
+              )}
+              {semesterHasLatestRetake[semester.id] && (
+                <p className="status" role="status">
+                  Retaken courses are counted by latest attempt in overall GPA.
+                </p>
+              )}
 
               <button
                 className="delete-semester-button"

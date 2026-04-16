@@ -80,6 +80,15 @@ function SearchableDropdown({
 }
 
 function OnboardingPage({ programs, profile, onProfileSaved }) {
+  const csPrograms = useMemo(
+    () =>
+      programs.filter(
+        program =>
+          program.faculty === 'Faculty of Engineering and Natural Sciences' &&
+          program.department === 'Computer Science and Engineering',
+      ),
+    [programs],
+  )
   const [faculty, setFaculty] = useState('')
   const [facultyInput, setFacultyInput] = useState('')
   const [programId, setProgramId] = useState(profile.program_id ? String(profile.program_id) : '')
@@ -89,8 +98,8 @@ function OnboardingPage({ programs, profile, onProfileSaved }) {
   const [error, setError] = useState(null)
 
   const faculties = useMemo(
-    () => uniqueSorted(programs.map(program => program.faculty).filter(Boolean)),
-    [programs],
+    () => uniqueSorted(csPrograms.map(program => program.faculty).filter(Boolean)),
+    [csPrograms],
   )
   const filteredFaculties = useMemo(() => {
     const query = facultyInput.trim().toLowerCase()
@@ -99,7 +108,7 @@ function OnboardingPage({ programs, profile, onProfileSaved }) {
   const entryTermOptions = useMemo(() => buildEntryTermOptions(), [])
   const filteredPrograms = useMemo(() => {
     const query = programInput.trim().toLowerCase()
-    return programs.filter(program => {
+    return csPrograms.filter(program => {
       if (program.faculty !== faculty) {
         return false
       }
@@ -108,7 +117,7 @@ function OnboardingPage({ programs, profile, onProfileSaved }) {
       }
       return `${program.program_name} ${program.department}`.toLowerCase().includes(query)
     })
-  }, [faculty, programInput, programs])
+  }, [csPrograms, faculty, programInput])
   const filteredEntryTerms = useMemo(() => {
     const query = entryTerm.trim().toLowerCase()
     return entryTermOptions.filter(option => !query || option.toLowerCase().includes(query))

@@ -3,12 +3,14 @@ from fastapi import APIRouter, HTTPException
 from app.models.taken_course import (
     CourseCreateRequest,
     GpaResponse,
+    GraduationRequirementsProgressResponse,
     SemesterCourseGradeUpdateRequest,
     SemestersSummaryResponse,
 )
 from app.services.taken_course_service import (
     add_course_to_semester,
     delete_course_record,
+    get_graduation_requirements_progress,
     get_semesters_summary,
     update_course_record,
 )
@@ -25,6 +27,14 @@ def _raise_http_error(error: Exception) -> None:
 @router.get("/gpa", response_model=GpaResponse)
 def get_gpa() -> dict:
     return get_semesters_summary()
+
+
+@router.get(
+    "/graduation-requirements",
+    response_model=GraduationRequirementsProgressResponse,
+)
+def get_graduation_requirements() -> dict:
+    return get_graduation_requirements_progress()
 
 
 @router.post("/courses", response_model=SemestersSummaryResponse, status_code=201)

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import CourseCatalog from './CourseCatalog'
 import GpaCalculator from './GpaCalculator'
+import GraduationRequirements from './GraduationRequirements'
 import { apiRequest } from '../lib/api'
 
 function MainPage({ profile, onProfileUpdated, programs }) {
@@ -57,6 +58,14 @@ function MainPage({ profile, onProfileUpdated, programs }) {
         >
           Course Catalog
         </button>
+        <button
+          type="button"
+          className={`tab-button ${activeTab === 'graduation-requirements' ? 'active' : ''}`}
+          onClick={() => setActiveTab('graduation-requirements')}
+          aria-pressed={activeTab === 'graduation-requirements'}
+        >
+          Graduation Requirements
+        </button>
       </section>
 
       {coursesError && <p className="error" role="alert">{coursesError}</p>}
@@ -72,6 +81,7 @@ function MainPage({ profile, onProfileUpdated, programs }) {
       )}
 
       {activeTab === 'course-catalog' && <CourseCatalog courses={courses} loading={coursesLoading} />}
+      {activeTab === 'graduation-requirements' && <GraduationRequirements />}
     </main>
   )
 }

@@ -18,6 +18,11 @@ LETTER_GRADE_POINTS = {
     "F": 0.0,
 }
 
+COURSE_CODE_ALIASES = {
+    "CS 210": "DSA 210 / CS 210",
+    "DSA 210": "DSA 210 / CS 210",
+}
+
 
 def normalize_letter_grade(grade: str | None) -> str | None:
     if grade in UNGRADED_VALUES:
@@ -55,7 +60,7 @@ def _calculate_weighted_gpa(weighted_courses: list[tuple[float, float]]) -> floa
 def _su_credits_by_course_code() -> dict[str, float]:
     courses = load_courses()
     return {
-        course["Course"]: float(course["SU Credits"])
+        COURSE_CODE_ALIASES.get(course["Course"], course["Course"]): float(course["SU Credits"])
         for course in courses
         if course.get("Course") and course.get("SU Credits") is not None
     }
@@ -80,7 +85,7 @@ def calculate_gpa_summary_from_letter_grades(
     su_credits_by_code = _su_credits_by_course_code()
     semester_gpas: list[float] = []
     semester_su_credits: list[float] = []
-    all_weighted_courses: list[tuple[float, float]] = []
+    latest_weighted_by_course: dict[str, tuple[float, float]] = {}
 
     for semester in grades:
         semester_codes: set[str] = set()
@@ -89,6 +94,7 @@ def calculate_gpa_summary_from_letter_grades(
 
         for course in semester:
             course_code = " ".join(course.course.upper().split())
+            course_code = COURSE_CODE_ALIASES.get(course_code, course_code)
             if not course_code:
                 continue
 
@@ -114,12 +120,13 @@ def calculate_gpa_summary_from_letter_grades(
 
             weighted_course = (credits, grade_points)
             semester_weighted_courses.append(weighted_course)
-            all_weighted_courses.append(weighted_course)
+            # Retaken courses count once in cumulative GPA with the latest attempt.
+            latest_weighted_by_course[course_code] = weighted_course
 
         semester_su_credits.append(round(semester_credits, 2))
         semester_gpas.append(_calculate_weighted_gpa(semester_weighted_courses))
 
-    cumulative_gpa = _calculate_weighted_gpa(all_weighted_courses)
+    cumulative_gpa = _calculate_weighted_gpa(list(latest_weighted_by_course.values()))
     return {
         "gpa": cumulative_gpa,
         "cumulative_gpa": cumulative_gpa,

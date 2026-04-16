@@ -583,6 +583,44 @@ select:hover:not(:disabled) {
   padding: 24px 0 48px;
 }
 
+.requirements-container {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 24px 0 48px;
+}
+
+.requirements-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.requirement-card {
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.requirement-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.requirement-card h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.requirement-card p {
+  margin: 0;
+  color: #444444;
+}
+
 .filters-section {
   gap: 10px;
   flex-wrap: wrap;
@@ -667,7 +705,8 @@ select:hover:not(:disabled) {
 
 @media (max-width: 720px) {
   .planner-shell,
-  .courses-container {
+  .courses-container,
+  .requirements-container {
     width: min(100% - 20px, 1180px);
   }
 
@@ -704,6 +743,10 @@ select:hover:not(:disabled) {
   }
 
   .summary-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .requirements-grid {
     grid-template-columns: 1fr;
   }
 

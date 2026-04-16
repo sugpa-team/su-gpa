@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from pydantic import Field
 
 
 class TakenCourse(BaseModel):
@@ -50,8 +51,10 @@ class SemesterCourseRecord(BaseModel):
     course_code: str
     course_name: str | None = None
     su_credits: float
+    ects_credits: float | None = None
     grade: str | None = None
     grade_points: float | None = None
+    is_overload: bool = False
 
 
 class SemesterRecord(BaseModel):
@@ -60,6 +63,8 @@ class SemesterRecord(BaseModel):
     total_su_credits: float
     gpa: float
     courses: list[SemesterCourseRecord]
+    eligible_course_codes: list[str] = Field(default_factory=list)
+    overload_course_count: int = 0
 
 
 class SemestersSummaryResponse(BaseModel):
@@ -68,6 +73,10 @@ class SemestersSummaryResponse(BaseModel):
     max_semester_su_credits: float
     semester_gpa: dict[int, float]
     cgpa: float
+    total_planned_su_credits: float
+    total_planned_ects_credits: float
+    program_required_su_credits: float | None = None
+    program_required_ects_credits: float | None = None
 
 
 class GpaResponse(BaseModel):
@@ -76,6 +85,28 @@ class GpaResponse(BaseModel):
     semesters: list[SemesterRecord]
     cumulative_gpa: float
     max_semester_su_credits: float
+    total_planned_su_credits: float
+    total_planned_ects_credits: float
+    program_required_su_credits: float | None = None
+    program_required_ects_credits: float | None = None
+
+
+class GraduationCategoryProgress(BaseModel):
+    category: str
+    required_su: float | None = None
+    required_ects: float | None = None
+    required_courses: int | None = None
+    completed_su: float | None = None
+    completed_ects: float | None = None
+    completed_courses: int | None = None
+    remaining_su: float | None = None
+    remaining_ects: float | None = None
+    remaining_courses: int | None = None
+    progress_percent: float | None = None
+
+
+class GraduationRequirementsProgressResponse(BaseModel):
+    categories: list[GraduationCategoryProgress]
 
 
 class CalculateGpaResponse(BaseModel):
