@@ -595,6 +595,37 @@ select:hover:not(:disabled) {
   gap: 12px;
 }
 
+.requirements-overview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.requirements-overview-card {
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 14px;
+  display: grid;
+  gap: 6px;
+}
+
+.requirements-overview-card span {
+  color: #575757;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.requirements-overview-card strong {
+  color: #111111;
+  font-size: 24px;
+}
+
+.requirements-overview-card small {
+  color: #555555;
+}
+
 .requirement-card {
   border: 1px solid #d8d8d8;
   border-radius: 8px;
@@ -747,6 +778,10 @@ select:hover:not(:disabled) {
   }
 
   .requirements-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .requirements-overview {
     grid-template-columns: 1fr;
   }
 
