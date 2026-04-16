@@ -652,6 +652,81 @@ select:hover:not(:disabled) {
   color: #444444;
 }
 
+.helper-instructions {
+  border: 1px solid #d8d8d8;
+  border-radius: 10px;
+  background: #ffffff;
+  padding: 16px;
+  display: grid;
+  gap: 8px;
+}
+
+.helper-instructions h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.helper-instructions p {
+  margin: 0;
+  color: #333333;
+}
+
+.helper-input-panel {
+  margin-top: 12px;
+  border: 1px solid #d8d8d8;
+  border-radius: 10px;
+  background: #ffffff;
+  padding: 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.helper-input-panel label {
+  color: #333333;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.helper-input-panel textarea {
+  width: 100%;
+  min-height: 220px;
+  resize: vertical;
+  border: 1px solid #b4c2b9;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111111;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.helper-input-actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.helper-analysis {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.helper-analysis h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.helper-inner-tabs {
+  position: static;
+  padding: 0;
+  margin: 0;
+}
+
+.helper-semester-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 8px;
+}
+
 .filters-section {
   gap: 10px;
   flex-wrap: wrap;
@@ -782,6 +857,10 @@ select:hover:not(:disabled) {
   }
 
   .requirements-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .helper-semester-form {
     grid-template-columns: 1fr;
   }
 

@@ -521,6 +521,11 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
                   This semester has exceeded the 20 SU credit limit. You must request an overload.
                 </p>
               )}
+              {semester.notes?.map(note => (
+                <p key={note} className="status" role="status">
+                  {note}
+                </p>
+              ))}
               {semesterHasLatestRetake[semester.id] && (
                 <p className="status" role="status">
                   Retaken courses are counted by latest attempt in overall GPA.

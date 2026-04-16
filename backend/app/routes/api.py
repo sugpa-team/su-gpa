@@ -1,16 +1,19 @@
 from fastapi import APIRouter, HTTPException
 
 from app.models.taken_course import (
+    BannerwebAnalyzeRequest,
     CourseCreateRequest,
     GpaResponse,
     GraduationRequirementsProgressResponse,
     SemesterCourseGradeUpdateRequest,
     SemestersSummaryResponse,
 )
+from app.services.bannerweb_degree_eval_parser import parse_bannerweb_degree_evaluation
 from app.services.taken_course_service import (
     add_course_to_semester,
     delete_course_record,
     get_graduation_requirements_progress,
+    get_requirements_course_catalog,
     get_semesters_summary,
     update_course_record,
 )
@@ -35,6 +38,19 @@ def get_gpa() -> dict:
 )
 def get_graduation_requirements() -> dict:
     return get_graduation_requirements_progress()
+
+
+@router.get("/graduation-requirements/catalog")
+def get_graduation_requirements_catalog() -> dict:
+    return get_requirements_course_catalog()
+
+
+@router.post("/bannerweb/analyze")
+def analyze_bannerweb_degree_evaluation(payload: BannerwebAnalyzeRequest) -> dict:
+    raw_text = (payload.raw_text or "").strip()
+    if not raw_text:
+        raise HTTPException(status_code=400, detail="Pasted text is empty.")
+    return parse_bannerweb_degree_evaluation(raw_text)
 
 
 @router.post("/courses", response_model=SemestersSummaryResponse, status_code=201)

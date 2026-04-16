@@ -65,6 +65,7 @@ class SemesterRecord(BaseModel):
     courses: list[SemesterCourseRecord]
     eligible_course_codes: list[str] = Field(default_factory=list)
     overload_course_count: int = 0
+    notes: list[str] = Field(default_factory=list)
 
 
 class SemestersSummaryResponse(BaseModel):
@@ -107,6 +108,10 @@ class GraduationCategoryProgress(BaseModel):
 
 class GraduationRequirementsProgressResponse(BaseModel):
     categories: list[GraduationCategoryProgress]
+
+
+class BannerwebAnalyzeRequest(BaseModel):
+    raw_text: str
 
 
 class CalculateGpaResponse(BaseModel):

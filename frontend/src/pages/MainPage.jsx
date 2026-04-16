@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import CourseCatalog from './CourseCatalog'
+import DegreeRequirementsHelper from './DegreeRequirementsHelper'
 import GpaCalculator from './GpaCalculator'
 import GraduationRequirements from './GraduationRequirements'
 import { apiRequest } from '../lib/api'
@@ -66,6 +67,14 @@ function MainPage({ profile, onProfileUpdated, programs }) {
         >
           Graduation Requirements
         </button>
+        <button
+          type="button"
+          className={`tab-button ${activeTab === 'bannerweb-degree-requirements-helper' ? 'active' : ''}`}
+          onClick={() => setActiveTab('bannerweb-degree-requirements-helper')}
+          aria-pressed={activeTab === 'bannerweb-degree-requirements-helper'}
+        >
+          Bannerweb Degree Requirements Helper
+        </button>
       </section>
 
       {coursesError && <p className="error" role="alert">{coursesError}</p>}
@@ -82,6 +91,7 @@ function MainPage({ profile, onProfileUpdated, programs }) {
 
       {activeTab === 'course-catalog' && <CourseCatalog courses={courses} loading={coursesLoading} />}
       {activeTab === 'graduation-requirements' && <GraduationRequirements />}
+      {activeTab === 'bannerweb-degree-requirements-helper' && <DegreeRequirementsHelper />}
     </main>
   )
 }

@@ -15,6 +15,7 @@ DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 DB_PATH = DATA_DIR / "taken_courses.db"
 REQUIREMENTS_PATH = DATA_DIR / "cs_bscs_requirements_v1.json"
 MAX_OVERLOAD_COURSES_PER_SEMESTER = 2
+PROJ_201_CODE = "PROJ 201"
 
 
 def _connect() -> sqlite3.Connection:
@@ -308,6 +309,71 @@ def _semester_has_course(
     return row is not None
 
 
+def _ordered_semester_ids(conn: sqlite3.Connection) -> list[int]:
+    rows = conn.execute(
+        """
+        SELECT id
+        FROM semesters
+        ORDER BY id ASC
+        """
+    ).fetchall()
+    return [row["id"] for row in rows]
+
+
+def _has_course_in_any_semester(
+    conn: sqlite3.Connection,
+    semester_ids: list[int],
+    course_code: str,
+) -> bool:
+    if not semester_ids:
+        return False
+    placeholders = ",".join("?" for _ in semester_ids)
+    row = conn.execute(
+        f"""
+        SELECT 1
+        FROM semester_courses
+        WHERE semester_id IN ({placeholders}) AND course_code = ?
+        LIMIT 1
+        """,
+        [*semester_ids, course_code],
+    ).fetchone()
+    return row is not None
+
+
+def _enforce_proj_201_by_semester_four(
+    conn: sqlite3.Connection,
+    courses_by_code: dict[str, dict],
+) -> int | None:
+    semester_ids = _ordered_semester_ids(conn)
+    if len(semester_ids) < 4:
+        return None
+
+    first_three = semester_ids[:3]
+    fourth_semester_id = semester_ids[3]
+    normalized_proj = _normalize_course_code(PROJ_201_CODE)
+
+    if _has_course_in_any_semester(conn, first_three, normalized_proj):
+        return None
+    if _semester_has_course(conn, fourth_semester_id, normalized_proj):
+        return fourth_semester_id
+
+    try:
+        semester_credits = _semester_credit_total(conn, fourth_semester_id, courses_by_code)
+        proj_credits = _course_su_credits(normalized_proj, courses_by_code)
+    except (LookupError, ValueError):
+        return None
+
+    is_overload = 1 if semester_credits + proj_credits > MAX_SEMESTER_SU_CREDITS else 0
+    conn.execute(
+        """
+        INSERT INTO semester_courses (semester_id, course_code, grade, is_overload)
+        VALUES (?, ?, ?, ?)
+        """,
+        (fourth_semester_id, normalized_proj, None, is_overload),
+    )
+    return fourth_semester_id
+
+
 def _find_semester_id_for_course(
     conn: sqlite3.Connection,
     course_code: str,
@@ -515,6 +581,7 @@ def _latest_attempts_by_course(rows: list[dict]) -> dict[str, dict]:
 
 def _build_semesters_summary(conn: sqlite3.Connection) -> dict:
     courses_by_code = _course_catalog()
+    proj_201_forced_semester_id = _enforce_proj_201_by_semester_four(conn, courses_by_code)
     all_course_codes = sorted(courses_by_code.keys())
     prerequisites_by_course = _prerequisites_by_course()
     semester_rows = conn.execute(
@@ -582,6 +649,13 @@ def _build_semesters_summary(conn: sqlite3.Connection) -> dict:
                 "courses": course_records,
                 "eligible_course_codes": eligible_course_codes,
                 "overload_course_count": _semester_overload_course_count(conn, semester["id"]),
+                "notes": (
+                    [
+                        "PROJ 201 was automatically added because it was not taken in the first three semesters."
+                    ]
+                    if proj_201_forced_semester_id == semester["id"]
+                    else []
+                ),
             }
         )
 
@@ -763,6 +837,39 @@ def get_graduation_requirements_progress() -> dict:
         )
 
     return {"categories": category_progress}
+
+
+def get_requirements_course_catalog() -> dict:
+    requirements = _requirements_data()
+    categories = requirements.get("categories", {})
+    if not isinstance(categories, dict):
+        return {"categories": {}}
+
+    def extract_courses(value: object) -> list[dict]:
+        collected: list[dict] = []
+        if isinstance(value, dict):
+            if value.get("course"):
+                collected.append(
+                    {
+                        "course": _normalize_course_code(value.get("course")),
+                        "name": value.get("name"),
+                    }
+                )
+            for nested in value.values():
+                collected.extend(extract_courses(nested))
+        elif isinstance(value, list):
+            for item in value:
+                collected.extend(extract_courses(item))
+        return collected
+
+    response: dict[str, list[dict]] = {}
+    for category_name, category_value in categories.items():
+        dedup: dict[str, dict] = {}
+        for item in extract_courses(category_value):
+            dedup[item["course"]] = item
+        response[category_name] = sorted(dedup.values(), key=lambda x: x["course"])
+
+    return {"categories": response}
 
 
 def create_semester(name: str) -> dict:
