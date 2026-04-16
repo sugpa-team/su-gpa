@@ -14,6 +14,8 @@ backend/**/*.pyc
 backend/.pytest_cache/
 backend/.mypy_cache/
 backend/app/data/*.db
+.coverage*
+htmlcov/
 
 # Node / React (frontend)
 frontend/node_modules/

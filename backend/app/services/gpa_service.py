@@ -46,10 +46,10 @@ def grade_to_points(grade: str | None) -> float | None:
     return LETTER_GRADE_POINTS[normalized_grade]
 
 
-def _calculate_weighted_gpa(weighted_courses: list[tuple[float, float]]) -> float:
+def _calculate_weighted_gpa(weighted_courses: list[tuple[float, float]]) -> float | None:
     total_credits = sum(credits for credits, _ in weighted_courses)
     if total_credits == 0:
-        return 0.0
+        return None
 
     total_grade_points = sum(
         credits * grade_points for credits, grade_points in weighted_courses
@@ -75,7 +75,7 @@ def calculate_gpa(taken_courses: list[TakenCourse]) -> float:
     return round(weighted_sum / total_credits, 2)
 
 
-def calculate_gpa_from_letter_grades(grades: list[list[CourseGrade]]) -> float:
+def calculate_gpa_from_letter_grades(grades: list[list[CourseGrade]]) -> float | None:
     return calculate_gpa_summary_from_letter_grades(grades)["cumulative_gpa"]
 
 
@@ -83,7 +83,7 @@ def calculate_gpa_summary_from_letter_grades(
     grades: list[list[CourseGrade]],
 ) -> dict[str, object]:
     su_credits_by_code = _su_credits_by_course_code()
-    semester_gpas: list[float] = []
+    semester_gpas: list[float | None] = []
     semester_su_credits: list[float] = []
     latest_weighted_by_course: dict[str, tuple[float, float]] = {}
 

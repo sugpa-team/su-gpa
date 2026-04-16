@@ -115,8 +115,8 @@ class BannerwebAnalyzeRequest(BaseModel):
 
 
 class CalculateGpaResponse(BaseModel):
-    gpa: float
-    cumulative_gpa: float
-    semester_gpas: list[float]
+    gpa: float | None
+    cumulative_gpa: float | None
+    semester_gpas: list[float | None]
     semester_su_credits: list[float]
     max_semester_su_credits: float
