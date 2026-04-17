@@ -1,8 +1,7 @@
 .main-page {
   min-height: 100vh;
   color: #111111;
-  background:
-    linear-gradient(180deg, #ffffff 0%, #eef7f1 34%, #f8f8f8 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #eef7f1 34%, #f8f8f8 100%);
 }
 
 .app-state {
@@ -20,9 +19,10 @@
 .onboarding-card {
   width: min(560px, 100%);
   border: 1px solid #d7d7d7;
-  border-radius: 10px;
+  border-radius: 14px;
   background: #ffffff;
-  padding: 20px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(18, 99, 63, 0.05);
 }
 
 .onboarding-card h1 {
@@ -87,9 +87,9 @@
   max-height: 220px;
   overflow-y: auto;
   border: 1px solid #b8cdc0;
-  border-radius: 10px;
+  border-radius: 12px;
   background: #ffffff;
-  box-shadow: 0 8px 20px rgba(17, 17, 17, 0.12);
+  box-shadow: 0 10px 24px rgba(17, 17, 17, 0.12);
 }
 
 .searchable-dropdown-option {
@@ -211,16 +211,15 @@
   margin: 0 0 6px;
   color: #12633f;
   font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0;
+  font-weight: 800;
   text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 h1,
 h2 {
   margin: 0;
   color: #111111;
-  letter-spacing: 0;
 }
 
 h1 {
@@ -240,9 +239,10 @@ h2 {
   min-width: 132px;
   padding: 14px 16px;
   border: 1px solid #a9d4bd;
-  border-radius: 8px;
+  border-radius: 12px;
   background: #ffffff;
   text-align: right;
+  box-shadow: 0 6px 20px rgba(18, 99, 63, 0.05);
 }
 
 .gpa-score span,
@@ -277,8 +277,9 @@ h2 {
   min-height: 72px;
   padding: 14px 16px;
   border: 1px solid #d8d8d8;
-  border-radius: 8px;
+  border-radius: 12px;
   background: #ffffff;
+  box-shadow: 0 6px 20px rgba(18, 99, 63, 0.04);
 }
 
 .summary-strip strong {
@@ -304,14 +305,16 @@ h2 {
 
 input,
 select,
-button {
+button,
+textarea {
   min-height: 42px;
-  border-radius: 6px;
+  border-radius: 10px;
   font: inherit;
 }
 
 input,
-select {
+select,
+textarea {
   border: 1px solid #b4c2b9;
   background: #ffffff;
   color: #111111;
@@ -323,12 +326,16 @@ input {
   padding: 0 12px;
 }
 
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+}
+
 select {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   padding: 0 40px 0 12px;
-  border-radius: 10px;
   border-color: #a9c7b7;
   background-image:
     linear-gradient(45deg, transparent 50%, #2d6f50 50%),
@@ -350,6 +357,7 @@ button {
   padding: 0 14px;
   font-weight: 700;
   cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
 }
 
 button:hover:not(:disabled) {
@@ -357,21 +365,29 @@ button:hover:not(:disabled) {
   border-color: #0d4f32;
 }
 
+button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
 button:disabled,
 input:disabled,
-select:disabled {
+select:disabled,
+textarea:disabled {
   cursor: not-allowed;
   opacity: 0.6;
 }
 
 input:focus,
 select:focus,
+textarea:focus,
 button:focus-visible {
   outline: 3px solid rgba(18, 99, 63, 0.24);
   outline-offset: 2px;
 }
 
-select:hover:not(:disabled) {
+select:hover:not(:disabled),
+input:hover:not(:disabled),
+textarea:hover:not(:disabled) {
   border-color: #6ea187;
   background-color: #fbfefd;
 }
@@ -392,7 +408,7 @@ select:hover:not(:disabled) {
   margin: 0 0 16px;
   padding: 12px 14px;
   border: 1px solid #b94343;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #fff1f1;
   color: #8d2525;
   font-weight: 700;
@@ -417,9 +433,10 @@ select:hover:not(:disabled) {
   gap: 14px;
   min-width: 0;
   border: 1px solid #d7d7d7;
-  border-radius: 8px;
+  border-radius: 14px;
   background: #ffffff;
   padding: 16px;
+  box-shadow: 0 6px 20px rgba(18, 99, 63, 0.04);
 }
 
 .semester-panel-header {
@@ -436,15 +453,15 @@ select:hover:not(:disabled) {
 .credit-meter {
   height: 10px;
   overflow: hidden;
-  border-radius: 6px;
-  background: #e8e8e8;
+  border-radius: 999px;
+  background: #e8ece9;
 }
 
 .credit-meter span {
   display: block;
   height: 100%;
-  border-radius: 6px;
-  background: #d89922;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #12633f 0%, #2bb673 100%);
 }
 
 .add-course-row {
@@ -486,9 +503,9 @@ select:hover:not(:disabled) {
   grid-template-columns: minmax(0, 1fr) 110px 34px;
   gap: 10px;
   min-height: 74px;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border-radius: 12px;
   background: #fbfbfb;
 }
 
@@ -586,79 +603,162 @@ select:hover:not(:disabled) {
 .requirements-container {
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 24px 0 48px;
-}
-
-.requirements-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  padding: 28px 0 48px;
 }
 
 .requirements-overview {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 16px;
+  margin-bottom: 18px;
 }
 
 .requirements-overview-card {
-  border: 1px solid #d8d8d8;
-  border-radius: 8px;
+  border: 1px solid #dfe7e2;
+  border-radius: 16px;
   background: #ffffff;
-  padding: 14px;
+  padding: 18px;
   display: grid;
-  gap: 6px;
+  gap: 8px;
+  box-shadow: 0 6px 20px rgba(18, 99, 63, 0.05);
 }
 
 .requirements-overview-card span {
-  color: #575757;
+  color: #5f6b65;
   font-size: 13px;
   font-weight: 700;
 }
 
 .requirements-overview-card strong {
   color: #111111;
-  font-size: 24px;
+  font-size: 22px;
+  line-height: 1.15;
 }
 
 .requirements-overview-card small {
-  color: #555555;
+  color: #5a5a5a;
+  font-size: 14px;
+}
+
+.requirements-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
 }
 
 .requirement-card {
-  border: 1px solid #d8d8d8;
-  border-radius: 8px;
+  border: 1px solid #dfe7e2;
+  border-radius: 16px;
   background: #ffffff;
-  padding: 14px;
+  padding: 18px;
   display: grid;
-  gap: 8px;
+  gap: 12px;
+  box-shadow: 0 6px 20px rgba(18, 99, 63, 0.05);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.requirement-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(18, 99, 63, 0.08);
+  border-color: #cddbd3;
 }
 
 .requirement-card-header {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  gap: 8px;
+  align-items: center;
+  gap: 12px;
 }
 
 .requirement-card h3 {
   margin: 0;
   font-size: 18px;
+  line-height: 1.3;
 }
 
-.requirement-card p {
-  margin: 0;
-  color: #444444;
+.requirement-card-header strong {
+  color: #111111;
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.requirement-meta {
+  display: grid;
+  gap: 10px;
+}
+
+.requirement-meta-row {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #f8faf9;
+  border: 1px solid #edf1ee;
+}
+
+.requirement-meta-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.meta-label {
+  color: #66716b;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.meta-value {
+  color: #111111;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.mini-meter {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e7ede8;
+}
+
+.mini-meter span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #12633f 0%, #31c47b 100%);
+}
+
+.mini-meter.blue span {
+  background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%);
+}
+
+.requirement-meta-footer {
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.meta-remaining {
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .helper-instructions {
   border: 1px solid #d8d8d8;
-  border-radius: 10px;
+  border-radius: 12px;
   background: #ffffff;
   padding: 16px;
   display: grid;
   gap: 8px;
+  box-shadow: 0 6px 20px rgba(18, 99, 63, 0.04);
 }
 
 .helper-instructions h3 {
@@ -674,11 +774,12 @@ select:hover:not(:disabled) {
 .helper-input-panel {
   margin-top: 12px;
   border: 1px solid #d8d8d8;
-  border-radius: 10px;
+  border-radius: 12px;
   background: #ffffff;
   padding: 16px;
   display: grid;
   gap: 10px;
+  box-shadow: 0 6px 20px rgba(18, 99, 63, 0.04);
 }
 
 .helper-input-panel label {
@@ -688,15 +789,9 @@ select:hover:not(:disabled) {
 }
 
 .helper-input-panel textarea {
-  width: 100%;
   min-height: 220px;
   resize: vertical;
-  border: 1px solid #b4c2b9;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #111111;
-  padding: 10px 12px;
-  font: inherit;
+  border-radius: 10px;
 }
 
 .helper-input-actions {
@@ -750,8 +845,9 @@ select:hover:not(:disabled) {
 .table-wrap {
   overflow-x: auto;
   border: 1px solid #d8d8d8;
-  border-radius: 8px;
+  border-radius: 12px;
   background: #ffffff;
+  box-shadow: 0 6px 20px rgba(18, 99, 63, 0.04);
 }
 
 .courses-table {
@@ -776,7 +872,6 @@ select:hover:not(:disabled) {
 .courses-table th {
   color: #333333;
   font-size: 13px;
-  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -818,6 +913,8 @@ select:hover:not(:disabled) {
 
   .tabs-shell {
     padding: 12px 12px 0;
+    gap: 14px;
+    overflow-x: auto;
   }
 
   .planner-shell {
@@ -848,22 +945,10 @@ select:hover:not(:disabled) {
     text-align: left;
   }
 
-  .summary-strip {
-    grid-template-columns: 1fr;
-  }
-
-  .requirements-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .requirements-overview {
-    grid-template-columns: 1fr;
-  }
-
-  .helper-semester-form {
-    grid-template-columns: 1fr;
-  }
-
+  .summary-strip,
+  .requirements-grid,
+  .requirements-overview,
+  .helper-semester-form,
   .semesters-grid {
     grid-template-columns: 1fr;
   }
@@ -889,5 +974,17 @@ select:hover:not(:disabled) {
   .filters-section select {
     max-width: none;
     width: 100%;
+  }
+
+  .requirement-meta-main,
+  .requirement-meta-footer {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .meta-value,
+  .meta-remaining {
+    text-align: left;
   }
 }

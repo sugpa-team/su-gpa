@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react'
-
 import { apiRequest } from '../lib/api'
 
 function formatValue(value, suffix = '') {
@@ -7,6 +6,17 @@ function formatValue(value, suffix = '') {
     return '-'
   }
   return `${Number(value).toFixed(2)}${suffix}`
+}
+
+function getSafePercent(completed, required) {
+  const safeCompleted = Number(completed || 0)
+  const safeRequired = Number(required || 0)
+
+  if (!safeRequired) {
+    return 0
+  }
+
+  return Math.min(100, (safeCompleted / safeRequired) * 100)
 }
 
 function GraduationRequirements() {
@@ -22,16 +32,18 @@ function GraduationRequirements() {
 
   const overview = useMemo(() => {
     const safeCategories = categories || []
+
     const progressValues = safeCategories
       .map(item => item.progress_percent)
       .filter(value => value !== null && value !== undefined)
+
     const overallPercent =
       progressValues.length > 0
         ? progressValues.reduce((sum, value) => sum + Number(value), 0) / progressValues.length
         : 0
 
-    const remainingSu = Math.max(0, overallCredits.requiredSu - overallCredits.completedSu)
-    const remainingEcts = Math.max(0, overallCredits.requiredEcts - overallCredits.completedEcts)
+    const remainingSu = Math.max(0, Number(overallCredits.requiredSu) - Number(overallCredits.completedSu))
+    const remainingEcts = Math.max(0, Number(overallCredits.requiredEcts) - Number(overallCredits.completedEcts))
     const remainingCourses = safeCategories.reduce(
       (sum, item) => sum + Number(item.remaining_courses || 0),
       0,
@@ -44,8 +56,8 @@ function GraduationRequirements() {
       remainingCourses,
       completedCount: safeCategories.filter(item => Number(item.progress_percent || 0) >= 100).length,
       totalCount: safeCategories.length,
-      requiredSu: overallCredits.requiredSu,
-      requiredEcts: overallCredits.requiredEcts,
+      requiredSu: Number(overallCredits.requiredSu || 0),
+      requiredEcts: Number(overallCredits.requiredEcts || 0),
     }
   }, [categories, overallCredits])
 
@@ -58,6 +70,7 @@ function GraduationRequirements() {
           apiRequest('/api/graduation-requirements'),
           apiRequest('/api/gpa'),
         ])
+
         if (!ignore) {
           setCategories(requirementsResponse.categories || [])
           setOverallCredits({
@@ -80,6 +93,7 @@ function GraduationRequirements() {
     }
 
     loadProgress()
+
     return () => {
       ignore = true
     }
@@ -95,6 +109,7 @@ function GraduationRequirements() {
       </div>
 
       {loading && <p className="status">Loading requirement progress...</p>}
+
       {error && (
         <p className="error" role="alert">
           {error}
@@ -111,47 +126,90 @@ function GraduationRequirements() {
                 <span style={{ width: `${Math.min(100, overview.overallPercent)}%` }} />
               </div>
             </article>
+
             <article className="requirements-overview-card">
               <span>Completed Categories</span>
               <strong>
                 {overview.completedCount}/{overview.totalCount}
               </strong>
             </article>
+
             <article className="requirements-overview-card">
               <span>Remaining Totals</span>
               <strong>
-                SU Credits {formatValue(overview.remainingSu)}/{formatValue(overview.requiredSu)}
+                SU Credits {formatValue(overview.remainingSu)} / {formatValue(overview.requiredSu)}
               </strong>
               <small>
-                ECTS Credits {formatValue(overview.remainingEcts)}/{formatValue(overview.requiredEcts)}
+                ECTS Credits {formatValue(overview.remainingEcts)} / {formatValue(overview.requiredEcts)}
               </small>
             </article>
           </section>
 
           <div className="requirements-grid">
-            {categories.map(item => (
-              <article key={item.category} className="requirement-card">
-                <div className="requirement-card-header">
-                  <h3>{item.category}</h3>
-                  <strong>{item.progress_percent !== null ? `${item.progress_percent.toFixed(1)}%` : '-'}</strong>
-                </div>
-                <div className="credit-meter" aria-hidden="true">
-                  <span style={{ width: `${item.progress_percent ?? 0}%` }} />
-                </div>
-                <p>
-                  SU: {formatValue(item.completed_su)} / {formatValue(item.required_su)} (Remaining:{' '}
-                  {formatValue(item.remaining_su)})
-                </p>
-                <p>
-                  ECTS: {formatValue(item.completed_ects)} / {formatValue(item.required_ects)} (Remaining:{' '}
-                  {formatValue(item.remaining_ects)})
-                </p>
-                <p>
-                  Courses: {item.completed_courses ?? '-'} / {item.required_courses ?? '-'} (Remaining:{' '}
-                  {item.remaining_courses ?? '-'})
-                </p>
-              </article>
-            ))}
+            {categories.map(item => {
+              const progressPercent = Number(item.progress_percent || 0)
+
+              return (
+                <article key={item.category} className="requirement-card">
+                  <div className="requirement-card-header">
+                    <h3>{item.category}</h3>
+                    <strong>{item.progress_percent !== null ? `${progressPercent.toFixed(1)}%` : '-'}</strong>
+                  </div>
+
+                  <div className="credit-meter" aria-hidden="true">
+                    <span style={{ width: `${Math.min(100, progressPercent)}%` }} />
+                  </div>
+
+                  <div className="requirement-meta">
+                    <div className="requirement-meta-row">
+                      <div className="requirement-meta-main">
+                        <span className="meta-label">SU Credits</span>
+                        <strong className="meta-value">
+                          {formatValue(item.completed_su)} / {formatValue(item.required_su)}
+                        </strong>
+                      </div>
+
+                      <div className="mini-meter" aria-hidden="true">
+                        <span
+                          style={{
+                            width: `${getSafePercent(item.completed_su, item.required_su)}%`,
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="requirement-meta-row">
+                      <div className="requirement-meta-main">
+                        <span className="meta-label">ECTS Credits</span>
+                        <strong className="meta-value">
+                          {formatValue(item.completed_ects)} / {formatValue(item.required_ects)}
+                        </strong>
+                      </div>
+
+                      <div className="mini-meter blue" aria-hidden="true">
+                        <span
+                          style={{
+                            width: `${getSafePercent(item.completed_ects, item.required_ects)}%`,
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="requirement-meta-row requirement-meta-footer">
+                      <span className="meta-label">Courses</span>
+
+                      <strong className="meta-value">
+                        {item.completed_courses ?? '-'} / {item.required_courses ?? '-'}
+                      </strong>
+
+                      <span className="meta-remaining">
+                        {item.remaining_courses ?? '-'} left
+                      </span>
+                    </div>
+                  </div>
+                </article>
+              )
+            })}
           </div>
         </>
       )}
