@@ -14,6 +14,7 @@ from app.utils.loader import load_courses
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 DB_PATH = DATA_DIR / "taken_courses.db"
 REQUIREMENTS_PATH = DATA_DIR / "cs_bscs_requirements_v1.json"
+FACULTY_COURSES_PATH = DATA_DIR / "faculty_courses_SU.json"
 MAX_OVERLOAD_COURSES_PER_SEMESTER = 2
 PROJ_201_CODE = "PROJ 201"
 
@@ -198,6 +199,20 @@ def _requirements_data() -> dict:
             return json.load(file)
     except (OSError, ValueError, TypeError, json.JSONDecodeError):
         return {}
+
+
+@lru_cache(maxsize=1)
+def _faculty_courses_data() -> list[dict]:
+    if not FACULTY_COURSES_PATH.exists():
+        return []
+    try:
+        with FACULTY_COURSES_PATH.open("r", encoding="utf-8") as file:
+            payload = json.load(file)
+    except (OSError, ValueError, TypeError, json.JSONDecodeError):
+        return []
+
+    courses = payload.get("courses", [])
+    return courses if isinstance(courses, list) else []
 
 
 def _extract_course_codes_from_category_definition(category_data: object) -> set[str]:
@@ -740,6 +755,11 @@ def get_graduation_requirements_progress() -> dict:
     area_codes = _extract_course_codes_from_category_definition(
         category_definitions.get("Area Electives", [])
     )
+    faculty_codes = {
+        _normalize_course_code(item.get("code", ""))
+        for item in _faculty_courses_data()
+        if isinstance(item, dict) and item.get("code")
+    }
 
     explicit_codes = university_codes | required_codes | core_codes | area_codes
     free_codes: set[str] = set()
@@ -759,6 +779,7 @@ def get_graduation_requirements_progress() -> dict:
         "Core Electives": core_codes,
         "Area Electives": area_codes,
         "Free Electives": free_codes,
+        "Faculty Courses": faculty_codes,
     }
 
     def compute_metrics(course_codes: set[str]) -> tuple[float, float, int]:
@@ -867,6 +888,17 @@ def get_requirements_course_catalog() -> dict:
         dedup: dict[str, dict] = {}
         for item in extract_courses(category_value):
             dedup[item["course"]] = item
+        if category_name == "Faculty Courses":
+            for item in _faculty_courses_data():
+                if not isinstance(item, dict):
+                    continue
+                course_code = _normalize_course_code(item.get("code", ""))
+                if not course_code:
+                    continue
+                dedup[course_code] = {
+                    "course": course_code,
+                    "name": item.get("name"),
+                }
         response[category_name] = sorted(dedup.values(), key=lambda x: x["course"])
 
     return {"categories": response}
