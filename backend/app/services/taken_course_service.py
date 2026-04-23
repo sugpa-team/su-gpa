@@ -17,6 +17,8 @@ REQUIREMENTS_PATH = DATA_DIR / "cs_bscs_requirements_v1.json"
 FACULTY_COURSES_PATH = DATA_DIR / "faculty_courses_SU.json"
 MAX_OVERLOAD_COURSES_PER_SEMESTER = 2
 PROJ_201_CODE = "PROJ 201"
+_MIN_GRADUATION_GPA = 2.0
+_CATEGORIES_WITH_REMAINING = frozenset({"Core Electives", "Area Electives"})
 
 
 def _connect() -> sqlite3.Connection:
@@ -902,6 +904,170 @@ def get_requirements_course_catalog() -> dict:
         response[category_name] = sorted(dedup.values(), key=lambda x: x["course"])
 
     return {"categories": response}
+
+
+def get_progress_summary() -> dict:
+    init_taken_courses_db()
+    requirements = _requirements_data()
+    category_requirements = requirements.get("requirement_summary", {}).get("categories", [])
+    category_definitions = requirements.get("categories", {})
+
+    if not isinstance(category_requirements, list):
+        category_requirements = []
+    if not isinstance(category_definitions, dict):
+        category_definitions = {}
+
+    courses_by_code = _course_catalog()
+
+    with _connect() as conn:
+        conn.row_factory = sqlite3.Row
+        course_rows = conn.execute(
+            """
+            SELECT id, semester_id, course_code, grade
+            FROM semester_courses
+            ORDER BY semester_id ASC, id ASC
+            """
+        ).fetchall()
+
+    latest_attempts = _latest_attempts_by_course(course_rows)
+    latest_attempt_rows = list(latest_attempts.values())
+    latest_graded_rows = [
+        row for row in latest_attempt_rows if grade_to_points(row["grade"]) is not None
+    ]
+    cgpa = _weighted_gpa(latest_graded_rows, courses_by_code)
+    latest_attempt_codes = {
+        _normalize_course_code(row["course_code"]) for row in latest_attempt_rows
+    }
+
+    university_codes = _extract_course_codes_from_category_definition(
+        category_definitions.get("University Courses", {})
+    )
+    required_codes = _extract_course_codes_from_category_definition(
+        category_definitions.get("Required Courses", [])
+    )
+    core_codes = _extract_course_codes_from_category_definition(
+        category_definitions.get("Core Electives", [])
+    )
+    area_codes = _extract_course_codes_from_category_definition(
+        category_definitions.get("Area Electives", [])
+    )
+    faculty_codes = {
+        _normalize_course_code(item.get("code", ""))
+        for item in _faculty_courses_data()
+        if isinstance(item, dict) and item.get("code")
+    }
+
+    explicit_codes = university_codes | required_codes | core_codes | area_codes
+    free_codes: set[str] = set()
+    for code in latest_attempt_codes:
+        if code in explicit_codes:
+            continue
+        course = courses_by_code.get(code)
+        if not course:
+            continue
+        faculty = (course.get("Faculty") or "").upper()
+        if faculty in {"FASS", "SBS", "FENS"}:
+            free_codes.add(code)
+
+    category_code_sets: dict[str, set[str]] = {
+        "University Courses": university_codes,
+        "Required Courses": required_codes,
+        "Core Electives": core_codes,
+        "Area Electives": area_codes,
+        "Free Electives": free_codes,
+        "Faculty Courses": faculty_codes,
+    }
+
+    total_credits_completed = round(
+        sum(_course_su_credits(row["course_code"], courses_by_code) for row in latest_attempt_rows),
+        2,
+    )
+    min_su_total, _ = _program_required_totals()
+
+    progress_percents: list[float] = []
+    category_items: list[dict] = []
+
+    for item in category_requirements:
+        if not isinstance(item, dict):
+            continue
+        category_name = item.get("category")
+        if not category_name:
+            continue
+
+        required_su = item.get("min_su")
+        required_ects = item.get("min_ects")
+        required_courses_count = item.get("min_courses")
+        course_codes = category_code_sets.get(category_name, set())
+
+        completed_codes: list[str] = sorted(
+            code for code in course_codes if code in latest_attempt_codes
+        )
+        completed_su = round(
+            sum(_course_su_credits(code, courses_by_code) for code in completed_codes), 2
+        )
+        completed_ects = 0.0
+        for code in completed_codes:
+            ects = _course_ects_credits(code, courses_by_code)
+            if ects is not None:
+                completed_ects += ects
+        completed_ects = round(completed_ects, 2)
+
+        progress_candidates: list[float] = []
+        if required_su is not None:
+            v = _safe_progress_percent(completed_su, float(required_su))
+            if v is not None:
+                progress_candidates.append(v)
+        if required_ects is not None:
+            v = _safe_progress_percent(completed_ects, float(required_ects))
+            if v is not None:
+                progress_candidates.append(v)
+        if required_courses_count is not None and int(required_courses_count) > 0:
+            progress_candidates.append(
+                round(min(100.0, (len(completed_codes) / int(required_courses_count)) * 100.0), 1)
+            )
+        progress_percent = min(progress_candidates) if progress_candidates else None
+
+        if progress_percent is not None:
+            progress_percents.append(progress_percent)
+
+        if progress_percent is not None and progress_percent >= 100.0:
+            status = "SATISFIED"
+        elif completed_su > 0 or len(completed_codes) > 0:
+            status = "IN_PROGRESS"
+        else:
+            status = "NOT_STARTED"
+
+        remaining_codes: list[str] = (
+            sorted(course_codes - set(completed_codes))
+            if category_name in _CATEGORIES_WITH_REMAINING
+            else []
+        )
+
+        category_items.append({
+            "id": category_name.lower().replace(" ", "_"),
+            "name": category_name,
+            "credits_completed": completed_su,
+            "credits_required": float(required_su) if required_su is not None else None,
+            "completion_pct": progress_percent,
+            "status": status,
+            "completed_courses": completed_codes,
+            "remaining_courses": remaining_codes,
+        })
+
+    overall_completion_pct = (
+        round(sum(progress_percents) / len(progress_percents), 1)
+        if progress_percents
+        else 0.0
+    )
+
+    return {
+        "overall_completion_pct": overall_completion_pct,
+        "total_credits_completed": total_credits_completed,
+        "total_credits_required": float(min_su_total) if min_su_total is not None else None,
+        "cgpa": cgpa,
+        "meets_minimum_gpa": cgpa >= _MIN_GRADUATION_GPA,
+        "categories": category_items,
+    }
 
 
 def create_semester(name: str) -> dict:

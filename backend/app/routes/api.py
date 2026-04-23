@@ -5,6 +5,7 @@ from app.models.taken_course import (
     CourseCreateRequest,
     GpaResponse,
     GraduationRequirementsProgressResponse,
+    ProgressResponse,
     SemesterCourseGradeUpdateRequest,
     SemestersSummaryResponse,
 )
@@ -13,6 +14,7 @@ from app.services.taken_course_service import (
     add_course_to_semester,
     delete_course_record,
     get_graduation_requirements_progress,
+    get_progress_summary,
     get_requirements_course_catalog,
     get_semesters_summary,
     update_course_record,
@@ -25,6 +27,11 @@ def _raise_http_error(error: Exception) -> None:
     if isinstance(error, LookupError):
         raise HTTPException(status_code=404, detail=str(error)) from error
     raise HTTPException(status_code=400, detail=str(error)) from error
+
+
+@router.get("/progress", response_model=ProgressResponse)
+def get_progress() -> dict:
+    return get_progress_summary()
 
 
 @router.get("/gpa", response_model=GpaResponse)

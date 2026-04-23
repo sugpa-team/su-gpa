@@ -120,3 +120,23 @@ class CalculateGpaResponse(BaseModel):
     semester_gpas: list[float]
     semester_su_credits: list[float]
     max_semester_su_credits: float
+
+
+class ProgressCategoryItem(BaseModel):
+    id: str
+    name: str
+    credits_completed: float
+    credits_required: float | None = None
+    completion_pct: float | None = None
+    status: str  # "SATISFIED" | "IN_PROGRESS" | "NOT_STARTED"
+    completed_courses: list[str]
+    remaining_courses: list[str]
+
+
+class ProgressResponse(BaseModel):
+    overall_completion_pct: float
+    total_credits_completed: float
+    total_credits_required: float | None = None
+    cgpa: float
+    meets_minimum_gpa: bool
+    categories: list[ProgressCategoryItem]
