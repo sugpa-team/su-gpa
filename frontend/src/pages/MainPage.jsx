@@ -11,6 +11,8 @@ function MainPage({ profile, onProfileUpdated, programs }) {
   const [courses, setCourses] = useState([])
   const [coursesLoading, setCoursesLoading] = useState(true)
   const [coursesError, setCoursesError] = useState(null)
+  const [dataVersion, setDataVersion] = useState(0)
+  const handleDataChanged = () => setDataVersion(value => value + 1)
 
   useEffect(() => {
     let ignore = false
@@ -38,7 +40,7 @@ function MainPage({ profile, onProfileUpdated, programs }) {
     return () => {
       ignore = true
     }
-  }, [])
+  }, [dataVersion])
 
   return (
     <main className="main-page">
@@ -86,12 +88,13 @@ function MainPage({ profile, onProfileUpdated, programs }) {
           programs={programs}
           courses={courses}
           coursesLoading={coursesLoading}
+          dataVersion={dataVersion}
         />
       )}
 
       {activeTab === 'course-catalog' && <CourseCatalog courses={courses} loading={coursesLoading} />}
-      {activeTab === 'graduation-requirements' && <GraduationRequirements />}
-      {activeTab === 'bannerweb-degree-requirements-helper' && <DegreeRequirementsHelper />}
+      {activeTab === 'graduation-requirements' && <GraduationRequirements dataVersion={dataVersion} />}
+      {activeTab === 'bannerweb-degree-requirements-helper' && <DegreeRequirementsHelper onDataChanged={handleDataChanged} />}
     </main>
   )
 }

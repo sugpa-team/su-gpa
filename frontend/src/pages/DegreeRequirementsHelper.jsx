@@ -14,10 +14,12 @@ const SECTION_TO_REQUIREMENTS_CATEGORY = {
   'BASIC SCIENCE': 'Basic Science',
 }
 
-function DegreeRequirementsHelper() {
+function DegreeRequirementsHelper({ onDataChanged }) {
   const [pastedText, setPastedText] = useState('')
   const [loading, setLoading] = useState(false)
+  const [importing, setImporting] = useState(false)
   const [error, setError] = useState(null)
+  const [importMessage, setImportMessage] = useState(null)
   const [analysis, setAnalysis] = useState(null)
   const [activeResultTab, setActiveResultTab] = useState(RESULT_TAB.OVERVIEW)
   const [requirementsCatalog, setRequirementsCatalog] = useState({})
@@ -138,6 +140,7 @@ function DegreeRequirementsHelper() {
     if (!pastedText.trim()) return setError('Please paste the Bannerweb Degree Evaluation text first.')
     setLoading(true)
     setError(null)
+    setImportMessage(null)
     try {
       const [result, catalogResponse, coursesResponse] = await Promise.all([
         apiRequest('/api/bannerweb/analyze', { method: 'POST', body: JSON.stringify({ raw_text: pastedText }) }),
@@ -156,6 +159,32 @@ function DegreeRequirementsHelper() {
       setError(requestError.message)
     } finally {
       setLoading(false)
+    }
+  }
+
+  async function handleImport() {
+    if (!pastedText.trim()) return setError('Please paste the Bannerweb Degree Evaluation text first.')
+    setImporting(true)
+    setError(null)
+    setImportMessage(null)
+    try {
+      const result = await apiRequest('/api/bannerweb/import', {
+        method: 'POST',
+        body: JSON.stringify({ raw_text: pastedText }),
+      })
+      const imported = result.imported_courses ?? 0
+      const semesters = result.created_semesters ?? 0
+      const skippedCount = (result.skipped || []).length
+      let message = `Imported ${imported} course${imported === 1 ? '' : 's'} into ${semesters} new semester${semesters === 1 ? '' : 's'}.`
+      if (skippedCount > 0) {
+        message += ` Skipped ${skippedCount} (already present or not in catalog).`
+      }
+      setImportMessage(message)
+      if (onDataChanged) onDataChanged()
+    } catch (requestError) {
+      setError(requestError.message)
+    } finally {
+      setImporting(false)
     }
   }
 
@@ -220,7 +249,13 @@ function DegreeRequirementsHelper() {
       <section className="helper-input-panel" aria-label="Paste Bannerweb degree evaluation text">
         <label htmlFor="bannerweb-paste-input">Paste Bannerweb output</label>
         <textarea id="bannerweb-paste-input" value={pastedText} onChange={event => setPastedText(event.target.value)} placeholder="Paste the full Degree Evaluation text here..." rows={14} />
-        <div className="helper-input-actions"><button type="button" onClick={handleAnalyze} disabled={loading}>{loading ? 'Analyzing...' : 'Analyze'}</button></div>
+        <div className="helper-input-actions">
+          <button type="button" onClick={handleAnalyze} disabled={loading || importing}>{loading ? 'Analyzing...' : 'Analyze'}</button>
+          {analysis && (
+            <button type="button" onClick={handleImport} disabled={loading || importing}>{importing ? 'Importing...' : 'Import to Profile'}</button>
+          )}
+        </div>
+        {importMessage && <p className="status" role="status">{importMessage}</p>}
         {error && <p className="error" role="alert">{error}</p>}
       </section>
       {analysis && (

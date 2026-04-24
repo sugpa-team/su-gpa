@@ -21,7 +21,7 @@ function formatNumber(value) {
   return Number(value || 0).toFixed(2)
 }
 
-function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLoading }) {
+function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLoading, dataVersion = 0 }) {
   const [summary, setSummary] = useState(EMPTY_SUMMARY)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -60,7 +60,7 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
     return () => {
       ignore = true
     }
-  }, [])
+  }, [dataVersion])
 
   const cgpa = summary.cgpa ?? summary.cumulative_gpa
   const totalPlannedSuCredits = summary.total_planned_su_credits ?? 0

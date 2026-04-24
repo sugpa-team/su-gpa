@@ -1259,6 +1259,125 @@ def reset_tracking_data() -> None:
         conn.execute("DELETE FROM taken_courses")
 
 
+def import_bannerweb_parse_result(parsed: dict) -> dict:
+    """Persist courses from a parsed Bannerweb degree evaluation.
+
+    Groups courses by term code and creates one semester per unique term
+    (reusing any existing semester with the same name). Inserts courses
+    directly, bypassing prerequisite/overload validation since Bannerweb
+    data is authoritative. Courses not in the catalog or already present
+    in the target semester are reported in `skipped`.
+    """
+    if not isinstance(parsed, dict):
+        raise ValueError("Parsed payload must be a dict.")
+
+    courses_by_term: dict[str, list[dict]] = {}
+    sections = parsed.get("sections", {}) or {}
+    for section in sections.values():
+        if not isinstance(section, dict):
+            continue
+        for course in section.get("courses", []) or []:
+            if not isinstance(course, dict):
+                continue
+            term = str(course.get("term", "") or "").strip()
+            raw_code = str(course.get("course", "") or "").strip()
+            if not term or not raw_code:
+                continue
+            courses_by_term.setdefault(term, []).append(course)
+
+    init_taken_courses_db()
+    courses_by_code = _course_catalog()
+
+    skipped: list[dict] = []
+    created_semesters = 0
+    imported_courses = 0
+
+    with _connect() as conn:
+        conn.row_factory = sqlite3.Row
+
+        for term in sorted(courses_by_term.keys()):
+            existing_semester = conn.execute(
+                "SELECT id FROM semesters WHERE name = ? LIMIT 1",
+                (term,),
+            ).fetchone()
+            if existing_semester:
+                semester_id = existing_semester["id"]
+            else:
+                cursor = conn.execute(
+                    "INSERT INTO semesters (name) VALUES (?)",
+                    (term,),
+                )
+                semester_id = cursor.lastrowid
+                created_semesters += 1
+
+            for course in courses_by_term[term]:
+                raw_code = str(course.get("course", "") or "").strip()
+                normalized_code = _normalize_course_code(raw_code)
+                grade = normalize_letter_grade(course.get("grade"))
+
+                if normalized_code not in courses_by_code:
+                    skipped.append(
+                        {
+                            "course": raw_code,
+                            "term": term,
+                            "reason": "Course not found in catalog",
+                        }
+                    )
+                    continue
+
+                if _semester_has_course(conn, semester_id, normalized_code):
+                    skipped.append(
+                        {
+                            "course": raw_code,
+                            "term": term,
+                            "reason": "Already exists in semester",
+                        }
+                    )
+                    continue
+
+                try:
+                    new_credits = _course_su_credits(normalized_code, courses_by_code)
+                    semester_credits = _semester_credit_total(
+                        conn,
+                        semester_id,
+                        courses_by_code,
+                    )
+                except (LookupError, ValueError) as err:
+                    skipped.append(
+                        {
+                            "course": raw_code,
+                            "term": term,
+                            "reason": str(err),
+                        }
+                    )
+                    continue
+
+                is_overload = (
+                    1
+                    if semester_credits + new_credits > MAX_SEMESTER_SU_CREDITS
+                    else 0
+                )
+
+                conn.execute(
+                    """
+                    INSERT INTO semester_courses
+                        (semester_id, course_code, grade, is_overload)
+                    VALUES (?, ?, ?, ?)
+                    """,
+                    (semester_id, normalized_code, grade, is_overload),
+                )
+                imported_courses += 1
+
+        summary = _build_semesters_summary(conn)
+
+    return {
+        "created_semesters": created_semesters,
+        "imported_courses": imported_courses,
+        "skipped": skipped,
+        "summary": summary,
+    }
+
+
 def parse_taken_courses_cookie(raw_cookie_value: str | None) -> dict[str, str]:
     if not raw_cookie_value:
         return {}

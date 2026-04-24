@@ -17,6 +17,7 @@ from app.services.taken_course_service import (
     get_progress_summary,
     get_requirements_course_catalog,
     get_semesters_summary,
+    import_bannerweb_parse_result,
     update_course_record,
 )
 
@@ -58,6 +59,18 @@ def analyze_bannerweb_degree_evaluation(payload: BannerwebAnalyzeRequest) -> dic
     if not raw_text:
         raise HTTPException(status_code=400, detail="Pasted text is empty.")
     return parse_bannerweb_degree_evaluation(raw_text)
+
+
+@router.post("/bannerweb/import")
+def import_bannerweb_degree_evaluation(payload: BannerwebAnalyzeRequest) -> dict:
+    raw_text = (payload.raw_text or "").strip()
+    if not raw_text:
+        raise HTTPException(status_code=400, detail="Pasted text is empty.")
+    parsed = parse_bannerweb_degree_evaluation(raw_text)
+    try:
+        return import_bannerweb_parse_result(parsed)
+    except (LookupError, ValueError) as error:
+        _raise_http_error(error)
 
 
 @router.post("/courses", response_model=SemestersSummaryResponse, status_code=201)

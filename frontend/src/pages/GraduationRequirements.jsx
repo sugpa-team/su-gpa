@@ -19,7 +19,7 @@ function getSafePercent(completed, required) {
   return Math.min(100, (safeCompleted / safeRequired) * 100)
 }
 
-function GraduationRequirements() {
+function GraduationRequirements({ dataVersion = 0 }) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [categories, setCategories] = useState([])
@@ -97,7 +97,7 @@ function GraduationRequirements() {
     return () => {
       ignore = true
     }
-  }, [])
+  }, [dataVersion])
 
   return (
     <section className="requirements-container" aria-labelledby="requirements-title">
