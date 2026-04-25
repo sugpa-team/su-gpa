@@ -1,0 +1,6701 @@
+[
+  {
+      "Course": "ACC 201",
+      "Name": "Introduction to Financial Accounting and Reporting",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "ACC 301",
+      "Name": "Managerial Accounting",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "ACC 401",
+      "Name": "Intermediate Financial Accounting and Reporting",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "ACC 402",
+      "Name": "Advanced Issues in Financial Accounting",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "ACC 403",
+      "Name": "Auditing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "ACC 404",
+      "Name": "International Accounting",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "ACC 405",
+      "Name": "Financial Statement Analysis",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "ACC 406",
+      "Name": "Intermediate Managerial Accounting",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "ACC 450",
+      "Name": "Selected Topics in Accounting I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "ACC 451",
+      "Name": "Selected Topics in Accounting II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "AL 102",
+      "Name": "Academic Literacies",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "ANTH 214",
+      "Name": "Anthropology as Cultural Critique",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ANTH 251",
+      "Name": "Anthropology of the Global City",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ANTH 255",
+      "Name": "Local Cultures, Global Forces",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ANTH 320",
+      "Name": "Material Culture",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ANTH 321",
+      "Name": "Anthropology of Migration and the City",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ANTH 326",
+      "Name": "Anthropology of the Body",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ANTH 340",
+      "Name": "Anthropology of Gender and Sexuality",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ANTH 350",
+      "Name": "Anthropology of Development Social Change and Social Justice",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ANTH 354",
+      "Name": "Migration and Citizenship",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ANTH 413",
+      "Name": "Etnographic Approaches to Law and Conflict",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ANTH 415",
+      "Name": "Anthropology of the State",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ANTH 425",
+      "Name": "Anthropology of Affect",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ANTH 428",
+      "Name": "Anthropology of Hope",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ANTH 450",
+      "Name": "Anthropology of the Middle East and North Africa (MENA)",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ANTH 465",
+      "Name": "Social Mobilization, Resistance and Protest",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ANTH 468",
+      "Name": "Ethnography: Fieldwork and Writing in Antropology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ANTH 469",
+      "Name": "Anthropology and History",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ANTH 471",
+      "Name": "Anthropology of Europe",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "BIO 301",
+      "Name": "Introduction to Molecular Biology",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 303",
+      "Name": "Genetics",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 304",
+      "Name": "Biological Function and Structure",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 306",
+      "Name": "Microbiology",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 308",
+      "Name": "Plant Physiology",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 310",
+      "Name": "Introduction to Bioinformatics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 321",
+      "Name": "Biochemistry I",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 322",
+      "Name": "Biochemistry II",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 330",
+      "Name": "Environmental Plant Biology",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 332",
+      "Name": "Cell Biology",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 335",
+      "Name": "Analytical Techniques",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 363",
+      "Name": "Ecology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 370",
+      "Name": "Mammalian Cell Culture",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 403",
+      "Name": "Plant Pathology",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 404",
+      "Name": "Plant Biotechnology",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 406",
+      "Name": "Protein Engineering",
+      "ECTS Credits": 6.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 407",
+      "Name": "Multicellular Organization",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 409",
+      "Name": "Modelling and Simulation of Biomolecular Processes",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 415",
+      "Name": "Plant Nutrition",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 421",
+      "Name": "Tissue Engineering",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 423",
+      "Name": "Neurobiology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 436",
+      "Name": "Cancer Biology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 444",
+      "Name": "Bioengineering",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 445",
+      "Name": "Plant Tissue Culture Techniques",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 446",
+      "Name": "Biology of Aging",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 447",
+      "Name": "Plant Breeding",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 452",
+      "Name": "Immunology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 466",
+      "Name": "Biophysics: Molecules and Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 467",
+      "Name": "Signal Transduction",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 468",
+      "Name": "Gene Regulation & Diseas",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "BIO 48006",
+      "Name": "Special Topics in BIO: Gene Regulation and Disease",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CHEM 202",
+      "Name": "Chemical Kinetics",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CHEM 301",
+      "Name": "Inorganic Chemistry",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CHEM 302",
+      "Name": "Analytical Chemistry",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CHEM 369",
+      "Name": "Chemistry of Transformable Materials",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CHEM 405",
+      "Name": "Electrochemistry",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CHEM 421",
+      "Name": "Clean Coal Technology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CIP 101N",
+      "Name": "Civic Involvement Projects I-N",
+      "ECTS Credits": 1.0,
+      "SU Credits": 0.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CONF 300",
+      "Name": "Conflict Analysis and Resolution",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CONF 400",
+      "Name": "International Conflict and Peace",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CONF 431",
+      "Name": "Conflict Resolution Practice",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CS 201",
+      "Name": "Programming Fundamentals",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 204",
+      "Name": "Advanced Programming",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "DSA 210 / CS 210",
+      "Name": "Introduction to Data Science",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 300",
+      "Name": "Data Structures",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 301",
+      "Name": "Algorithms",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 302",
+      "Name": "Formal Languages and Automata Theory",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 303",
+      "Name": "Logic and Digital System Design",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 305",
+      "Name": "Programming Languages",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 306",
+      "Name": "Database Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 307",
+      "Name": "Operating Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 308",
+      "Name": "Software Engineering",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 310",
+      "Name": "Mobile Application Development",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 395",
+      "Name": "Internship Project",
+      "ECTS Credits": 5.0,
+      "SU Credits": 0.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 400",
+      "Name": "Logic in Computer Science",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 401",
+      "Name": "Computer Architectures",
+      "ECTS Credits": 6.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 402",
+      "Name": "Compiler Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 403",
+      "Name": "Distributed Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 404",
+      "Name": "Artificial Intelligence",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 405",
+      "Name": "Computer Graphics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 406",
+      "Name": "Parallel Computing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 407",
+      "Name": "Theory of Computation",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 408",
+      "Name": "Computer Networks",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 411",
+      "Name": "Cryptography",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 412",
+      "Name": "Machine Learning",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 414",
+      "Name": "Network Science",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 419",
+      "Name": "Digital Image and Video Analysis",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 432",
+      "Name": "Computer and Network Security",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 436",
+      "Name": "Cloud Computing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 437",
+      "Name": "Cybersecurity Practices and Applications",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 438",
+      "Name": "Blockchain: Security and Applications",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 439",
+      "Name": "Software Verification and Validation",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 442",
+      "Name": "Software Design Patterns",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 445",
+      "Name": "Natural Language Processing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 447",
+      "Name": "Immersive Systems Development",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 449",
+      "Name": "Human Computer Interaction",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 450",
+      "Name": "Arts and Computing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 48000",
+      "Name": "Special Topics in CS: Software Design Patterns",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 48001",
+      "Name": "Special Topics in CS: Blockchain: Security and Applications",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 48002",
+      "Name": "Special Topics in CS: Network Science",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 48003",
+      "Name": "Special Topics in CS: Parallel Computer Architecture",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 48004",
+      "Name": "Special Topics in CS: Agile Software Development",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 48006",
+      "Name": "Special Topics in CS: Decentralized Finance",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 48007",
+      "Name": "Special Topics in CS: Internet of Things Sensing System",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 48008",
+      "Name": "Special Topics in CS: Malware Analysis and Detection",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CS 48010",
+      "Name": "Special Topics in CS: Performance Analysis and Engineering",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "CULT 201",
+      "Name": "Theory and Practice in Cultural Studies",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 222",
+      "Name": "Popular Culture and Everyday Life",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 223",
+      "Name": "Consumption, Food and Culture",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 225",
+      "Name": "Advertising and Culture",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 230",
+      "Name": "Introduction to Media Studies",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 299",
+      "Name": "Topics in Turkish Cultural Studies",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 322",
+      "Name": "Youth Culture",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 324",
+      "Name": "Humans and Clones",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 325",
+      "Name": "Media Worlds",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 327",
+      "Name": "Postcolonial Theory and Its Discontents",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 342",
+      "Name": "Gender and Nationalism",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 355",
+      "Name": "Urban Spaces and Cultures",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 360",
+      "Name": "Consumer Society and Cultures",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 361",
+      "Name": "Oral History",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 362",
+      "Name": "Memory Studies",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 364",
+      "Name": "Topics in Memory Studies",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 368",
+      "Name": "Globalization and Health Inequalities",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 370",
+      "Name": "Everyday Life",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 384",
+      "Name": "Political Ecology and Society",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 391",
+      "Name": "Turkish Culture: Critical Perspectives",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 399",
+      "Name": "Independent Study",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 420",
+      "Name": "Science, Technology and Culture",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 421",
+      "Name": "Digital Humanities",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 432",
+      "Name": "Modernism/Postmodernism",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 434",
+      "Name": "Advanced Cultural Theory",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 435",
+      "Name": "Representations of Violence",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 446",
+      "Name": "Gender and Media",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 449",
+      "Name": "Harem Fictions: From Montesquieu to Mernissi",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 451",
+      "Name": "Nation, History and Culture in Museums",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 452",
+      "Name": "Myth, Art and Politics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 453",
+      "Name": "Spaces of Migration",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 454",
+      "Name": "Cultures of Migration",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 460",
+      "Name": "Cultures and Politics of Law Reform",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 462",
+      "Name": "Postsocialism",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 491",
+      "Name": "Advanced Topics in Cultural Studies I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 492",
+      "Name": "Advanced Topics in Cultural Studies II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "CULT 493",
+      "Name": "Thematic Approaches to Contemporary Turkish Culture",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "DSA 201",
+      "Name": "Advanced Programming for Data Science",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "DSA 301",
+      "Name": "Data Visualization",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ECON 201",
+      "Name": "Games and Strategies",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 301",
+      "Name": "Econometrics",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 310",
+      "Name": "Game Theory",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 312",
+      "Name": "Behavioral Economics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 320",
+      "Name": "Public Economics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 321",
+      "Name": "Education Economics and Policy",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 322",
+      "Name": "Health Economics and Policy",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 323",
+      "Name": "Energy and Environmental Economics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 330",
+      "Name": "Industrial Organization",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 335",
+      "Name": "Economics of Information",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 340",
+      "Name": "International Economics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 341",
+      "Name": "Corporate Finance",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 345",
+      "Name": "International Finance",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 346",
+      "Name": "Global Finance and Multinational Corporation",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 347",
+      "Name": "Essentials of Project and Infrastructure Finance",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 350",
+      "Name": "Financial Institutions and Markets",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 360",
+      "Name": "Advanced Macroeconomics",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 370",
+      "Name": "Advanced Microeconomics",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 391",
+      "Name": "Topics in Macroeconomics: Emerging Market Macroeconomics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 399",
+      "Name": "Independent Study",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 400",
+      "Name": "History of Economic Thought",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 401",
+      "Name": "Applied Econometrics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 403",
+      "Name": "Economic History",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 405",
+      "Name": "Law and Economics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 407",
+      "Name": "The Political Economy of European Integration",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 412",
+      "Name": "Competition and Regulation",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 414",
+      "Name": "Applied Macroeconomics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 420",
+      "Name": "Growth and Development",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 422",
+      "Name": "From Plan to Market: Economic Transformation in Eastern Europe",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 423",
+      "Name": "Economics of the Welfare State",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 424",
+      "Name": "Welfare Economics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 425",
+      "Name": "Topics in Political Economics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 430",
+      "Name": "Labor Economics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 440",
+      "Name": "Topics in Economics of Globalization and Development",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 450",
+      "Name": "Microeconomics of Banking",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 481",
+      "Name": "Advanced Microeconomic Theory I",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 482",
+      "Name": "Advanced Microeconomic Theory II",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 483",
+      "Name": "Advanced Macroeconomic Theory I",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 484",
+      "Name": "Advanced Macroeconomic Theory II",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 485",
+      "Name": "Advanced Quantitative Methods",
+      "ECTS Credits": 8.0,
+      "SU Credits": 4.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 486",
+      "Name": "Advanced Econometric Theory",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 488",
+      "Name": "Matchings and Markets",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 491",
+      "Name": "Topics in Economic Theory",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 492",
+      "Name": "Seminar on the Turkish Economy",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 493",
+      "Name": "Understanding Chinese Economy",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 494",
+      "Name": "Spatial Data Science",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ECON 495",
+      "Name": "Machine Learning for Policy Evaluation",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "EE 200",
+      "Name": "Electronic Circuit Implementations",
+      "ECTS Credits": 2.0,
+      "SU Credits": 2.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 202",
+      "Name": "Electronic Circuits II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 301",
+      "Name": "Electromagnetics II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 302",
+      "Name": "Digital Integrated Circuits",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 303",
+      "Name": "Analog Integrated Circuits",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 306",
+      "Name": "Introduction to Radio Frequency and Microwave Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 307",
+      "Name": "Semiconductor Physics and Devices",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 308",
+      "Name": "Microcomputer Based System Design",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 310",
+      "Name": "Hardware Description Languages",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 311",
+      "Name": "Introduction to Signal Processing and Information Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 312",
+      "Name": "Discrete-Time Signals and Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 313",
+      "Name": "Introduction to Communication Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 314",
+      "Name": "Digital Communications",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 401",
+      "Name": "Very Large Scale Integrated System Design I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 402",
+      "Name": "Very Large Scale Integrated System Design II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 403",
+      "Name": "Optoelectronics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 404",
+      "Name": "Introduction to Microelectromechanical Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 405",
+      "Name": "Communication Circuit Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 406",
+      "Name": "Antennas and Propagation for Wireless Communication",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 407",
+      "Name": "Microelectronic Fabrication",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 408",
+      "Name": "Modeling of Semiconductor Devices",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 409",
+      "Name": "Microwaves",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 410",
+      "Name": "Information and Coding Theory",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 411",
+      "Name": "RF Integrated Circuits.",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 413",
+      "Name": "Wireless Communications",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 414",
+      "Name": "Multimedia Communication",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 415",
+      "Name": "Digital Speech and Audio Processing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 417",
+      "Name": "Computer Vision",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 419",
+      "Name": "Signal Processing Design and Implementation",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 440",
+      "Name": "Mixed-Signal Integrated Circuits",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 444",
+      "Name": "Optics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 473",
+      "Name": "Biomedical Instrumentation",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 48000",
+      "Name": "Special Topics in EE: RF Integrated Circuits Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 48001",
+      "Name": "Special Topics in EE: Nanoscale Integrated Circuit Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 48002",
+      "Name": "Special Topics in EE: Sensor Networks",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 48004",
+      "Name": "Special Topics in EE: Power systems analysis",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "EE 48008",
+      "Name": "Special Topics in EE: Heterogeneous Computing and System-on-Chip Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENRG 220",
+      "Name": "World Energy Outlook: The Coming Year",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENRG 301",
+      "Name": "Energy Systems and Environment",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENRG 315",
+      "Name": "Energy",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENRG 401",
+      "Name": "Energy: Supply Chain, Economics and Geopolitics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENRG 420",
+      "Name": "Energy Systems Optimization",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENRG 422",
+      "Name": "Battery Science and Engineering",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENRG 423",
+      "Name": "Electric Power Systems: Operation, Technology and Economics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 201",
+      "Name": "Electromagnetics I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 202",
+      "Name": "Thermodynamics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 203",
+      "Name": "Electronic Circuits I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 204",
+      "Name": "Mechanics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 205",
+      "Name": "Introduction to Materials Science",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 206",
+      "Name": "Systems Modeling and Control",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 207",
+      "Name": "Introduction to Energy Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 208",
+      "Name": "Introduction to Industrial Engineering",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 209",
+      "Name": "Introduction to Computer Aided Drafting and Solid Modeling",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 210",
+      "Name": "Computational Biology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 211",
+      "Name": "Signals",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 214",
+      "Name": "Dynamics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 216",
+      "Name": "Information Systems: A Historical Perspective",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 222",
+      "Name": "Biological Circuits and Molecular Machines",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 301",
+      "Name": "Energy Systems and Environment",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 302",
+      "Name": "Technology and Society",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 303",
+      "Name": "Introduction to Space Technology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 309",
+      "Name": "Computer Aided Engineering",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 315",
+      "Name": "Energy",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 409",
+      "Name": "Numerical Analysis",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 410",
+      "Name": "Advanced Solid Modeling Techniques",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 413",
+      "Name": "Experimental Methods in Nanoscience I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 414",
+      "Name": "Experimental Methods in Nanoscience II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 416",
+      "Name": "Introduction to Scanning Probe Microscopy",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 48000",
+      "Name": "Special Topics in FENS: Energy: Supply Chain, Economics and Geopolitics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 48001",
+      "Name": "Special Topics in FENS: Materials Selection in Product Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 48002",
+      "Name": "Special Topics in FENS: Analysis of Social Networks",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 4803",
+      "Name": "Special Topics in FENS: Nanobiotechnology",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 491",
+      "Name": "Graduation Project (Design)",
+      "ECTS Credits": 2.0,
+      "SU Credits": 1.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENS 492",
+      "Name": "Graduation Project (Implementation)",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ENT 201",
+      "Name": "The Foundations of Entrepreneurship",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "FILM 231",
+      "Name": "Introduction to Film Studies",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "FILM 331",
+      "Name": "Approaches to Film Studies",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "FILM 335",
+      "Name": "Critical Perspectives on Turkish Cinema",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "FILM 345",
+      "Name": "International Cinemas",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "FILM 390",
+      "Name": "Topics in Film Studies",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "FILM 424",
+      "Name": "Anthropology and Film",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "FILM 432",
+      "Name": "Vision, Representation and Cinema",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "FILM 435",
+      "Name": "Documentary: Context and Practice-I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "FILM 436",
+      "Name": "Documentary Context and Practice-II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "FILM 452",
+      "Name": "Psychoanalysis and Film",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "FIN 301",
+      "Name": "Financial Management",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "FIN 401",
+      "Name": "Corporate Finance",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "FIN 402",
+      "Name": "Investments",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "FIN 403",
+      "Name": "Derivative Securities",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "FIN 404",
+      "Name": "Multinational Corporate Finance",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "FIN 405",
+      "Name": "Corporate Mergers & Acquisitions",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "FIN 406",
+      "Name": "Behavioral Finance",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "FIN 407",
+      "Name": "Entrepreneurship and Venture Capital",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "FIN 408",
+      "Name": "Financial Products",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "FIN 409",
+      "Name": "Banking and Financial Intermediation",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "FIN 410",
+      "Name": "Financial Technologies",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "FIN 450",
+      "Name": "Selected Topics in Finance I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "FIN 451",
+      "Name": "Selected Topics in Finance II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "FIN 499",
+      "Name": "Wealth Management",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "FRE 110",
+      "Name": "Basic French I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "FRE 120",
+      "Name": "Basic French II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "FRE 130",
+      "Name": "Intermediate French I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "FRE 140",
+      "Name": "Intermediate French II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "GEN 341",
+      "Name": "Myths of Gender",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "GEN 343",
+      "Name": "Topics In Gender & Sexuality Studies",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "GEN 383",
+      "Name": "Gender and Migration",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "GEN 385",
+      "Name": "Migrations and the Family",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "GEN 399",
+      "Name": "Independent Study in Gender Studies",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "GEN 410",
+      "Name": "Gender and Politics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "GEN 441",
+      "Name": "Gender in the Middle East",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "GEN 442",
+      "Name": "Gendered Memories of War and Political Violence",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "GEN 444",
+      "Name": "Gender and Sexuality in Turkey",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "GEN 480",
+      "Name": "Men and Mesculinities",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "GER 110",
+      "Name": "Basic German I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "GER 120",
+      "Name": "Basic German II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "GER 130",
+      "Name": "Intermediate German I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "GER 140",
+      "Name": "Intermediate German II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "GER 150",
+      "Name": "Advanced German I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "HART 213",
+      "Name": "History of Photography and Moving Image",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 234",
+      "Name": "Classical Mythology in Art",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 292",
+      "Name": "From Modern to Contemporary Art",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 293",
+      "Name": "Contemporary Art",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 311",
+      "Name": "Renaissance Art",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 312",
+      "Name": "Renaissance Visuality II (Cinquecento)",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 320",
+      "Name": "Women Artists",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 323",
+      "Name": "Art and Power",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 330",
+      "Name": "The Imaginary of the Middle Ages in Modern Art and Popular Culture",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 333",
+      "Name": "Heavenly Spires: Introduction to Medieval European Art and Architecture",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 334",
+      "Name": "Roman Art in Context",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 380",
+      "Name": "Bauhaus",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 392",
+      "Name": "Art in the Age of Transition (from Renaiss. to Early Modern)",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 411",
+      "Name": "Art in the age of Revolt: Early Modernity",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 413",
+      "Name": "Visual Arts in Turkey",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 414",
+      "Name": "Post 60 Turkish Art",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 424",
+      "Name": "Art Project at the Museum",
+      "ECTS Credits": 6.0,
+      "SU Credits": 1.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 425",
+      "Name": "Art & History at the Museum",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 426",
+      "Name": "Leonardo and Michelangelo: Heroes of the Renaissance",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 431",
+      "Name": "The Dome of Gold : The Art of the Byzantine Empire",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 432",
+      "Name": "Post-1945 American Art",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 434",
+      "Name": "Art and Architecture of the Medieval Mediterranean",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 444",
+      "Name": "Designing the Nation. Art and Nationalism",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 450",
+      "Name": "Caravaggio",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HART 480",
+      "Name": "Bauhaus",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 191",
+      "Name": "Principles of Atat\u00fcrk and the History of the Turkish Revolution I",
+      "ECTS Credits": 3.0,
+      "SU Credits": 2.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 192",
+      "Name": "Principles of Atat\u00fcrk and the History of the Turkish Revolution II",
+      "ECTS Credits": 3.0,
+      "SU Credits": 2.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 205",
+      "Name": "History of the Twentieth Century",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 221",
+      "Name": "Renaissance and Reformation Europe",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 223",
+      "Name": "Women in Pre-Modern Societies",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 227",
+      "Name": "History Goes to the Movies",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 233",
+      "Name": "The Medieval Hero, East and West",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 242",
+      "Name": "The Age of Revolution 1789-1848",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 245",
+      "Name": "Men, Ships and the Sea",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 285",
+      "Name": "The S\u00fcleymanic Era",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 315",
+      "Name": "Episodes in the History of Science I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 316",
+      "Name": "Episodes in the History of Science II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 323",
+      "Name": "Revolutions in History",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 324",
+      "Name": "A History of North America up to the Reconstruction Era",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 326",
+      "Name": "Latin American History and Culture",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 331",
+      "Name": "Early Islamic History : A Survey",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 332",
+      "Name": "Islamic History: the Middle Period (c.945 - 1500)",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 335",
+      "Name": "The Gunpowder Empires of the Islamic World, ca. 1450-1800",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 336",
+      "Name": "History of Central and Inner Asia",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 341",
+      "Name": "War and Society II : The Military Revolution and the Genesis of the Modern State",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 348",
+      "Name": "Diplomatic History of the Modern Era I (1815-1950)",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 349",
+      "Name": "Diplomatic History of the Modern Era II (1945-2004)",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 370",
+      "Name": "History of a City I : From Byzantion to Constantinople",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 371",
+      "Name": "History of a City II : Ottoman Istanbul, 1450-1900",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 385",
+      "Name": "The Ottomans, Europe and the World in the Sixteenth",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 397",
+      "Name": "Late Ottoman and Modern Turkish Foreign Policy",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 406",
+      "Name": "The Twentieth Century Through Art and Literature",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 415",
+      "Name": "The Scientific Revolution",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 423",
+      "Name": "Nature and Empires",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 424",
+      "Name": "Family, Childhood and Gender in European History",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 425",
+      "Name": "The History of Childhood and Youth in Modern Europe and the Ottoman Empire",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 427",
+      "Name": "Education, Literacy, Printing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 431",
+      "Name": "Introduction to Byzantine History (AD 300-1453)",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 433",
+      "Name": "Medieval Europe: A Social and Economic History",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 434",
+      "Name": "Russian History I : Tsarist Russia (from the 17th Century to 1917)",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 436",
+      "Name": "History of The Modern Middle East",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 437",
+      "Name": "Empires, Nations, and their Aftermath: Central and Eastern Europe in the 19th and 20th centuries",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 438",
+      "Name": "The Economic History of the Middle East Since World War II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 439",
+      "Name": "Christians In The Ottoman Empire",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 441",
+      "Name": "The Enlightenment World",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 443",
+      "Name": "War and Society IV: World War I and the Ottoman Empire",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 447",
+      "Name": "Palestine versus the Palestinians",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 450",
+      "Name": "The Eastern Question, 1768-1923",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 455",
+      "Name": "History of the Balkan Lands up to the Early 19th Century and the Onset of Tanzimat Modernization",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 461",
+      "Name": "Ottoman Reform Movements I (1550-1839)",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 462",
+      "Name": "Ottoman Reform Movements II:Political and Social Reforms (1839-1918)",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 463",
+      "Name": "Social and Economic History of the Ottoman Empire",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 465",
+      "Name": "Love, Entertainment and Daily Culture in Ottoman Poetry, 1400-1800",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 473",
+      "Name": "Approaches to Agrarian Societies",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 475",
+      "Name": "Postorientalism and Postcolonialism",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 476",
+      "Name": "Late Ottoman and Modern Turkish Politics and Literature",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 484",
+      "Name": "Peripheral Populations in the Ottoman Empire (1300-1914)",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 485",
+      "Name": "Minority Questions in Contemporary Turkey",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 486",
+      "Name": "Topics in Armenian History and Literature",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 487",
+      "Name": "Proto-Fascism in Europe and the Ottoman Empire",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 488",
+      "Name": "Nationalist Projects in Southeast European History",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 489",
+      "Name": "From Empire to Republic : Turkish Nationalism and the Nation-State",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 490",
+      "Name": "Texts and Constructions of National Memory II : Reading the Republican Historians",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 491",
+      "Name": "Popular Culture and Nationalism",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 492",
+      "Name": "War and Literature in Turkish History",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 493",
+      "Name": "Caucasus and its Hinterland: Clans, Ethnicities and Nations in Imperial Borderlands",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 494",
+      "Name": "Recent Turkish Political and Social History : Impressions and Inferences from Memoirs",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 497",
+      "Name": "Nations and Boundaries in the Middle East, the Balkans and the Caucasus",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HIST 498",
+      "Name": "A History of the Cyprus Conflict",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HUM 201",
+      "Name": "Major Works of Literature",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HUM 202",
+      "Name": "Major Works of Western Art",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HUM 207",
+      "Name": "Major Works of Western Philosophy",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HUM 304",
+      "Name": "Major Works of Classical Music",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HUM 311",
+      "Name": "Major Works of Literature: The World Before Modernity",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HUM 312",
+      "Name": "Major Works of Modern Art",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HUM 317",
+      "Name": "Major Works of Moral Philosophy",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HUM 321",
+      "Name": "Major Works of Literature: The Modern World",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HUM 322",
+      "Name": "Major Works of Art: The World Before Modernity",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HUM 324",
+      "Name": "Major Works of 20th Century Music",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HUM 371",
+      "Name": "Major Works of Literature: The Islamic World",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HUM 413",
+      "Name": "Genres and Styles of Western Music",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "HUM 414",
+      "Name": "Orientalism in Western Classical Music",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "IE 302",
+      "Name": "Stochastic Models in Operations Research",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 303",
+      "Name": "Decision Economics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 304",
+      "Name": "Production and Service Systems Planning and Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 305",
+      "Name": "Simulation",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 306",
+      "Name": "Human Factors Engineering",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 308",
+      "Name": "Cost Analysis and Control",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 309",
+      "Name": "Manufacturing Processes I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 311",
+      "Name": "Operations Research I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 312",
+      "Name": "Operations Research II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 313",
+      "Name": "Operations Research III",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 398",
+      "Name": "Integrated Manufacturing Systems- Special Studies",
+      "ECTS Credits": 1.0,
+      "SU Credits": 1.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 399",
+      "Name": "Individual Studies in Operations Research",
+      "ECTS Credits": 4.0,
+      "SU Credits": 1.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 401",
+      "Name": "Production and Service Systems Operations",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 402",
+      "Name": "Integrated Manufacturing Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 403",
+      "Name": "Quality Planning and Control",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 405",
+      "Name": "Decision Analysis",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 407",
+      "Name": "Investment Decision Making",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 408",
+      "Name": "Reliability and Maintenance Analysis",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 409",
+      "Name": "Project Scheduling and Management",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 411",
+      "Name": "Modeling and Analysis of Large Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 412",
+      "Name": "Financial Engineering",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 413",
+      "Name": "Information Systems",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 414",
+      "Name": "Manufacturing and Digitalization Strategies",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 415",
+      "Name": "Decision Support Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 416",
+      "Name": "Additive Manufacturing",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 417",
+      "Name": "Facilities and Material Handling Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 418",
+      "Name": "Manufacturing Processes II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 419",
+      "Name": "Total Quality Management",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 420",
+      "Name": "Storage and Distribution Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 425",
+      "Name": "Computational Operations Research",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 430",
+      "Name": "Logistics Systems Planning and Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 432",
+      "Name": "Stochastic Models in Finance",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 436",
+      "Name": "Monte Carlo Methods in Finance",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 451",
+      "Name": "Data Analytics and Optimization",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 454",
+      "Name": "Supply Chain Analysis",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 471",
+      "Name": "Supply Chain Practice",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 472",
+      "Name": "Strategic Decision Making Practice",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 48000",
+      "Name": "Special Topics in IE:System Dynamics",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 48001",
+      "Name": "Special Topics in IE:Managing New Product Development",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 48002",
+      "Name": "Special Topics in IE:Advanced statistics with R",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 48003",
+      "Name": "Special Topics in IE:Multi-axis Machining",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 48004",
+      "Name": "Special Topics in IE:Computer-Aided Biomodeling and Fabrication",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IE 48005",
+      "Name": "Special Topics in IE: Digital Manufacturing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IF 100",
+      "Name": "Computational Approaches to Problem Solving",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IF 200",
+      "Name": "Fantasy, Reality, Science and Society",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IF 301",
+      "Name": "Gender in Science and Technology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IF 333",
+      "Name": "Creativity, Innovation and Entrepreneurship",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IF 401",
+      "Name": "Energy: Supply Chain, Economics and Geopolitics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IF 467",
+      "Name": "Decision, Psychology and Brain",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "IR 201",
+      "Name": "International Relations Theory",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "IR 301",
+      "Name": "Globalization and International Relations",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "IR 312",
+      "Name": "Global Civics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "IR 341",
+      "Name": "Global Governance",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "IR 342",
+      "Name": "Turkish Foreign Policy",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "IR 391",
+      "Name": "International Political Economy",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "IR 392",
+      "Name": "Foreign Policy Analysis",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "IR 394",
+      "Name": "World Politics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "IR 401",
+      "Name": "Turkey and the Middle East",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "IR 402",
+      "Name": "Turkey in Europe",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "IR 403",
+      "Name": "Political Violence in the Post-Cold War Era",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "IR 405",
+      "Name": "European Foreign Policy",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "IR 406",
+      "Name": "Turkey and the South Caucasus",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "IR 407",
+      "Name": "Domestic Sources of International Politics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "IR 410",
+      "Name": "International Security",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "IR 489",
+      "Name": "Human Rights in World Affairs",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "IR 493",
+      "Name": "International Negotiation",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "ITA 110",
+      "Name": "Basic Italian I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "ITA 120",
+      "Name": "Basic Italian II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "ITA 130",
+      "Name": "Intermediate Italian I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "ITA 140",
+      "Name": "Intermediate Italian II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "JAP 110",
+      "Name": "Basic Japanese I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "JAP 120",
+      "Name": "Basic Japanese II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "JAP 130",
+      "Name": "Intermediate Japanese I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "JAP 140",
+      "Name": "Intermediate Japanese II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "JAP 150",
+      "Name": "Advanced Japanese I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "KUR 110",
+      "Name": "Basic Kurdish I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "KUR 120",
+      "Name": "Basic Kurdish II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "KUR 130",
+      "Name": "Intermediate Kurdish I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "KUR 140",
+      "Name": "Intermediate Kurdish II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "LAW 309",
+      "Name": "History of Western Law",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LAW 310",
+      "Name": "Comparative Legal Thought",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LAW 311",
+      "Name": "International Law",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LAW 312",
+      "Name": "Comparative Constitutional Law",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LAW 401",
+      "Name": "Law, Business and Society",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LAW 403",
+      "Name": "Internartional Business Law",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LAW 404",
+      "Name": "Human Rights in the EU",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LIT 212",
+      "Name": "Analyzing Text and Context",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LIT 252",
+      "Name": "Topics in World Literature",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LIT 290",
+      "Name": "Topics in Turkish Literature",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LIT 320",
+      "Name": "Popular Literature",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LIT 324",
+      "Name": "Postcolonial Theory and Literatures",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LIT 354",
+      "Name": "Literature and Immigration",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LIT 359",
+      "Name": "Literature, Ideology and Resistance",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LIT 370",
+      "Name": "Imagining the City",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LIT 371",
+      "Name": "Creative Writing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LIT 394",
+      "Name": "Modern Turkish Literature",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LIT 430",
+      "Name": "Auto/biography",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LIT 434",
+      "Name": "Literary Theory",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LIT 440",
+      "Name": "Literature and Psychoanalysis",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LIT 445",
+      "Name": "Gender and Sexuality in Literature",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LIT 452",
+      "Name": "Seminar in World Literature",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "LIT 492",
+      "Name": "Advanced Topics in Turkish Literature",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "MAT 204",
+      "Name": "Electrical, Optical and Magnetic Properties of Materials",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 206",
+      "Name": "Kinetics of Materials",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 302",
+      "Name": "Polymer Synthesis",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 304",
+      "Name": "Biopolymers",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 305",
+      "Name": "Polymer Engineering: Fundamentals",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 306",
+      "Name": "Computational Techniques for Materials at the Nano-scale",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 307",
+      "Name": "Composite Materials",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 308",
+      "Name": "Phase Equilibria",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 309",
+      "Name": "Transport Phenomena in Materials Processing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 310",
+      "Name": "Chemical Processes for New Materials",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 312",
+      "Name": "Materials Characterization",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 314",
+      "Name": "Mechanical Properties of Materials",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 401",
+      "Name": "Surface Chemistry",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 402",
+      "Name": "Polymer Engineering: Processing and Applications",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 403",
+      "Name": "Polymer Processes",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 404",
+      "Name": "Polymer Physics",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 405",
+      "Name": "Advanced Materials Characterization",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 406",
+      "Name": "Nanoengineered Systems Fabrication",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 408",
+      "Name": "Introduction to Ceramics",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 416",
+      "Name": "Biomaterials Science and Biocompatibility",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 422",
+      "Name": "Glass Science and Engineering",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 423",
+      "Name": "Cement Chemistry and Technology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 424",
+      "Name": "Materials Selection in Product Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 48000",
+      "Name": "Special Topics in Materials Science and Nanoengineering: Adhesion Science and Engineering",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 48003",
+      "Name": "Special Topics in MAT: Failure Analysis",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 48004",
+      "Name": "Special Topics in MAT: Polymer Matrix Composites",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 48005",
+      "Name": "Special Topics in MAT: Polymer Engineering/ Processing Fundamentals",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MAT 528",
+      "Name": "Nanoengineering in Agriculture and FoodScience",
+      "ECTS Credits": 10.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 101",
+      "Name": "Calculus I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 102",
+      "Name": "Calculus II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 201",
+      "Name": "Linear Algebra",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 202",
+      "Name": "Differential Equations",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 203",
+      "Name": "Introduction to Probability",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 204",
+      "Name": "Discrete Mathematics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 206",
+      "Name": "Vector Calculus",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 221",
+      "Name": "History of Mathematics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 301",
+      "Name": "Introduction to Mathematical Analysis",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 302",
+      "Name": "Integration",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 305",
+      "Name": "Complex Calculus",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 306",
+      "Name": "Statistical Modelling",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 307",
+      "Name": "Dynamical Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 311",
+      "Name": "Introduction to Algebra",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 317",
+      "Name": "Elementary Number Theory",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 318",
+      "Name": "Introduction to Combinatorics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 322",
+      "Name": "Partial Differential Equations",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 401",
+      "Name": "Introduction to Functional Analysis",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 402",
+      "Name": "Hilbert Space Techniques",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 405",
+      "Name": "Numerical Methods",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 409",
+      "Name": "Proofs from the Notebook",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 410",
+      "Name": "Introduction to Stochastic Calculus",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 414",
+      "Name": "Finite Fields and Applications",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MATH 479",
+      "Name": "Calculus of Variations",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 301",
+      "Name": "Mechanical Systems I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 302",
+      "Name": "Mechanical Systems II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 303",
+      "Name": "Control System Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 304",
+      "Name": "Motion Control Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 305",
+      "Name": "Power Electronics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 307",
+      "Name": "Fluid Dynamics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 308",
+      "Name": "Industrial Control",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 309",
+      "Name": "Heat and Mass Transfer",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 312",
+      "Name": "Analysis and Synthesis of Mechanisms",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 402",
+      "Name": "Plasmonics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 403",
+      "Name": "Introduction to Robotics",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 405",
+      "Name": "Mechanical Vibrations",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 407",
+      "Name": "Embedded Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 408",
+      "Name": "Mechatronics System Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 409",
+      "Name": "Foundations of Microsystems",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 410",
+      "Name": "Computer Aided Engineering",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 411",
+      "Name": "Mechanical System Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 412",
+      "Name": "Introduction to the Finite Element Method",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 415",
+      "Name": "Computational Analysis and Simulation",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 420",
+      "Name": "Renewable and Sustainable Energy Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 425",
+      "Name": "Autonomous Mobile Robotics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 435",
+      "Name": "Scaling in Engineering Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 437",
+      "Name": "Biomechatronics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 441",
+      "Name": "Advanced Vehicle Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 48000",
+      "Name": "Special Topics in in ME: Biomechatronics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 48001",
+      "Name": "Special Topics in in ME: Mechanical Vibrations",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "ME 48002",
+      "Name": "Special Topics in ME: Networked multi-agent systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "MGMT 201",
+      "Name": "Introduction to Management",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 203",
+      "Name": "Introduction to Data Analysis and Research in Business",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 213",
+      "Name": "Disaster Awareness & Relief Management",
+      "ECTS Credits": 4.0,
+      "SU Credits": 2.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 307",
+      "Name": "MIT Sloan Seminars in Management I",
+      "ECTS Credits": 1.0,
+      "SU Credits": 1.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 308",
+      "Name": "MIT Sloan Seminars in Management II",
+      "ECTS Credits": 1.0,
+      "SU Credits": 1.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 401",
+      "Name": "Business Strategy",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 402",
+      "Name": "Entrepreneurship",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 403",
+      "Name": "International Business",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 404",
+      "Name": "Technology Management",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 405",
+      "Name": "Turkish Managerial Context",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 406",
+      "Name": "Globalization",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 407",
+      "Name": "Business Law",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 408",
+      "Name": "Ethics in Business and Sustainability",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 409",
+      "Name": "Managing Non-Profit Organizations",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 410",
+      "Name": "Corporate Governance and Social Responsibility",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 411",
+      "Name": "Agile Project Management",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 412",
+      "Name": "Social Innovation and Entrepreneurship",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 413",
+      "Name": "Strategic Innovation",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 414",
+      "Name": "Negotiation Skills",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 415",
+      "Name": "Entrepreneurial Technology Commercialization",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 417",
+      "Name": "Strategy Execution",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 418",
+      "Name": "Fundamentals of Family Business",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 419",
+      "Name": "Succession & Transfer of Power in Family Business",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 420",
+      "Name": "New venture and Business Plan Development",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 421",
+      "Name": "Technology Awareness and Implications of Technology Trends to Business Life and Processes",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 422",
+      "Name": "Socio-Cultural and Institutional Perspectives on the Family Business",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 425",
+      "Name": "Art Business and Entrepreneurship",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 450",
+      "Name": "Selected Topics in Management I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 451",
+      "Name": "Selected Topics in Management II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 491",
+      "Name": "Career and Professional Development Course",
+      "ECTS Credits": 2.0,
+      "SU Credits": 1.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 492",
+      "Name": "Learning Through Action Project",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 495",
+      "Name": "Entrepreneurial Skills Workshop I",
+      "ECTS Credits": 2.0,
+      "SU Credits": 1.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 496",
+      "Name": "Entrepreneurial Skills Workshop II",
+      "ECTS Credits": 2.0,
+      "SU Credits": 1.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MGMT 499",
+      "Name": "Independent Study",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MKTG 301",
+      "Name": "Introduction to Marketing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MKTG 401",
+      "Name": "Marketing Research",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MKTG 402",
+      "Name": "Consumer Behavior",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MKTG 403",
+      "Name": "International Marketing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MKTG 404",
+      "Name": "Digital Marketing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MKTG 405",
+      "Name": "Marketing Strategy",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MKTG 406",
+      "Name": "Brand Management",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MKTG 407",
+      "Name": "Sales Management",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MKTG 408",
+      "Name": "Public Relations and Influencer Marketing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MKTG 409",
+      "Name": "Pricing in Marketing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MKTG 410",
+      "Name": "Social Media Marketing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MKTG 411",
+      "Name": "Advertising and Promotion",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MKTG 412",
+      "Name": "Marketing Channel Management and Retailing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MKTG 413",
+      "Name": "AI for Consumers and Society",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MKTG 414",
+      "Name": "Marketing Analytics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MKTG 450",
+      "Name": "Selected Topics in Marketing I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "MKTG 451",
+      "Name": "Selected Topics in Marketing II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "NS 101",
+      "Name": "Science of Nature I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 102",
+      "Name": "Science of Nature II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 200",
+      "Name": "Einstein's Relativity",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 201",
+      "Name": "Discovering Life",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 206",
+      "Name": "What is There in the Universe: Inside the Milky Way?",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 207",
+      "Name": "Organic Chemistry",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 208",
+      "Name": "General Biotechnology",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 209",
+      "Name": "What is there in the Universe: \"Beyond the Milky Way\"",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 210",
+      "Name": "Water: Its Physics, Nanophysics, Chemistry and Geopolitics",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 212",
+      "Name": "Volcanoes, Earthquakes, Rocks ( Understanding the Earth)",
+      "ECTS Credits": 5.0,
+      "SU Credits": 2.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 213",
+      "Name": "Basic Concepts of Physics for Scientists and Engineers",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 214",
+      "Name": "Oscillations, Waves and Optics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 216",
+      "Name": "Life on Earth",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 218",
+      "Name": "Fundamentals of Nanoscience",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 220",
+      "Name": "World Energy Outlook: The Coming Year",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 222",
+      "Name": "Planetary Systems and Extrasolar Planets",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 223",
+      "Name": "Environmental Science",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 224",
+      "Name": "Urban Agriculture",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "NS 48000",
+      "Name": "Special Topics in NS: Astrobiology Fundamentals and Contemporary Research Topics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "OPIM 301",
+      "Name": "Operations Management",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 302",
+      "Name": "Management Information Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 390",
+      "Name": "Introduction to Business Analytics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 401",
+      "Name": "Supply Chain Management",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 402",
+      "Name": "Optimization Modeling in Business Analytics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 403",
+      "Name": "Service Operations Management",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 404",
+      "Name": "Business Process Analysis and Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 405",
+      "Name": "Management Decision Support Systems",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 406",
+      "Name": "Customer Relationship Management using Location Intelligence",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 407",
+      "Name": "Advanced Business Analytics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 408",
+      "Name": "Retail Operations and Marketing Analytics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 409",
+      "Name": "Project Management",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 410",
+      "Name": "Decision Making Under Uncertainty",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 411",
+      "Name": "Fashion Industry Operations and Pricing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 412",
+      "Name": "Strategic Procurement",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 416",
+      "Name": "Quality Improvement with Six Sigma",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 450",
+      "Name": "Selected Topics in Operations Management I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 451",
+      "Name": "Selected Topics in Operations Management II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 452",
+      "Name": "Selected Topics in Management Information Systems I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "OPIM 453",
+      "Name": "Selected Topics in Management Information Systems II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "ORG 301",
+      "Name": "Organizations and Organizing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "ORG 302",
+      "Name": "Organizational Behavior",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "ORG 401",
+      "Name": "Human Resources Management",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "ORG 402",
+      "Name": "Organizational Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "ORG 403",
+      "Name": "Cross-Cultural Management",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "ORG 404",
+      "Name": "Creativity & Leading Innovations",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "ORG 450",
+      "Name": "Selected Topics in Organizations I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "ORG 451",
+      "Name": "Selected Topics in Organizations II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SBS"
+  },
+  {
+      "Course": "PERS 110",
+      "Name": "Basic Persian I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "PERS 120",
+      "Name": "Basic Persian II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "PERS 130",
+      "Name": "Intermediate Persian I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "PERS 140",
+      "Name": "Intermediate Persian II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "PERS 150",
+      "Name": "Advanced Persian I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "PERS 160",
+      "Name": "Advanced Persian II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "PHIL 202",
+      "Name": "Problems of Philosophy",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PHIL 224",
+      "Name": "Philosophy and Film",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PHIL 300",
+      "Name": "Philosophy of Science",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PHIL 301",
+      "Name": "Philosophy of Social Sciences",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PHIL 310",
+      "Name": "Philosophy of Mind",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PHIL 313",
+      "Name": "Emotion and Reason",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PHIL 321",
+      "Name": "Symbolic Logic",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PHIL 322",
+      "Name": "Philosophy of Art",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PHIL 323",
+      "Name": "Imagination and Play",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PHIL 330",
+      "Name": "Philosophy of Language",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PHIL 340",
+      "Name": "Bioethics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PHIL 342",
+      "Name": "Philosophy of Biology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PHIL 399",
+      "Name": "Independent Study",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PHIL 401",
+      "Name": "Epistemology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PHIL 421",
+      "Name": "Personhood and Personal Identity",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PHIL 425",
+      "Name": "European Humanism and After",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PHIL 450",
+      "Name": "Science and Society",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PHYS 211",
+      "Name": "Modern Physics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "PHYS 302",
+      "Name": "Solid State Physics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "PHYS 303",
+      "Name": "Quantum Mechanics I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "PHYS 304",
+      "Name": "Quantum Mechanics II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "PHYS 313",
+      "Name": "Quantum Mechanics Laboratory",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "PHYS 401",
+      "Name": "Classical Mechanics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "PHYS 411",
+      "Name": "Electromagnetic Theory I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "PHYS 412",
+      "Name": "Statistical Mechanics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "PHYS 438",
+      "Name": "Phase Transitions and Renormalization-Group Theory",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "PHYS 484",
+      "Name": "Quantum Computation and Quantum Information",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "PHYS 492",
+      "Name": "Modern Topics in Condensed Matter Physics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "POLS 250",
+      "Name": "Comparative Politics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 251",
+      "Name": "Borders, Citizens, Immigrants, Refugees",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 252",
+      "Name": "Rights and Their History",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 271",
+      "Name": "Nations and Nationalism",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 301",
+      "Name": "Political Theory I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 302",
+      "Name": "Issues and Concepts in Political Philosophy",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 303",
+      "Name": "Elections And Political Participation",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 305",
+      "Name": "Political Ideologies in Modern Turkey",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 307",
+      "Name": "Politics of Development",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 348",
+      "Name": "Politics of Southern Europe",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 349",
+      "Name": "Politics of South-East Asia",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 350",
+      "Name": "Transitions to Democracy in Eastern Europe",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 351",
+      "Name": "Dynamics of Political Change",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 352",
+      "Name": "Turkish Politics I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 353",
+      "Name": "Turkish Politics II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 354",
+      "Name": "Politics of Migration",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 364",
+      "Name": "Constitutional Law",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 365",
+      "Name": "Law and Politics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 366",
+      "Name": "Special Topics in Political Science and International Relations",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 372",
+      "Name": "Liberalism and its Critics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 392",
+      "Name": "Modern Dictatorships and the One-Party Period Political System in Turkey",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 393",
+      "Name": "Political Parties in Turkey",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 399",
+      "Name": "Independent Study",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 400",
+      "Name": "Ancient, Medieval and Early Political Theory",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 401",
+      "Name": "Research Methods",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 403",
+      "Name": "Political Psychology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 404",
+      "Name": "Comparative Party Systems and Electoral Behavior",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 405",
+      "Name": "Political Thought: Issues, Concepts, Debates",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 409",
+      "Name": "Greek-Turkish Relations",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 410",
+      "Name": "American Politics and Government",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 421",
+      "Name": "Philosophical Approaches to Modernity",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 422",
+      "Name": "Politics and Culture",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 425",
+      "Name": "Civil Society",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 426",
+      "Name": "Continental Political Thought",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 431",
+      "Name": "Governance, Politics and Public Policy",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 434",
+      "Name": "Formal Modelling and Political Analysis I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 440",
+      "Name": "Governance of the Turkish Metropolis",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 441",
+      "Name": "NGO Governance",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 446",
+      "Name": "Latin American Politics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 448",
+      "Name": "Conflicts in the Middle East",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 455",
+      "Name": "Rise and Fall of Democracy",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 457",
+      "Name": "The Politics of Authoritarian Regimes",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 462",
+      "Name": "Analytical Approaches To The European Union",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 472",
+      "Name": "Nietzsche",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 473",
+      "Name": "Political Theory II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 483",
+      "Name": "Ethnicity and Nationalism",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 491",
+      "Name": "European Politics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 492",
+      "Name": "European Union: Politics, Policies and Governance",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 493",
+      "Name": "Comparative Local Government",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 495",
+      "Name": "Middle Eastern Politics and Government",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "POLS 496",
+      "Name": "Reform and the History of Ideas in the Ottoman Empire in the 19th century",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PROJ 201",
+      "Name": "Undergraduate Project Course",
+      "ECTS Credits": 1.0,
+      "SU Credits": 1.0,
+      "Faculty": "FENS"
+  },
+  {
+      "Course": "PROJ 301",
+      "Name": "Guided Project I",
+      "ECTS Credits": 2.0,
+      "SU Credits": 1.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PROJ 401",
+      "Name": "Guided Project II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 2.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSIR 311",
+      "Name": "Research Methods for Political Science and International Relations I",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSIR 401",
+      "Name": "Research Methods for Political Science and International Relations II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 201",
+      "Name": "Mind and Behavior",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 202",
+      "Name": "Research Methods and Statistics for Psychology I",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 203",
+      "Name": "Stress and Well-Being",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 304",
+      "Name": "Research Methods and Statistics for Psychology II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 305",
+      "Name": "Experimental Psychology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 306",
+      "Name": "Testing and Measurement",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 310",
+      "Name": "Cognitive Processes",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 311",
+      "Name": "Emotion",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 312",
+      "Name": "Sensation / Perception",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 314",
+      "Name": "Language",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 315",
+      "Name": "Memory",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 316",
+      "Name": "Attention",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 317",
+      "Name": "Learning",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 320",
+      "Name": "Developmental Psychology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 322",
+      "Name": "Lifespan Psychological Science",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 323",
+      "Name": "Human Bonding",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 325",
+      "Name": "Infant Development",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 340",
+      "Name": "Social Psychology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 341",
+      "Name": "Applied Social Psychology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 343",
+      "Name": "Relationship Science",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 344",
+      "Name": "Group Processes",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 345",
+      "Name": "Stress and Well-Being in Adulthood",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 350",
+      "Name": "Introduction to Neuroscience",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 360",
+      "Name": "Abnormal Behavior",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 361",
+      "Name": "Personality",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 362",
+      "Name": "Clinical Applications of Psychology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 363",
+      "Name": "Individual Differences",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 364",
+      "Name": "Clinical Interviewing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 365",
+      "Name": "Family and Couple Therapy",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 366",
+      "Name": "Child and Adolescent Psychopathology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 368",
+      "Name": "Adolescent Development and Mental Health",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 398",
+      "Name": "Independent Study I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 399",
+      "Name": "Independent Study II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 403",
+      "Name": "Advanced Research in Psychology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 407",
+      "Name": "EEG Methods and Analyses",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 410",
+      "Name": "Advanced Topics in Social and Cognitive Psychology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 411",
+      "Name": "Cognition, Emotion and Psychopathology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 412",
+      "Name": "Visual Cognition",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 414",
+      "Name": "Selected topics in Language and Communication",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 415",
+      "Name": "Seminar in Memory and Attention",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 416",
+      "Name": "Culture and Cognition",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 418",
+      "Name": "Topics in Episodic Memory and Future Thinking",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 421",
+      "Name": "Cognitive Development",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 422",
+      "Name": "Social Development",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 423",
+      "Name": "Human Bonding",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 424",
+      "Name": "Language Development in Infancy and Childhood",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 442",
+      "Name": "Social Cognition",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 443",
+      "Name": "Psychology of the Self",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 444",
+      "Name": "Intergroup Relationships",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 445",
+      "Name": "Selected Topics in Social Psychology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 450",
+      "Name": "Selected Topics in Neuroscience",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 452",
+      "Name": "Cognitive Neuroscience",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 467",
+      "Name": "Clinical Insights from Basic Psychological Science",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 469",
+      "Name": "Foundations of Infant Mental Heath",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 480",
+      "Name": "Psychology in the Public Interest",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 481",
+      "Name": "Selected Topics in Applied Psychology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "PSY 518",
+      "Name": "Topics in Episodic Memory and Future Thinking",
+      "ECTS Credits": 10.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "RUS 110",
+      "Name": "Basic Russian I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "RUS 120",
+      "Name": "Basic Russian II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "RUS 130",
+      "Name": "Intermediate Russian I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "RUS 140",
+      "Name": "Intermediate Russian II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "SOC 201",
+      "Name": "Social Theory",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 203",
+      "Name": "Perspectives on Law and Society",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 300",
+      "Name": "Sociology of Science",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 301",
+      "Name": "Political Sociology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 305",
+      "Name": "Corporate Governance and Social Responsibility",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 308",
+      "Name": "Sociology of Religion",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 313",
+      "Name": "Turkish Social Thought",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 318",
+      "Name": "Qualitative Research Methods",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 321",
+      "Name": "Urban Sociology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 350",
+      "Name": "Science, Religion and Society",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 402",
+      "Name": "Media and Politics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 404",
+      "Name": "Media Research Workshop",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 406",
+      "Name": "Exploring the Legal Profession",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 408",
+      "Name": "Religion and Politics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 420",
+      "Name": "Infrastructure and Mobilities",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 425",
+      "Name": "Power, Economy, and Society",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 426",
+      "Name": "Gender and Work",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 432",
+      "Name": "Sexualities, Sociabilities",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SOC 444",
+      "Name": "New Social Movements",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SPA 110",
+      "Name": "Basic Spanish I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "SPA 120",
+      "Name": "Basic Spanish II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "SPA 130",
+      "Name": "Intermediate Spanish I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "SPA 140",
+      "Name": "Intermediate Spanish II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "SPS 101",
+      "Name": "Humanity and Society I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SPS 102",
+      "Name": "Humanity and Society II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SPS 201",
+      "Name": "Fundamentals of Scientific Inquiry and Statistical Reasoning for Social Sciences",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SPS 303",
+      "Name": "Law and Ethics",
+      "ECTS Credits": 5.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SPS 311",
+      "Name": "Research Methods I",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SPS 312",
+      "Name": "Quantitative Methods",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SPS 315",
+      "Name": "Analysis of Social Networks",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SPS 320",
+      "Name": "Approaches to Ethnic Conflict",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SPS 322",
+      "Name": "Football, Nationality and the State",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SPS 325",
+      "Name": "Alcibiades and Philoctetes: Individual?s Talents and Rights in an Oligarchical Society",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SPS 374",
+      "Name": "Global Environmental Challenges",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SPS 384",
+      "Name": "Climate Change and Environmental Politics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SPS 442",
+      "Name": "State Formation",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "SPS 452",
+      "Name": "Military in Society and Politics",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "TLL 001",
+      "Name": "Communication Skills in Turkish",
+      "ECTS Credits": 8.0,
+      "SU Credits": 0.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "TLL 101",
+      "Name": "Turkish Language and Literature I",
+      "ECTS Credits": 3.0,
+      "SU Credits": 2.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "TLL 102",
+      "Name": "Turkish Language and Literature II",
+      "ECTS Credits": 3.0,
+      "SU Credits": 2.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "TLL 110",
+      "Name": "Ottoman Turkish I",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "TLL 130",
+      "Name": "Ottoman Turkish II",
+      "ECTS Credits": 4.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "TLL 150",
+      "Name": "Ottoman Paleography",
+      "ECTS Credits": 10.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "TS 320",
+      "Name": "Digital Humanities",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "TUR 101",
+      "Name": "Basic Turkish I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "TUR 102",
+      "Name": "Basic Turkish II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "TUR 201",
+      "Name": "Intermediate Turkish I",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "TUR 202",
+      "Name": "Intermediate Turkish II",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "SL"
+  },
+  {
+      "Course": "VA 201",
+      "Name": "Visual Language I",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 202",
+      "Name": "Visual Language II",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 203",
+      "Name": "Language of Drawing I",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 204",
+      "Name": "Language of Drawing II",
+      "ECTS Credits": null,
+      "SU Credits": null,
+      "Faculty": null
+  },
+  {
+      "Course": "VA 228",
+      "Name": "Introduction to Photography",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 234",
+      "Name": "Design with Typography",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 301",
+      "Name": "Art Studio I",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 302",
+      "Name": "Art Studio II",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 303",
+      "Name": "Design Studio I",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 304",
+      "Name": "Design Studio II",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 310",
+      "Name": "Introduction to Multimedia",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 311",
+      "Name": "Art and Design Practices in the City",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 312",
+      "Name": "History of Visual Communication",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 315",
+      "Name": "Visual Culture",
+      "ECTS Credits": 7.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 321",
+      "Name": "Fine Art Practice",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 322",
+      "Name": "Digital Art Practice",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 323",
+      "Name": "Figure Drawing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 324",
+      "Name": "Advanced Drawing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 325",
+      "Name": "Interface Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 327",
+      "Name": "Studio Photography and Lighting Techniques",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 328",
+      "Name": "Digital and Photographic Imaging",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 329",
+      "Name": "Photography and Expression",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 331",
+      "Name": "Illustration as Communication",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 333",
+      "Name": "Content Creation and Design for Websites",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 335",
+      "Name": "Sound and Image",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 336",
+      "Name": "Interactive Sound",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 345",
+      "Name": "Creative Coding",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 399",
+      "Name": "Independent Study",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 401",
+      "Name": "Art Studio III",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 402",
+      "Name": "Art Studio IV",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 403",
+      "Name": "Design Studio III",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 404",
+      "Name": "Design Studio IV",
+      "ECTS Credits": 7.0,
+      "SU Credits": 4.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 416",
+      "Name": "History of Digital and Electronic Arts",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 420",
+      "Name": "Concepts & Debates in Contemporary Art",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 423",
+      "Name": "Art, Culture, Technology",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 424",
+      "Name": "Advanced Topics in Typography",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 430",
+      "Name": "Art Analysis: Theory and Criticism",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 431",
+      "Name": "Videography and Narrative Making",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 433",
+      "Name": "3D Modelling",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 434",
+      "Name": "3D Animation",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 437",
+      "Name": "Experimental Film and Video",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 439",
+      "Name": "Envisioning Information",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 440",
+      "Name": "Motion Graphics and Art",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 441",
+      "Name": "Visiting Artist Studio",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 442",
+      "Name": "Visiting Designer Studio",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 444",
+      "Name": "Interaction Design",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 445",
+      "Name": "Issues in Contemporary Performance Art",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 446",
+      "Name": "History and Aesthetics of Electroacoustic Music",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 450",
+      "Name": "Construction/Deconstruction in 3 Dimensional Space",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 453",
+      "Name": "Design Thinking",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 455",
+      "Name": "Physical Computing",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 461",
+      "Name": "Advanced Illustration",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 481",
+      "Name": "Summer Project I",
+      "ECTS Credits": 3.0,
+      "SU Credits": 2.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 482",
+      "Name": "Summer Project II",
+      "ECTS Credits": 3.0,
+      "SU Credits": 2.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VA 490",
+      "Name": "Professional Practice as a Designer",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VIS 308",
+      "Name": "The Business of Art",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VIS 310",
+      "Name": "The New Media",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  },
+  {
+      "Course": "VIS 412",
+      "Name": "Museums and Contemporary Arts",
+      "ECTS Credits": 6.0,
+      "SU Credits": 3.0,
+      "Faculty": "FASS"
+  }
+]
