@@ -72,6 +72,14 @@ def init_taken_courses_db() -> None:
             conn.execute(
                 "ALTER TABLE semester_courses ADD COLUMN is_overload INTEGER NOT NULL DEFAULT 0"
             )
+        if "engineering_ects" not in columns:
+            conn.execute(
+                "ALTER TABLE semester_courses ADD COLUMN engineering_ects REAL NOT NULL DEFAULT 0"
+            )
+        if "basic_science_ects" not in columns:
+            conn.execute(
+                "ALTER TABLE semester_courses ADD COLUMN basic_science_ects REAL NOT NULL DEFAULT 0"
+            )
 
 
 def add_taken_course(course_code: str, grade: str) -> None:
@@ -731,7 +739,8 @@ def get_graduation_requirements_progress() -> dict:
         conn.row_factory = sqlite3.Row
         course_rows = conn.execute(
             """
-            SELECT id, semester_id, course_code, grade
+            SELECT id, semester_id, course_code, grade,
+                   engineering_ects, basic_science_ects
             FROM semester_courses
             ORDER BY semester_id ASC, id ASC
             """
@@ -744,6 +753,23 @@ def get_graduation_requirements_progress() -> dict:
         _normalize_course_code(row["course_code"])
         for row in latest_attempt_rows
     }
+
+    # Engineering and Basic Science are partial-credit attributions per course;
+    # sum the per-row columns populated by the Bannerweb import.
+    engineering_completed_ects = round(
+        sum(float(row["engineering_ects"] or 0.0) for row in latest_attempt_rows),
+        2,
+    )
+    basic_science_completed_ects = round(
+        sum(float(row["basic_science_ects"] or 0.0) for row in latest_attempt_rows),
+        2,
+    )
+    engineering_completed_courses = sum(
+        1 for row in latest_attempt_rows if float(row["engineering_ects"] or 0.0) > 0
+    )
+    basic_science_completed_courses = sum(
+        1 for row in latest_attempt_rows if float(row["basic_science_ects"] or 0.0) > 0
+    )
 
     university_codes = _extract_course_codes_from_category_definition(
         category_definitions.get("University Courses", {})
@@ -784,6 +810,19 @@ def get_graduation_requirements_progress() -> dict:
         "Faculty Courses": faculty_codes,
     }
 
+    attribution_metrics = {
+        "Engineering": (
+            0.0,
+            engineering_completed_ects,
+            engineering_completed_courses,
+        ),
+        "Basic Science": (
+            0.0,
+            basic_science_completed_ects,
+            basic_science_completed_courses,
+        ),
+    }
+
     def compute_metrics(course_codes: set[str]) -> tuple[float, float, int]:
         completed_su = 0.0
         completed_ects = 0.0
@@ -809,8 +848,11 @@ def get_graduation_requirements_progress() -> dict:
         required_su = item.get("min_su")
         required_ects = item.get("min_ects")
         required_courses = item.get("min_courses")
-        course_codes = category_code_sets.get(category_name, set())
-        completed_su, completed_ects, completed_courses = compute_metrics(course_codes)
+        if category_name in attribution_metrics:
+            completed_su, completed_ects, completed_courses = attribution_metrics[category_name]
+        else:
+            course_codes = category_code_sets.get(category_name, set())
+            completed_su, completed_ects, completed_courses = compute_metrics(course_codes)
 
         remaining_su = (
             round(max(0.0, float(required_su) - completed_su), 2)
@@ -1267,13 +1309,46 @@ def import_bannerweb_parse_result(parsed: dict) -> dict:
     directly, bypassing prerequisite/overload validation since Bannerweb
     data is authoritative. Courses not in the catalog or already present
     in the target semester are reported in `skipped`.
+
+    Per-course Engineering and Basic Science ECTS attributions from the
+    matching Bannerweb sections are stored alongside each course; they
+    feed the otherwise-unmappable Engineering and Basic Science
+    graduation requirements.
     """
     if not isinstance(parsed, dict):
         raise ValueError("Parsed payload must be a dict.")
 
-    courses_by_term: dict[str, list[dict]] = {}
     sections = parsed.get("sections", {}) or {}
-    for section in sections.values():
+
+    # Engineering and Basic Science sections list per-course partial ECTS
+    # attributions (a course's ECTS is split across these categories).
+    # Build lookup keyed by (term, normalized_course_code).
+    def _attribution_lookup(section_name: str) -> dict[tuple[str, str], float]:
+        section = sections.get(section_name) or {}
+        out: dict[tuple[str, str], float] = {}
+        for course in section.get("courses", []) or []:
+            if not isinstance(course, dict):
+                continue
+            term = str(course.get("term", "") or "").strip()
+            raw_code = str(course.get("course", "") or "").strip()
+            ects = course.get("ects_credits")
+            if not term or not raw_code or ects is None:
+                continue
+            try:
+                out[(term, _normalize_course_code(raw_code))] = float(ects)
+            except (TypeError, ValueError):
+                continue
+        return out
+
+    engineering_lookup = _attribution_lookup("ENGINEERING")
+    basic_science_lookup = _attribution_lookup("BASIC SCIENCE")
+
+    courses_by_term: dict[str, list[dict]] = {}
+    for section_name, section in sections.items():
+        if section_name in {"ENGINEERING", "BASIC SCIENCE"}:
+            # These sections are attribution lookups, not course rows
+            # to insert (their ECTS values are partial, not authoritative).
+            continue
         if not isinstance(section, dict):
             continue
         for course in section.get("courses", []) or []:
@@ -1358,13 +1433,25 @@ def import_bannerweb_parse_result(parsed: dict) -> dict:
                     else 0
                 )
 
+                attribution_key = (term, normalized_code)
+                engineering_ects = engineering_lookup.get(attribution_key, 0.0)
+                basic_science_ects = basic_science_lookup.get(attribution_key, 0.0)
+
                 conn.execute(
                     """
                     INSERT INTO semester_courses
-                        (semester_id, course_code, grade, is_overload)
-                    VALUES (?, ?, ?, ?)
+                        (semester_id, course_code, grade, is_overload,
+                         engineering_ects, basic_science_ects)
+                    VALUES (?, ?, ?, ?, ?, ?)
                     """,
-                    (semester_id, normalized_code, grade, is_overload),
+                    (
+                        semester_id,
+                        normalized_code,
+                        grade,
+                        is_overload,
+                        engineering_ects,
+                        basic_science_ects,
+                    ),
                 )
                 imported_courses += 1
 

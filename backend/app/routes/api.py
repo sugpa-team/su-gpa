@@ -18,6 +18,7 @@ from app.services.taken_course_service import (
     get_requirements_course_catalog,
     get_semesters_summary,
     import_bannerweb_parse_result,
+    reset_tracking_data,
     update_course_record,
 )
 
@@ -71,6 +72,12 @@ def import_bannerweb_degree_evaluation(payload: BannerwebAnalyzeRequest) -> dict
         return import_bannerweb_parse_result(parsed)
     except (LookupError, ValueError) as error:
         _raise_http_error(error)
+
+
+@router.post("/reset", response_model=SemestersSummaryResponse)
+def reset_all_tracking_data() -> dict:
+    reset_tracking_data()
+    return get_semesters_summary()
 
 
 @router.post("/courses", response_model=SemestersSummaryResponse, status_code=201)

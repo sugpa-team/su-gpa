@@ -149,3 +149,96 @@ def test_import_empty_payload_returns_empty_result(requirement_engine):
     assert result["imported_courses"] == 0
     assert result["skipped"] == []
     assert result["summary"]["semesters"] == []
+
+
+def test_import_captures_engineering_and_basic_science_attributions(requirement_engine):
+    payload = {
+        "sections": {
+            "REQUIRED COURSES": {
+                "courses": [
+                    {"course": "REQ 101", "grade": "A", "ects_credits": 5.0, "su_credits": 3.0, "term": "202309"},
+                ],
+            },
+            "CORE ELECTIVES": {
+                "courses": [
+                    {"course": "CORE 101", "grade": "B", "ects_credits": 5.0, "su_credits": 3.0, "term": "202309"},
+                    {"course": "CORE 102", "grade": "A-", "ects_credits": 5.0, "su_credits": 3.0, "term": "202401"},
+                ],
+            },
+            # Per-course partial ECTS attribution to Engineering and Basic Science.
+            # Same course code + term as the rows above; the ENGINEERING/BASIC SCIENCE
+            # sections are not authoritative for course existence, only for attribution.
+            "ENGINEERING": {
+                "courses": [
+                    {"course": "REQ 101", "grade": "A", "ects_credits": 4.0, "term": "202309"},
+                    {"course": "CORE 101", "grade": "B", "ects_credits": 3.0, "term": "202309"},
+                    {"course": "CORE 102", "grade": "A-", "ects_credits": 5.0, "term": "202401"},
+                ],
+            },
+            "BASIC SCIENCE": {
+                "courses": [
+                    {"course": "REQ 101", "grade": "A", "ects_credits": 1.0, "term": "202309"},
+                    {"course": "CORE 101", "grade": "B", "ects_credits": 2.0, "term": "202309"},
+                ],
+            },
+        },
+    }
+
+    result = requirement_engine.import_bannerweb_parse_result(payload)
+
+    # Only REQUIRED + CORE rows are inserted; ENGINEERING/BASIC SCIENCE are
+    # attribution-only and do not create their own course rows.
+    assert result["imported_courses"] == 3
+    assert result["skipped"] == []
+
+    progress = {
+        item["category"]: item
+        for item in requirement_engine.get_graduation_requirements_progress()["categories"]
+    }
+
+    # Engineering: 4 + 3 + 5 = 12 ECTS, 3 courses contributing
+    assert progress["Engineering"]["completed_ects"] == 12.0
+    assert progress["Engineering"]["completed_courses"] == 3
+    assert progress["Engineering"]["progress_percent"] == 100.0
+
+    # Basic Science: 1 + 2 = 3 ECTS, 2 courses contributing
+    assert progress["Basic Science"]["completed_ects"] == 3.0
+    assert progress["Basic Science"]["completed_courses"] == 2
+    # 3 ECTS out of required 5 = 60%
+    assert progress["Basic Science"]["progress_percent"] == 60.0
+
+
+def test_import_without_engineering_section_leaves_attributions_zero(requirement_engine):
+    payload = {
+        "sections": {
+            "REQUIRED COURSES": {
+                "courses": [
+                    {"course": "REQ 101", "grade": "A", "term": "202309"},
+                ],
+            },
+        },
+    }
+
+    requirement_engine.import_bannerweb_parse_result(payload)
+    progress = {
+        item["category"]: item
+        for item in requirement_engine.get_graduation_requirements_progress()["categories"]
+    }
+
+    assert progress["Engineering"]["completed_ects"] == 0.0
+    assert progress["Engineering"]["completed_courses"] == 0
+    assert progress["Basic Science"]["completed_ects"] == 0.0
+
+
+def test_reset_clears_all_imported_data(requirement_engine):
+    requirement_engine.create_semester("2023 Fall")
+    requirement_engine.add_course_to_semester(1, "REQ 101", "A")
+    summary_before = requirement_engine.get_semesters_summary()
+    assert len(summary_before["semesters"]) == 1
+    assert len(summary_before["semesters"][0]["courses"]) == 1
+
+    requirement_engine.reset_tracking_data()
+
+    summary_after = requirement_engine.get_semesters_summary()
+    assert summary_after["semesters"] == []
+    assert summary_after["cumulative_gpa"] == 0.0

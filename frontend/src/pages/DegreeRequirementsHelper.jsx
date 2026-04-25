@@ -188,6 +188,26 @@ function DegreeRequirementsHelper({ onDataChanged }) {
     }
   }
 
+  async function handleClearAll() {
+    const confirmed = window.confirm(
+      'This will permanently delete all your semesters and courses (imported or manually added). Continue?',
+    )
+    if (!confirmed) return
+    setImporting(true)
+    setError(null)
+    setImportMessage(null)
+    try {
+      await apiRequest('/api/reset', { method: 'POST' })
+      setAnalysis(null)
+      setImportMessage('All semesters and courses cleared.')
+      if (onDataChanged) onDataChanged()
+    } catch (requestError) {
+      setError(requestError.message)
+    } finally {
+      setImporting(false)
+    }
+  }
+
   function handleAddSemester() {
     setSimulatedSemesters(current => [...current, { id: crypto.randomUUID(), name: `Semester ${current.length + 1}`, courses: [] }])
   }
@@ -254,6 +274,7 @@ function DegreeRequirementsHelper({ onDataChanged }) {
           {analysis && (
             <button type="button" onClick={handleImport} disabled={loading || importing}>{importing ? 'Importing...' : 'Import to Profile'}</button>
           )}
+          <button type="button" onClick={handleClearAll} disabled={loading || importing}>Clear All Data</button>
         </div>
         {importMessage && <p className="status" role="status">{importMessage}</p>}
         {error && <p className="error" role="alert">{error}</p>}

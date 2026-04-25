@@ -37,6 +37,8 @@ FIXTURE_REQUIREMENTS = {
             {"category": "Area Electives", "min_su": 3},
             {"category": "Free Electives", "min_su": 3},
             {"category": "Faculty Courses", "min_courses": 2},
+            {"category": "Engineering", "min_ects": 10},
+            {"category": "Basic Science", "min_ects": 5},
         ],
     },
     "categories": {
@@ -60,6 +62,8 @@ FIXTURE_REQUIREMENTS = {
             "definition": "All courses not counted in explicit categories.",
         },
         "Faculty Courses": {},
+        "Engineering": {"min_ects_credits": 10},
+        "Basic Science": {"min_ects_credits": 5},
     },
     "prerequisites": {"courses": []},
 }
