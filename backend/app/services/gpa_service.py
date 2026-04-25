@@ -18,6 +18,10 @@ LETTER_GRADE_POINTS = {
     "F": 0.0,
 }
 
+# Pass/fail and administrative markers that appear on Bannerweb transcripts
+# but do not contribute to GPA. Stored as-is; grade_to_points returns None.
+NON_GPA_GRADES = frozenset({"S", "U", "P", "NP", "W", "I", "R", "TR", "AU", "EX"})
+
 COURSE_CODE_ALIASES = {
     "CS 210": "DSA 210 / CS 210",
     "DSA 210": "DSA 210 / CS 210",
@@ -33,17 +37,16 @@ def normalize_letter_grade(grade: str | None) -> str | None:
         return None
 
     normalized_grade = normalized_grade.upper()
-    if normalized_grade not in LETTER_GRADE_POINTS:
-        raise ValueError(f"Invalid letter grade: {grade}")
-
-    return normalized_grade
+    if normalized_grade in LETTER_GRADE_POINTS or normalized_grade in NON_GPA_GRADES:
+        return normalized_grade
+    raise ValueError(f"Invalid letter grade: {grade}")
 
 
 def grade_to_points(grade: str | None) -> float | None:
     normalized_grade = normalize_letter_grade(grade)
     if normalized_grade is None:
         return None
-    return LETTER_GRADE_POINTS[normalized_grade]
+    return LETTER_GRADE_POINTS.get(normalized_grade)
 
 
 def _calculate_weighted_gpa(weighted_courses: list[tuple[float, float]]) -> float:

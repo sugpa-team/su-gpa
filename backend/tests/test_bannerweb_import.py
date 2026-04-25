@@ -119,6 +119,29 @@ def test_import_reuses_existing_semester_with_matching_name(requirement_engine):
     assert [c["course_code"] for c in semesters[0]["courses"]] == ["UNI 101"]
 
 
+def test_import_accepts_pass_fail_grades(requirement_engine):
+    payload = {
+        "sections": {
+            "UNIVERSITY COURSES": {
+                "courses": [
+                    {"course": "UNI 101", "grade": "S", "term": "202309"},
+                    {"course": "UNI 102", "grade": "U", "term": "202309"},
+                ],
+            },
+        },
+    }
+
+    result = requirement_engine.import_bannerweb_parse_result(payload)
+
+    assert result["imported_courses"] == 2
+    assert result["skipped"] == []
+    semester = result["summary"]["semesters"][0]
+    grades = {c["course_code"]: c["grade"] for c in semester["courses"]}
+    assert grades["UNI 101"] == "S"
+    assert grades["UNI 102"] == "U"
+    assert all(c["grade_points"] is None for c in semester["courses"])
+
+
 def test_import_empty_payload_returns_empty_result(requirement_engine):
     result = requirement_engine.import_bannerweb_parse_result({"sections": {}})
 
