@@ -53,8 +53,19 @@ function courseEctsCredits(courseCode, catalog) {
   return ects === null || ects === undefined ? null : Number(ects)
 }
 
+function toApiCourse(c) {
+  return {
+    course: c.Course,
+    name: c.Name,
+    ects_credits: c['ECTS Credits'] === undefined || c['ECTS Credits'] === null ? null : Number(c['ECTS Credits']),
+    su_credits: c['SU Credits'] === undefined || c['SU Credits'] === null ? null : Number(c['SU Credits']),
+    faculty: c.Faculty || null,
+  }
+}
+
 export async function getCourses() {
-  return loadCourses()
+  const list = await loadCourses()
+  return list.filter(c => c.Course).map(toApiCourse)
 }
 
 export async function getRequirementsCourseCatalog() {
