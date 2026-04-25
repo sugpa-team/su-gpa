@@ -1019,6 +1019,28 @@ textarea:hover:not(:disabled) {
   flex-wrap: wrap;
 }
 .planner-totals strong { font-size: 1.1em; }
+.planner-plans-bar {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0.6rem 1rem;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+}
+.planner-plans-bar label { font-size: 0.85em; color: #1e3a8a; font-weight: 600; }
+.planner-plans-bar input[type=text] {
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #93c5fd;
+  border-radius: 6px;
+  min-width: 220px;
+}
+.planner-plans-bar select {
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #93c5fd;
+  border-radius: 6px;
+}
 .planner-conflict-ok { color: #16a34a; }
 .planner-conflict-bad { color: #dc2626; font-weight: 600; }
 .planner-warnings {

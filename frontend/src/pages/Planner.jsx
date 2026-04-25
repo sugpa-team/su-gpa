@@ -34,6 +34,12 @@ function Planner() {
   // Map<sectionKey, { courseCode, courseName, classIndex, section, suCredits, ectsCredits, prereqs }>
   const [selectedSections, setSelectedSections] = useState(new Map())
   const [copiedAt, setCopiedAt] = useState(null)
+  // Plan persistence
+  const [savedPlans, setSavedPlans] = useState([])
+  const [activePlanId, setActivePlanId] = useState(null)
+  const [planNameDraft, setPlanNameDraft] = useState('')
+  const [planMessage, setPlanMessage] = useState(null)
+  const [busy, setBusy] = useState(false)
 
   useEffect(() => {
     let ignore = false
@@ -54,16 +60,152 @@ function Planner() {
     setLoading(true)
     setPlanner(null)
     setSelectedSections(new Map())
-    apiRequest(`/api/schedule/${activeTerm}/planner`)
-      .then(data => {
+    setActivePlanId(null)
+    setPlanNameDraft('')
+    setPlanMessage(null)
+    Promise.all([
+      apiRequest(`/api/schedule/${activeTerm}/planner`),
+      apiRequest(`/api/plans?term=${activeTerm}`),
+    ])
+      .then(([plannerData, plansData]) => {
         if (ignore) return
-        setPlanner(data)
+        setPlanner(plannerData)
+        setSavedPlans(plansData.plans || [])
         setError(null)
       })
       .catch(err => !ignore && setError(err.message))
       .finally(() => !ignore && setLoading(false))
     return () => { ignore = true }
   }, [activeTerm])
+
+  function rebuildSelectionFromPlan(plan, plannerData) {
+    if (!plan || !plannerData) return new Map()
+    const next = new Map()
+    plan.sections.forEach(entry => {
+      const course = plannerData.courses.find(c => c.code === entry.course_code)
+      if (!course) return
+      const classIndex = entry.class_index || 0
+      const section = course.classes[classIndex]?.sections.find(s => String(s.crn) === String(entry.crn))
+      if (!section) return
+      next.set(sectionKey(course.code, classIndex, section), {
+        courseCode: course.code,
+        courseName: course.name,
+        classIndex,
+        section,
+        suCredits: course.su_credits,
+        ectsCredits: course.ects_credits,
+        prereqs: course.prerequisites || [],
+      })
+    })
+    return next
+  }
+
+  function selectionToSectionList() {
+    return [...selectedSections.values()].map(item => ({
+      course_code: item.courseCode,
+      crn: item.section.crn,
+      class_index: item.classIndex,
+    }))
+  }
+
+  function handleLoadPlan(planId) {
+    const plan = savedPlans.find(p => p.id === Number(planId))
+    if (!plan) return
+    setActivePlanId(plan.id)
+    setPlanNameDraft(plan.name)
+    setSelectedSections(rebuildSelectionFromPlan(plan, planner))
+    setPlanMessage(`Loaded "${plan.name}".`)
+  }
+
+  async function handleSavePlan() {
+    if (!planNameDraft.trim()) {
+      setPlanMessage('Give the plan a name first.')
+      return
+    }
+    if (selectedSections.size === 0) {
+      setPlanMessage('Select at least one section before saving.')
+      return
+    }
+    setBusy(true)
+    try {
+      const payload = { sections: selectionToSectionList() }
+      let saved
+      if (activePlanId) {
+        payload.name = planNameDraft.trim()
+        saved = await apiRequest(`/api/plans/${activePlanId}`, {
+          method: 'PATCH',
+          body: JSON.stringify(payload),
+        })
+      } else {
+        payload.term = activeTerm
+        payload.name = planNameDraft.trim()
+        saved = await apiRequest('/api/plans', {
+          method: 'POST',
+          body: JSON.stringify(payload),
+        })
+        setActivePlanId(saved.id)
+      }
+      // Refresh saved plans list
+      const plans = await apiRequest(`/api/plans?term=${activeTerm}`)
+      setSavedPlans(plans.plans || [])
+      setPlanMessage(`Saved "${saved.name}".`)
+    } catch (e) {
+      setPlanMessage(`Save failed: ${e.message}`)
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function handleDeletePlan() {
+    if (!activePlanId) return
+    if (!window.confirm('Delete this saved plan?')) return
+    setBusy(true)
+    try {
+      await apiRequest(`/api/plans/${activePlanId}`, { method: 'DELETE' })
+      const plans = await apiRequest(`/api/plans?term=${activeTerm}`)
+      setSavedPlans(plans.plans || [])
+      setActivePlanId(null)
+      setPlanNameDraft('')
+      setPlanMessage('Plan deleted.')
+    } catch (e) {
+      setPlanMessage(`Delete failed: ${e.message}`)
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function handlePromoteToSemester() {
+    if (!activePlanId) {
+      setPlanMessage('Save the plan first, then promote it.')
+      return
+    }
+    if (!window.confirm(
+      `This will create a semester named "${activeTerm}" in your GPA Calculator (or add to the existing one) and add ${selectedSections.size} courses (without grades). Continue?`,
+    )) return
+    setBusy(true)
+    try {
+      const result = await apiRequest(`/api/plans/${activePlanId}/promote-to-semester`, {
+        method: 'POST',
+      })
+      const skippedNote = result.skipped.length > 0
+        ? ` Skipped ${result.skipped.length}: ${result.skipped.map(s => `${s.course_code} (${s.reason})`).join('; ')}`
+        : ''
+      setPlanMessage(
+        `Promoted to GPA Calculator: ${result.imported_courses} added to semester "${result.semester_name}".${skippedNote}`,
+      )
+    } catch (e) {
+      setPlanMessage(`Promote failed: ${e.message}`)
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  function handleNewPlan() {
+    setActivePlanId(null)
+    setPlanNameDraft('')
+    setSelectedSections(new Map())
+    setPlanMessage(null)
+  }
 
   const allCategories = useMemo(() => {
     if (!planner) return []
@@ -213,6 +355,52 @@ function Planner() {
           {copiedAt ? 'Copied!' : 'Copy CRNs'}
         </button>
       </div>
+
+      <div className="planner-plans-bar">
+        <label htmlFor="planner-plan-name">Plan name</label>
+        <input
+          id="planner-plan-name"
+          type="text"
+          placeholder={activePlanId ? '' : 'e.g. Fall 2026 - balanced'}
+          value={planNameDraft}
+          onChange={e => setPlanNameDraft(e.target.value)}
+        />
+        <button type="button" onClick={handleSavePlan} disabled={busy}>
+          {activePlanId ? 'Update plan' : 'Save plan'}
+        </button>
+        {activePlanId && (
+          <button type="button" onClick={handleDeletePlan} disabled={busy}>
+            Delete
+          </button>
+        )}
+        <button type="button" onClick={handleNewPlan} disabled={busy || (!activePlanId && selectedSections.size === 0)}>
+          New empty plan
+        </button>
+        {savedPlans.length > 0 && (
+          <>
+            <label htmlFor="planner-plan-load">Load saved</label>
+            <select
+              id="planner-plan-load"
+              value={activePlanId || ''}
+              onChange={e => handleLoadPlan(e.target.value)}
+            >
+              <option value="">— pick a plan —</option>
+              {savedPlans.map(p => (
+                <option key={p.id} value={p.id}>{p.name} ({p.sections.length} sections)</option>
+              ))}
+            </select>
+          </>
+        )}
+        <button
+          type="button"
+          onClick={handlePromoteToSemester}
+          disabled={busy || !activePlanId}
+          title={!activePlanId ? 'Save the plan first' : `Add ${selectedSections.size} courses to a "${activeTerm}" semester in the GPA Calculator`}
+        >
+          Promote to GPA Calculator
+        </button>
+      </div>
+      {planMessage && <p className="status" role="status">{planMessage}</p>}
 
       {prereqWarnings.length > 0 && (
         <ul className="planner-warnings" role="alert">
