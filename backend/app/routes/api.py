@@ -1,3 +1,6 @@
+import json
+import sqlite3
+
 from fastapi import APIRouter, HTTPException
 
 from app.models.taken_course import (
@@ -11,14 +14,17 @@ from app.models.taken_course import (
 )
 from app.services.bannerweb_degree_eval_parser import parse_bannerweb_degree_evaluation
 from app.services.taken_course_service import (
+    DB_PATH,
     add_course_to_semester,
     delete_course_record,
     get_graduation_requirements_progress,
     get_progress_summary,
     get_requirements_course_catalog,
     get_semesters_summary,
+    init_taken_courses_db,
     update_course_record,
 )
+from app.services import profile_service
 
 router = APIRouter()
 
@@ -89,3 +95,47 @@ def delete_course(course_id: int) -> dict:
         return delete_course_record(course_id)
     except (LookupError, ValueError) as error:
         _raise_http_error(error)
+
+
+@router.get("/export")
+def export_all_data() -> dict:
+    """Emit all user-owned tracking data as JSON.
+
+    Shape matches what the client-only build expects from its
+    Import-from-file flow, so a student with backend data can:
+      1. GET /api/export from their running backend.
+      2. Switch the frontend to client mode and Import the file.
+    All their semesters, courses, plans, and profile move to IndexedDB.
+    """
+    init_taken_courses_db()
+    profile_service.init_profile_db()
+
+    semesters = []
+    semester_courses = []
+    plans = []
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+        for row in conn.execute("SELECT * FROM semesters ORDER BY id ASC").fetchall():
+            semesters.append(dict(row))
+        for row in conn.execute("SELECT * FROM semester_courses ORDER BY id ASC").fetchall():
+            semester_courses.append(dict(row))
+        try:
+            for row in conn.execute("SELECT * FROM plans ORDER BY id ASC").fetchall():
+                plan = dict(row)
+                try:
+                    plan["sections"] = json.loads(plan.pop("sections_json", "[]") or "[]")
+                except json.JSONDecodeError:
+                    plan["sections"] = []
+                plans.append(plan)
+        except sqlite3.OperationalError:
+            # plans table may not exist on older deployments
+            pass
+
+    profile = profile_service.get_profile() or None
+
+    return {
+        "semesters": semesters,
+        "semester_courses": semester_courses,
+        "plans": plans,
+        "profile": profile,
+    }

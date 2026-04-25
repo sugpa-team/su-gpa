@@ -1,0 +1,84 @@
+name: scrape-suchedule
+
+# Refreshes backend/app/data/schedule_data/{term}.min.json every day by
+# re-running the suchedule scraper. Opens an auto-PR if the data changed.
+# Mirrors the upstream pattern from aburakayaz/suchedule.
+
+on:
+  schedule:
+    - cron: '0 0 * * *'   # daily at 00:00 UTC
+  workflow_dispatch:
+    inputs:
+      term:
+        description: 'Bannerweb term code (e.g. 202502 for Spring 2025-2026). Defaults to the latest term Bannerweb publishes.'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install scraper deps
+        run: pip install requests beautifulsoup4
+
+      - name: Discover latest term from Bannerweb (or use input)
+        id: pick-term
+        run: |
+          if [ -n "${{ inputs.term }}" ]; then
+            echo "term=${{ inputs.term }}" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import re, requests
+          from bs4 import BeautifulSoup
+          r = requests.get(
+              "https://suis.sabanciuniv.edu/prod/bwckschd.p_disp_dyn_sched",
+              headers={'User-Agent': 'Mozilla/5.0 (su-gpa scrape-suchedule cron)'},
+              timeout=30,
+          )
+          soup = BeautifulSoup(r.content, 'html.parser')
+          select = soup.find('select', {'name': 'p_term'})
+          terms = [o.get('value') for o in select.find_all('option') if o.get('value') and re.fullmatch(r'\d{6}', o.get('value'))]
+          # Bannerweb lists terms newest-first
+          print(f"term={terms[0]}")
+          PY
+
+      - name: Scrape ${{ steps.pick-term.outputs.term }}
+        run: |
+          cd backend/app/data/scraper_suchedule
+          python scrape.py ${{ steps.pick-term.outputs.term }}
+
+      - name: Show diff
+        run: |
+          git diff --stat backend/app/data/schedule_data/ || true
+
+      - name: Open PR if data changed
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: auto-update-schedule-data
+          delete-branch: true
+          commit-message: 'Refresh schedule data for term ${{ steps.pick-term.outputs.term }}'
+          title: 'Refresh schedule data for term ${{ steps.pick-term.outputs.term }}'
+          body: |
+            Daily refresh of `backend/app/data/schedule_data/${{ steps.pick-term.outputs.term }}.min.json`.
+
+            Triggered by `.github/workflows/scrape-suchedule.yaml`.
+            Source: BannerWeb (`https://suis.sabanciuniv.edu/prod/bwckschd.p_disp_dyn_sched`).
+            Term picked: `${{ steps.pick-term.outputs.term }}` (latest term Bannerweb advertises, or workflow input override).
+
+            If the diff looks like noise (instructor list reorder, etc.) it's safe to close.
+          labels: |
+            data-refresh
+            automated

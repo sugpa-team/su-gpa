@@ -323,16 +323,26 @@ class SUcheduleCourseScraper:
 
         return self.places.index(place)
 
-    @staticmethod
-    def write_json_file(courses: List[Dict], instructors: List[str], places: List[str]):
+    def write_json_file(self, courses: List[Dict], instructors: List[str], places: List[str]):
         """
-        Write json file.
+        Write json file. Output path: ../schedule_data/{term}.min.json
+        relative to this script. Falls back to local data.min.json if the
+        target directory does not exist (e.g. when running standalone).
         """
+        import os
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        target_dir = os.path.join(script_dir, os.pardir, "schedule_data")
+        if os.path.isdir(target_dir):
+            output_path = os.path.join(target_dir, f"{self.term}.min.json")
+        else:
+            output_path = os.path.join(script_dir, "data.min.json")
+
         data = {"courses": courses,
                 "instructors": instructors,
                 "places": places}
-        with open("data.min.json", "w", encoding='utf-8') as file:
+        with open(output_path, "w", encoding='utf-8') as file:
             json.dump(data, file, ensure_ascii=False)
+        print(f"Wrote {output_path}")
 
 
 if __name__ == '__main__':

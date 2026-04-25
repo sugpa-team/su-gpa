@@ -241,6 +241,53 @@ def _safe_progress_percent(completed: float, required: float) -> float | None:
     return round(min(100.0, (completed / required) * 100.0), 1)
 
 
+def get_category_membership() -> dict[str, list[str]]:
+    """Return { course_code: [category, ...] } for all courses listed in
+    the requirements JSON. Used by the planner to surface which graduation
+    categories a candidate course satisfies. A course may appear in
+    multiple categories (e.g. CS 201 in both Required Courses and Faculty
+    Courses)."""
+    requirements = _requirements_data()
+    category_definitions = requirements.get("categories", {})
+    if not isinstance(category_definitions, dict):
+        category_definitions = {}
+
+    membership: dict[str, list[str]] = {}
+
+    def add(code: str, category: str) -> None:
+        if not code:
+            return
+        bucket = membership.setdefault(code, [])
+        if category not in bucket:
+            bucket.append(category)
+
+    for category_name in (
+        "University Courses",
+        "Required Courses",
+        "Core Electives",
+        "Area Electives",
+    ):
+        for code in _extract_course_codes_from_category_definition(
+            category_definitions.get(category_name, [])
+        ):
+            add(code, category_name)
+
+    for item in _faculty_courses_data():
+        if isinstance(item, dict):
+            add(_normalize_course_code(item.get("code", "")), "Faculty Courses")
+
+    return membership
+
+
+def get_taken_course_codes() -> set[str]:
+    """Return normalized codes the user has on file (any semester, any grade).
+    Used by the planner to flag prerequisite satisfaction."""
+    init_taken_courses_db()
+    with _connect() as conn:
+        rows = conn.execute("SELECT DISTINCT course_code FROM semester_courses").fetchall()
+    return {_normalize_course_code(row[0]) for row in rows}
+
+
 def _previous_semester_course_codes(
     conn: sqlite3.Connection,
     semester_id: int,

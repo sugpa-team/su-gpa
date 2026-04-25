@@ -9,9 +9,16 @@ pip install -r requirements.txt
 python scrape.py <term_code>
 ```
 
-`term_code`: BannerWeb'deki dönem numarası (örn. `202420` için 2024 Bahar).
+`term_code`: BannerWeb'deki dönem numarası — formatı `YYYYNN` (`01`=Güz, `02`=Bahar, `03`=Yaz).
+Geçerli kodları görmek için: `https://suis.sabanciuniv.edu/prod/bwckschd.p_disp_dyn_sched`.
+Örn. `202502` = Bahar 2025-2026.
 
-Çıktı olarak `data.min.json` dosyası oluşturulur.
+Çıktı `backend/app/data/schedule_data/{term}.min.json` dosyasına yazılır
+(`schedule_data/` dizini varsa). Aksi halde scraper kendi dizinine
+`data.min.json` olarak yazar.
+
+GitHub Actions cron'u (`.github/workflows/scrape-suchedule.yaml`) bu
+scraper'ı her gün 00:00 UTC'de çalıştırır ve veri değiştiğinde otomatik PR açar.
 
 ## Ne Yapıyor?
 
