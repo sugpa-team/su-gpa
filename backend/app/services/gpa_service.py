@@ -20,7 +20,7 @@ LETTER_GRADE_POINTS = {
 
 # Pass/fail and administrative markers that appear on Bannerweb transcripts
 # but do not contribute to GPA. Stored as-is; grade_to_points returns None.
-NON_GPA_GRADES = frozenset({"S", "U", "P", "NP", "W", "I", "R", "TR", "AU", "EX"})
+NON_GPA_GRADES = frozenset({"S", "U", "P", "NP", "W", "I", "R", "TR", "AU", "EX", "I.P."})
 
 COURSE_CODE_ALIASES = {
     "CS 210": "DSA 210 / CS 210",
