@@ -125,3 +125,69 @@ def _resolve_meeting(meeting: dict, places: list[str]) -> dict:
 def clear_cache() -> None:
     """Drop in-memory cache; tests use this between runs."""
     _load_term.cache_clear()
+
+
+# --- Planner join: schedule + credits + prereqs + requirement categories ---
+
+
+def get_planner_courses(
+    term: str,
+    courses_catalog: dict[str, dict],
+    prerequisites_by_course: dict[str, set[str]],
+    category_membership: dict[str, list[str]],
+) -> list[dict]:
+    """Return one entry per scheduled course for `term`, enriched with
+    catalog metadata and graduation-requirement membership.
+
+    Arguments are passed in (not loaded from disk here) so the caller
+    decides which catalog/requirements files to use — keeps this function
+    pure and easy to test.
+
+    `courses_catalog`: dict mapping normalized course code -> catalog dict
+        (with keys like "Course", "Name", "SU Credits", "ECTS Credits",
+        "Faculty"). The same shape used by taken_course_service._course_catalog().
+    `prerequisites_by_course`: dict mapping course code -> set of
+        prerequisite codes.
+    `category_membership`: dict mapping course code -> list of requirement
+        category names this course belongs to.
+    """
+    payload = _load_term(term)
+    instructors: list[str] = payload.get("instructors", [])
+    places: list[str] = payload.get("places", [])
+
+    out: list[dict] = []
+    for course in payload.get("courses", []):
+        code = course.get("code", "")
+        # Catalog-style normalize (single-space, upper) — schedule data
+        # already uses single-space codes ("CS 201"). The schedule_service
+        # _normalize_course_code (no spaces) is only for case/whitespace-
+        # insensitive USER input matching, not catalog joins.
+        catalog_lookup_key = " ".join(str(code).upper().split())
+        catalog_entry = courses_catalog.get(catalog_lookup_key) or {}
+
+        out.append(
+            {
+                "code": code,
+                "name": course.get("name") or catalog_entry.get("Name"),
+                "su_credits": _to_float(catalog_entry.get("SU Credits")),
+                "ects_credits": _to_float(catalog_entry.get("ECTS Credits")),
+                "faculty": catalog_entry.get("Faculty"),
+                "prerequisites": sorted(prerequisites_by_course.get(catalog_lookup_key, set())),
+                "requirement_categories": category_membership.get(catalog_lookup_key, []),
+                "classes": [
+                    _resolve_class(cls, instructors, places)
+                    for cls in course.get("classes", [])
+                ],
+            }
+        )
+
+    return out
+
+
+def _to_float(value) -> float | None:
+    if value is None:
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None

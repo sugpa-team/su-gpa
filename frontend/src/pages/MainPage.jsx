@@ -4,6 +4,7 @@ import CourseCatalog from './CourseCatalog'
 import DegreeRequirementsHelper from './DegreeRequirementsHelper'
 import GpaCalculator from './GpaCalculator'
 import GraduationRequirements from './GraduationRequirements'
+import Planner from './Planner'
 import { apiRequest } from '../lib/api'
 
 function MainPage({ profile, onProfileUpdated, programs }) {
@@ -77,6 +78,14 @@ function MainPage({ profile, onProfileUpdated, programs }) {
         >
           Bannerweb Degree Requirements Helper
         </button>
+        <button
+          type="button"
+          className={`tab-button ${activeTab === 'planner' ? 'active' : ''}`}
+          onClick={() => setActiveTab('planner')}
+          aria-pressed={activeTab === 'planner'}
+        >
+          Next Semester Planner
+        </button>
       </section>
 
       {coursesError && <p className="error" role="alert">{coursesError}</p>}
@@ -93,8 +102,9 @@ function MainPage({ profile, onProfileUpdated, programs }) {
       )}
 
       {activeTab === 'course-catalog' && <CourseCatalog courses={courses} loading={coursesLoading} />}
-      {activeTab === 'graduation-requirements' && <GraduationRequirements dataVersion={dataVersion} />}
-      {activeTab === 'bannerweb-degree-requirements-helper' && <DegreeRequirementsHelper onDataChanged={handleDataChanged} />}
+      {activeTab === 'graduation-requirements' && <GraduationRequirements />}
+      {activeTab === 'bannerweb-degree-requirements-helper' && <DegreeRequirementsHelper />}
+      {activeTab === 'planner' && <Planner />}
     </main>
   )
 }
