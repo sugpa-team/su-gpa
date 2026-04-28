@@ -1,3 +1,6 @@
+import json
+
+
 def _progress_by_category(service_module):
     result = service_module.get_graduation_requirements_progress()
     return {item["category"]: item for item in result["categories"]}
@@ -121,6 +124,32 @@ def test_free_elective_overflow_does_not_inflate_other_categories(requirement_en
     assert _status(progress["Free Electives"]) == "SATISFIED"
     assert progress["Area Electives"]["completed_su"] == 0.0
     assert progress["Required Courses"]["completed_su"] == 0.0
+
+
+def test_elective_overflow_follows_core_area_free_priority(requirement_engine):
+    data = json.loads(requirement_engine.REQUIREMENTS_PATH.read_text())
+    data["categories"]["Core Electives"].append(
+        {"course": "MULTI 101", "name": "Multi Category Course"}
+    )
+    requirement_engine.REQUIREMENTS_PATH.write_text(json.dumps(data))
+    requirement_engine._requirements_data.cache_clear()
+
+    _create_semester_with_courses(
+        requirement_engine,
+        "Semester 1",
+        [
+            ("CORE 101", "A"),
+            ("CORE 102", "A"),
+            ("MULTI 101", "A"),
+            ("AREA 101", "A"),
+        ],
+    )
+
+    progress = _progress_by_category(requirement_engine)
+
+    assert progress["Core Electives"]["completed_su"] == 6.0
+    assert progress["Area Electives"]["completed_su"] == 3.0
+    assert progress["Free Electives"]["completed_su"] == 3.0
 
 
 def test_empty_transcript_starts_everything_at_zero(requirement_engine):

@@ -19,6 +19,13 @@ MAX_OVERLOAD_COURSES_PER_SEMESTER = 2
 PROJ_201_CODE = "PROJ 201"
 _MIN_GRADUATION_GPA = 2.0
 _CATEGORIES_WITH_REMAINING = frozenset({"Core Electives", "Area Electives"})
+_BANNERWEB_PRIMARY_SECTION_CATEGORIES = {
+    "UNIVERSITY COURSES": "University Courses",
+    "REQUIRED COURSES": "Required Courses",
+    "CORE ELECTIVES": "Core Electives",
+    "AREA ELECTIVES": "Area Electives",
+    "FREE ELECTIVES": "Free Electives",
+}
 
 
 def _connect() -> sqlite3.Connection:
@@ -79,6 +86,18 @@ def init_taken_courses_db() -> None:
         if "basic_science_ects" not in columns:
             conn.execute(
                 "ALTER TABLE semester_courses ADD COLUMN basic_science_ects REAL NOT NULL DEFAULT 0"
+            )
+        if "bannerweb_category" not in columns:
+            conn.execute(
+                "ALTER TABLE semester_courses ADD COLUMN bannerweb_category TEXT"
+            )
+        if "bannerweb_su_credits" not in columns:
+            conn.execute(
+                "ALTER TABLE semester_courses ADD COLUMN bannerweb_su_credits REAL"
+            )
+        if "bannerweb_ects_credits" not in columns:
+            conn.execute(
+                "ALTER TABLE semester_courses ADD COLUMN bannerweb_ects_credits REAL"
             )
 
 
@@ -149,6 +168,18 @@ def _course_ects_credits(
     if ects_credits is None:
         return None
     return float(ects_credits)
+
+
+def _row_su_credits(row: dict, courses_by_code: dict[str, dict]) -> float:
+    if "bannerweb_su_credits" in row.keys() and row["bannerweb_su_credits"] is not None:
+        return float(row["bannerweb_su_credits"])
+    return _course_su_credits(row["course_code"], courses_by_code)
+
+
+def _row_ects_credits(row: dict, courses_by_code: dict[str, dict]) -> float | None:
+    if "bannerweb_ects_credits" in row.keys() and row["bannerweb_ects_credits"] is not None:
+        return float(row["bannerweb_ects_credits"])
+    return _course_ects_credits(row["course_code"], courses_by_code)
 
 
 @lru_cache(maxsize=1)
@@ -241,6 +272,133 @@ def _extract_course_codes_from_category_definition(category_data: object) -> set
 
     collect(category_data)
     return codes
+
+
+def _min_su_by_category(category_requirements: list[dict]) -> dict[str, float]:
+    minimums: dict[str, float] = {}
+    for item in category_requirements:
+        if not isinstance(item, dict):
+            continue
+        category_name = item.get("category")
+        min_su = item.get("min_su")
+        if not category_name or min_su is None:
+            continue
+        try:
+            minimums[category_name] = float(min_su)
+        except (TypeError, ValueError):
+            continue
+    return minimums
+
+
+def _is_free_elective_eligible(course_code: str, courses_by_code: dict[str, dict]) -> bool:
+    course = courses_by_code.get(_normalize_course_code(course_code))
+    if not course:
+        return False
+    faculty = (course.get("Faculty") or "").upper()
+    return faculty in {"FASS", "SBS", "FENS"}
+
+
+def _build_category_code_sets(
+    latest_attempt_rows: list[sqlite3.Row],
+    category_requirements: list[dict],
+    category_definitions: dict,
+    courses_by_code: dict[str, dict],
+) -> dict[str, set[str]]:
+    university_codes = _extract_course_codes_from_category_definition(
+        category_definitions.get("University Courses", {})
+    )
+    required_codes = _extract_course_codes_from_category_definition(
+        category_definitions.get("Required Courses", [])
+    )
+    core_codes = _extract_course_codes_from_category_definition(
+        category_definitions.get("Core Electives", [])
+    )
+    area_codes = _extract_course_codes_from_category_definition(
+        category_definitions.get("Area Electives", [])
+    )
+    faculty_codes = {
+        _normalize_course_code(item.get("code", ""))
+        for item in _faculty_courses_data()
+        if isinstance(item, dict) and item.get("code")
+    }
+
+    minimum_su = _min_su_by_category(category_requirements)
+    ordered_latest_codes = [
+        _normalize_course_code(row["course_code"])
+        for row in latest_attempt_rows
+    ]
+    latest_rows_by_code = {
+        _normalize_course_code(row["course_code"]): row
+        for row in latest_attempt_rows
+    }
+    bannerweb_allocated = {
+        category: set()
+        for category in _BANNERWEB_PRIMARY_SECTION_CATEGORIES.values()
+    }
+    for row in latest_attempt_rows:
+        category = (
+            str(row["bannerweb_category"] or "").strip()
+            if "bannerweb_category" in row.keys()
+            else ""
+        )
+        if category in bannerweb_allocated:
+            bannerweb_allocated[category].add(_normalize_course_code(row["course_code"]))
+
+    bannerweb_assigned_codes = set().union(*bannerweb_allocated.values())
+    fixed_codes = university_codes | required_codes
+    assigned_codes = set(bannerweb_assigned_codes)
+    assigned_codes.update(
+        code
+        for code in ordered_latest_codes
+        if code in fixed_codes and code not in bannerweb_assigned_codes
+    )
+
+    def allocate_until_satisfied(candidates: list[str], required_su: float | None) -> set[str]:
+        allocated: set[str] = set()
+        completed_su = 0.0
+        for code in candidates:
+            if code in assigned_codes:
+                continue
+            if required_su is not None and completed_su >= required_su:
+                break
+            allocated.add(code)
+            assigned_codes.add(code)
+            completed_su += _row_su_credits(latest_rows_by_code[code], courses_by_code)
+        return allocated
+
+    core_allocated = set(bannerweb_allocated["Core Electives"])
+    core_allocated.update(allocate_until_satisfied(
+        [code for code in ordered_latest_codes if code in core_codes and code not in fixed_codes],
+        minimum_su.get("Core Electives"),
+    ))
+    area_allocated = set(bannerweb_allocated["Area Electives"])
+    area_allocated.update(allocate_until_satisfied(
+        [
+            code
+            for code in ordered_latest_codes
+            if code in (area_codes | core_codes) and code not in fixed_codes
+        ],
+        minimum_su.get("Area Electives"),
+    ))
+    free_allocated = {
+        code
+        for code in ordered_latest_codes
+        if code not in assigned_codes
+        and code not in fixed_codes
+        and _is_free_elective_eligible(code, courses_by_code)
+    }
+    free_allocated.update(bannerweb_allocated["Free Electives"])
+
+    return {
+        "University Courses": university_codes | bannerweb_allocated["University Courses"],
+        "Required Courses": required_codes | bannerweb_allocated["Required Courses"],
+        "Core Electives": core_allocated,
+        "Area Electives": area_allocated,
+        "Free Electives": free_allocated,
+        "Faculty Courses": faculty_codes,
+        "_Core Electives Eligible": core_codes,
+        "_Area Electives Eligible": area_codes,
+    }
 
 
 def _safe_progress_percent(completed: float, required: float) -> float | None:
@@ -352,14 +510,14 @@ def _previous_semester_total_su_credits(
     placeholders = ",".join("?" for _ in previous_ids)
     rows = conn.execute(
         f"""
-        SELECT course_code
+        SELECT course_code, bannerweb_su_credits
         FROM semester_courses
         WHERE semester_id IN ({placeholders})
         """,
         previous_ids,
     ).fetchall()
     return sum(
-        _course_su_credits(row["course_code"], courses_by_code)
+        _row_su_credits(row, courses_by_code)
         for row in rows
     )
 
@@ -591,11 +749,15 @@ def _semester_credit_total(
     courses_by_code: dict[str, dict],
 ) -> float:
     rows = conn.execute(
-        "SELECT course_code FROM semester_courses WHERE semester_id = ?",
+        """
+        SELECT course_code, bannerweb_su_credits
+        FROM semester_courses
+        WHERE semester_id = ?
+        """,
         (semester_id,),
     ).fetchall()
     return sum(
-        _course_su_credits(row["course_code"], courses_by_code)
+        _row_su_credits(row, courses_by_code)
         for row in rows
     )
 
@@ -624,7 +786,7 @@ def _weighted_gpa(rows: list[dict], courses_by_code: dict[str, dict]) -> float:
         if grade_points is None:
             continue
 
-        credits = _course_su_credits(row["course_code"], courses_by_code)
+        credits = _row_su_credits(row, courses_by_code)
         total_credits += credits
         total_grade_points += credits * grade_points
 
@@ -665,7 +827,8 @@ def _build_semesters_summary(conn: sqlite3.Connection) -> dict:
     ).fetchall()
     course_rows = conn.execute(
         """
-        SELECT id, semester_id, course_code, grade, is_overload
+        SELECT id, semester_id, course_code, grade, is_overload,
+               bannerweb_su_credits, bannerweb_ects_credits
         FROM semester_courses
         ORDER BY semester_id ASC, id ASC
         """
@@ -685,8 +848,8 @@ def _build_semesters_summary(conn: sqlite3.Connection) -> dict:
         for course_row in semester_courses:
             course_code = _normalize_course_code(course_row["course_code"])
             course = courses_by_code.get(course_code, {})
-            su_credits = _course_su_credits(course_code, courses_by_code)
-            ects_credits = _course_ects_credits(course_code, courses_by_code)
+            su_credits = _row_su_credits(course_row, courses_by_code)
+            ects_credits = _row_ects_credits(course_row, courses_by_code)
             total_su_credits += su_credits
             grade_points = grade_to_points(course_row["grade"])
 
@@ -743,8 +906,8 @@ def _build_semesters_summary(conn: sqlite3.Connection) -> dict:
     total_planned_su_credits = 0.0
     total_planned_ects_credits = 0.0
     for row in latest_attempt_rows:
-        total_planned_su_credits += _course_su_credits(row["course_code"], courses_by_code)
-        ects_credits = _course_ects_credits(row["course_code"], courses_by_code)
+        total_planned_su_credits += _row_su_credits(row, courses_by_code)
+        ects_credits = _row_ects_credits(row, courses_by_code)
         if ects_credits is not None:
             total_planned_ects_credits += ects_credits
 
@@ -787,7 +950,8 @@ def get_graduation_requirements_progress() -> dict:
         course_rows = conn.execute(
             """
             SELECT id, semester_id, course_code, grade,
-                   engineering_ects, basic_science_ects
+                   engineering_ects, basic_science_ects, bannerweb_category,
+                   bannerweb_su_credits, bannerweb_ects_credits
             FROM semester_courses
             ORDER BY semester_id ASC, id ASC
             """
@@ -798,6 +962,10 @@ def get_graduation_requirements_progress() -> dict:
     courses_by_code = _course_catalog()
     latest_attempt_codes = {
         _normalize_course_code(row["course_code"])
+        for row in latest_attempt_rows
+    }
+    latest_rows_by_code = {
+        _normalize_course_code(row["course_code"]): row
         for row in latest_attempt_rows
     }
 
@@ -818,44 +986,12 @@ def get_graduation_requirements_progress() -> dict:
         1 for row in latest_attempt_rows if float(row["basic_science_ects"] or 0.0) > 0
     )
 
-    university_codes = _extract_course_codes_from_category_definition(
-        category_definitions.get("University Courses", {})
+    category_code_sets = _build_category_code_sets(
+        latest_attempt_rows,
+        category_requirements,
+        category_definitions,
+        courses_by_code,
     )
-    required_codes = _extract_course_codes_from_category_definition(
-        category_definitions.get("Required Courses", [])
-    )
-    core_codes = _extract_course_codes_from_category_definition(
-        category_definitions.get("Core Electives", [])
-    )
-    area_codes = _extract_course_codes_from_category_definition(
-        category_definitions.get("Area Electives", [])
-    )
-    faculty_codes = {
-        _normalize_course_code(item.get("code", ""))
-        for item in _faculty_courses_data()
-        if isinstance(item, dict) and item.get("code")
-    }
-
-    explicit_codes = university_codes | required_codes | core_codes | area_codes
-    free_codes: set[str] = set()
-    for course_code in latest_attempt_codes:
-        if course_code in explicit_codes:
-            continue
-        course = courses_by_code.get(course_code)
-        if not course:
-            continue
-        faculty = (course.get("Faculty") or "").upper()
-        if faculty in {"FASS", "SBS", "FENS"}:
-            free_codes.add(course_code)
-
-    category_code_sets = {
-        "University Courses": university_codes,
-        "Required Courses": required_codes,
-        "Core Electives": core_codes,
-        "Area Electives": area_codes,
-        "Free Electives": free_codes,
-        "Faculty Courses": faculty_codes,
-    }
 
     attribution_metrics = {
         "Engineering": (
@@ -878,8 +1014,9 @@ def get_graduation_requirements_progress() -> dict:
             if course_code not in latest_attempt_codes:
                 continue
             completed_courses += 1
-            completed_su += _course_su_credits(course_code, courses_by_code)
-            ects = _course_ects_credits(course_code, courses_by_code)
+            row = latest_rows_by_code[course_code]
+            completed_su += _row_su_credits(row, courses_by_code)
+            ects = _row_ects_credits(row, courses_by_code)
             if ects is not None:
                 completed_ects += ects
         return round(completed_su, 2), round(completed_ects, 2), completed_courses
@@ -1012,7 +1149,8 @@ def get_progress_summary() -> dict:
         conn.row_factory = sqlite3.Row
         course_rows = conn.execute(
             """
-            SELECT id, semester_id, course_code, grade
+            SELECT id, semester_id, course_code, grade, bannerweb_category,
+                   bannerweb_su_credits, bannerweb_ects_credits
             FROM semester_courses
             ORDER BY semester_id ASC, id ASC
             """
@@ -1027,48 +1165,20 @@ def get_progress_summary() -> dict:
     latest_attempt_codes = {
         _normalize_course_code(row["course_code"]) for row in latest_attempt_rows
     }
-
-    university_codes = _extract_course_codes_from_category_definition(
-        category_definitions.get("University Courses", {})
-    )
-    required_codes = _extract_course_codes_from_category_definition(
-        category_definitions.get("Required Courses", [])
-    )
-    core_codes = _extract_course_codes_from_category_definition(
-        category_definitions.get("Core Electives", [])
-    )
-    area_codes = _extract_course_codes_from_category_definition(
-        category_definitions.get("Area Electives", [])
-    )
-    faculty_codes = {
-        _normalize_course_code(item.get("code", ""))
-        for item in _faculty_courses_data()
-        if isinstance(item, dict) and item.get("code")
+    latest_rows_by_code = {
+        _normalize_course_code(row["course_code"]): row
+        for row in latest_attempt_rows
     }
 
-    explicit_codes = university_codes | required_codes | core_codes | area_codes
-    free_codes: set[str] = set()
-    for code in latest_attempt_codes:
-        if code in explicit_codes:
-            continue
-        course = courses_by_code.get(code)
-        if not course:
-            continue
-        faculty = (course.get("Faculty") or "").upper()
-        if faculty in {"FASS", "SBS", "FENS"}:
-            free_codes.add(code)
-
-    category_code_sets: dict[str, set[str]] = {
-        "University Courses": university_codes,
-        "Required Courses": required_codes,
-        "Core Electives": core_codes,
-        "Area Electives": area_codes,
-        "Free Electives": free_codes,
-        "Faculty Courses": faculty_codes,
-    }
+    category_code_sets = _build_category_code_sets(
+        latest_attempt_rows,
+        category_requirements,
+        category_definitions,
+        courses_by_code,
+    )
 
     total_credits_completed = round(
-        sum(_course_su_credits(row["course_code"], courses_by_code) for row in latest_attempt_rows),
+        sum(_row_su_credits(row, courses_by_code) for row in latest_attempt_rows),
         2,
     )
     min_su_total, _ = _program_required_totals()
@@ -1092,11 +1202,11 @@ def get_progress_summary() -> dict:
             code for code in course_codes if code in latest_attempt_codes
         )
         completed_su = round(
-            sum(_course_su_credits(code, courses_by_code) for code in completed_codes), 2
+            sum(_row_su_credits(latest_rows_by_code[code], courses_by_code) for code in completed_codes), 2
         )
         completed_ects = 0.0
         for code in completed_codes:
-            ects = _course_ects_credits(code, courses_by_code)
+            ects = _row_ects_credits(latest_rows_by_code[code], courses_by_code)
             if ects is not None:
                 completed_ects += ects
         completed_ects = round(completed_ects, 2)
@@ -1127,7 +1237,10 @@ def get_progress_summary() -> dict:
             status = "NOT_STARTED"
 
         remaining_codes: list[str] = (
-            sorted(course_codes - set(completed_codes))
+            sorted(
+                category_code_sets.get(f"_{category_name} Eligible", course_codes)
+                - latest_attempt_codes
+            )
             if category_name in _CATEGORIES_WITH_REMAINING
             else []
         )
@@ -1392,9 +1505,10 @@ def import_bannerweb_parse_result(parsed: dict) -> dict:
 
     courses_by_term: dict[str, list[dict]] = {}
     for section_name, section in sections.items():
-        if section_name in {"ENGINEERING", "BASIC SCIENCE"}:
+        if section_name in {"FACULTY COURSES", "ENGINEERING", "BASIC SCIENCE"}:
             # These sections are attribution lookups, not course rows
-            # to insert (their ECTS values are partial, not authoritative).
+            # to insert (their values are category attributions, not
+            # authoritative transcript rows).
             continue
         if not isinstance(section, dict):
             continue
@@ -1405,7 +1519,9 @@ def import_bannerweb_parse_result(parsed: dict) -> dict:
             raw_code = str(course.get("course", "") or "").strip()
             if not term or not raw_code:
                 continue
-            courses_by_term.setdefault(term, []).append(course)
+            course_entry = dict(course)
+            course_entry["_bannerweb_category"] = _BANNERWEB_PRIMARY_SECTION_CATEGORIES.get(section_name)
+            courses_by_term.setdefault(term, []).append(course_entry)
 
     init_taken_courses_db()
     courses_by_code = _course_catalog()
@@ -1436,8 +1552,10 @@ def import_bannerweb_parse_result(parsed: dict) -> dict:
                 raw_code = str(course.get("course", "") or "").strip()
                 normalized_code = _normalize_course_code(raw_code)
                 grade = normalize_letter_grade(course.get("grade"))
+                bannerweb_su_credits = course.get("su_credits")
+                bannerweb_ects_credits = course.get("ects_credits")
 
-                if normalized_code not in courses_by_code:
+                if normalized_code not in courses_by_code and bannerweb_su_credits is None:
                     skipped.append(
                         {
                             "course": raw_code,
@@ -1458,7 +1576,11 @@ def import_bannerweb_parse_result(parsed: dict) -> dict:
                     continue
 
                 try:
-                    new_credits = _course_su_credits(normalized_code, courses_by_code)
+                    new_credits = (
+                        float(bannerweb_su_credits)
+                        if bannerweb_su_credits is not None
+                        else _course_su_credits(normalized_code, courses_by_code)
+                    )
                     semester_credits = _semester_credit_total(
                         conn,
                         semester_id,
@@ -1483,13 +1605,15 @@ def import_bannerweb_parse_result(parsed: dict) -> dict:
                 attribution_key = (term, normalized_code)
                 engineering_ects = engineering_lookup.get(attribution_key, 0.0)
                 basic_science_ects = basic_science_lookup.get(attribution_key, 0.0)
+                bannerweb_category = course.get("_bannerweb_category")
 
                 conn.execute(
                     """
                     INSERT INTO semester_courses
                         (semester_id, course_code, grade, is_overload,
-                         engineering_ects, basic_science_ects)
-                    VALUES (?, ?, ?, ?, ?, ?)
+                         engineering_ects, basic_science_ects, bannerweb_category,
+                         bannerweb_su_credits, bannerweb_ects_credits)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         semester_id,
@@ -1498,6 +1622,9 @@ def import_bannerweb_parse_result(parsed: dict) -> dict:
                         is_overload,
                         engineering_ects,
                         basic_science_ects,
+                        bannerweb_category,
+                        bannerweb_su_credits,
+                        bannerweb_ects_credits,
                     ),
                 )
                 imported_courses += 1

@@ -230,6 +230,28 @@ def test_import_without_engineering_section_leaves_attributions_zero(requirement
     assert progress["Basic Science"]["completed_ects"] == 0.0
 
 
+def test_import_uses_bannerweb_overflow_category_for_free_electives(requirement_engine):
+    payload = {
+        "sections": {
+            "FREE ELECTIVES": {
+                "courses": [
+                    {"course": "CORE 101", "grade": "A", "su_credits": 3.0, "ects_credits": 5.0, "term": "202309"},
+                ],
+            },
+        },
+    }
+
+    requirement_engine.import_bannerweb_parse_result(payload)
+    progress = {
+        item["category"]: item
+        for item in requirement_engine.get_graduation_requirements_progress()["categories"]
+    }
+
+    assert progress["Core Electives"]["completed_su"] == 0.0
+    assert progress["Free Electives"]["completed_su"] == 3.0
+    assert progress["Free Electives"]["completed_courses"] == 1
+
+
 def test_reset_clears_all_imported_data(requirement_engine):
     requirement_engine.create_semester("2023 Fall")
     requirement_engine.add_course_to_semester(1, "REQ 101", "A")
