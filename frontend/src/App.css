@@ -1052,6 +1052,55 @@ textarea:hover:not(:disabled) {
   margin: 0;
   color: #92400e;
 }
+.planned-course-panel {
+  display: grid;
+  gap: 0.75rem;
+}
+.planned-course-panel-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: #1f2937;
+}
+.planned-course-panel-header span {
+  color: #475569;
+  font-weight: 600;
+}
+.planned-course-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+}
+.planned-course-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(108px, 132px);
+  gap: 0.75rem;
+  align-items: end;
+  background: #ffffff;
+  border: 1px solid #dbe4ef;
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+.planned-course-card > div,
+.planned-course-card label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+.planned-course-card span,
+.planned-course-card small {
+  color: #64748b;
+}
+.planned-course-card label {
+  color: #1e3a8a;
+  font-size: 0.8em;
+  font-weight: 700;
+}
+.planned-course-card select {
+  min-height: 36px;
+  width: 100%;
+}
 .planner-layout {
   display: grid;
   grid-template-columns: minmax(320px, 380px) 1fr;

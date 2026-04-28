@@ -11,6 +11,20 @@ const SECTION_COLORS = [
   '#fde68a', '#bfdbfe', '#bbf7d0', '#fbcfe8', '#ddd6fe',
   '#fed7aa', '#a7f3d0', '#fecaca', '#c7d2fe', '#fef3c7',
 ]
+const GRADE_OPTIONS = ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F']
+const GRADE_POINTS = {
+  A: 4,
+  'A-': 3.7,
+  'B+': 3.3,
+  B: 3,
+  'B-': 2.7,
+  'C+': 2.3,
+  C: 2,
+  'C-': 1.7,
+  'D+': 1.3,
+  D: 1,
+  F: 0,
+}
 
 function colorFor(courseCode) {
   let hash = 0
@@ -114,6 +128,7 @@ function Planner() {
         courseName: course.name,
         classIndex,
         classType: classComponentLabel(course, classIndex),
+        expectedGrade: entry.expected_grade || '',
         section,
         suCredits: course.su_credits,
         ectsCredits: course.ects_credits,
@@ -128,6 +143,7 @@ function Planner() {
       course_code: item.courseCode,
       crn: item.section.crn,
       class_index: item.classIndex,
+      expected_grade: item.expectedGrade,
     }))
   }
 
@@ -147,6 +163,10 @@ function Planner() {
     }
     if (selectedSections.size === 0) {
       setPlanMessage('Select at least one section before saving.')
+      return
+    }
+    if (missingExpectedGrades.length > 0) {
+      setPlanMessage('Choose an expected grade for each planned course before saving.')
       return
     }
     if (missingClassComponents.length > 0) {
@@ -210,9 +230,12 @@ function Planner() {
       setPlanMessage('Complete each selected course before promoting it.')
       return
     }
-    const targetSemesterName = planner.promote_semester_name || activeTerm
+    if (missingExpectedGrades.length > 0) {
+      setPlanMessage('Choose an expected grade for each planned course before promoting it.')
+      return
+    }
     if (!window.confirm(
-      `This will create a semester named "${targetSemesterName}" in your GPA Calculator (or add to the existing one) and add ${totals.courseCount} courses (without grades). Continue?`,
+      `This will create a semester named "${activeTerm}" in your GPA Calculator (or add to the existing one) and add ${totals.courseCount} courses (without grades). Continue?`,
     )) return
     setBusy(true)
     try {
@@ -273,6 +296,47 @@ function Planner() {
     })
     return { su, ects, courseCount: seenCourses.size }
   }, [selectedSections])
+
+  const plannedCourses = useMemo(() => {
+    const byCode = new Map()
+    selectedSections.forEach(item => {
+      if (!byCode.has(item.courseCode)) {
+        byCode.set(item.courseCode, {
+          courseCode: item.courseCode,
+          courseName: item.courseName,
+          suCredits: item.suCredits,
+          ectsCredits: item.ectsCredits,
+          expectedGrade: item.expectedGrade || '',
+          components: [],
+        })
+      }
+      const course = byCode.get(item.courseCode)
+      if (!course.expectedGrade && item.expectedGrade) course.expectedGrade = item.expectedGrade
+      course.components.push(item.classType)
+    })
+    return [...byCode.values()].sort((a, b) => a.courseCode.localeCompare(b.courseCode))
+  }, [selectedSections])
+
+  const missingExpectedGrades = useMemo(
+    () => plannedCourses.filter(course => !course.expectedGrade),
+    [plannedCourses],
+  )
+
+  const projectedSemesterGpa = useMemo(() => {
+    if (plannedCourses.length === 0 || plannedCourses.some(course => !course.expectedGrade)) {
+      return null
+    }
+    let totalCredits = 0
+    let weightedPoints = 0
+    plannedCourses.forEach(course => {
+      const points = GRADE_POINTS[course.expectedGrade]
+      if (points == null) return
+      const credits = Number(course.suCredits || 0)
+      totalCredits += credits
+      weightedPoints += credits * points
+    })
+    return totalCredits > 0 ? weightedPoints / totalCredits : null
+  }, [plannedCourses])
 
   const conflicts = useMemo(() => {
     // Build per-cell occupancy: cellOccupants[day][slot] = [sectionKey, ...]
@@ -341,6 +405,18 @@ function Planner() {
     setExpandedCourses(curr => ({ ...curr, [code]: !curr[code] }))
   }
 
+  function setExpectedGrade(courseCode, grade) {
+    setSelectedSections(curr => {
+      const next = new Map(curr)
+      next.forEach((item, key) => {
+        if (item.courseCode === courseCode) {
+          next.set(key, { ...item, expectedGrade: grade })
+        }
+      })
+      return next
+    })
+  }
+
   function toggleSection(course, classIndex, section) {
     if (course.retake_allowed === false) return
     const key = sectionKey(course.code, classIndex, section)
@@ -354,11 +430,13 @@ function Planner() {
             next.delete(selectedKey)
           }
         }
+        const existingCourseItem = [...next.values()].find(item => item.courseCode === course.code)
         next.set(key, {
           courseCode: course.code,
           courseName: course.name,
           classIndex,
           classType: classComponentLabel(course, classIndex),
+          expectedGrade: existingCourseItem?.expectedGrade || '',
           section,
           suCredits: course.su_credits,
           ectsCredits: course.ects_credits,
@@ -407,6 +485,7 @@ function Planner() {
         <span><strong>{totals.courseCount}</strong> course{totals.courseCount === 1 ? '' : 's'}</span>
         <span><strong>{totals.su.toFixed(1)}</strong> SU</span>
         <span><strong>{totals.ects.toFixed(1)}</strong> ECTS</span>
+        <span><strong>{projectedSemesterGpa == null ? '-' : projectedSemesterGpa.toFixed(2)}</strong> projected GPA</span>
         <span className={conflicts.conflictKeys.size > 0 ? 'planner-conflict-bad' : 'planner-conflict-ok'}>
           {conflicts.conflictKeys.size === 0 ? 'No conflicts' : `${conflicts.conflictKeys.size} conflicting selections`}
         </span>
@@ -453,12 +532,14 @@ function Planner() {
         <button
           type="button"
           onClick={handlePromoteToSemester}
-          disabled={busy || !activePlanId || missingClassComponents.length > 0}
+          disabled={busy || !activePlanId || missingClassComponents.length > 0 || missingExpectedGrades.length > 0}
           title={!activePlanId
             ? 'Save the plan first'
+            : missingExpectedGrades.length > 0
+              ? 'Choose expected grades first'
               : missingClassComponents.length > 0
                 ? 'Complete lecture/recitation selections first'
-                : `Add ${totals.courseCount} courses to a "${planner.promote_semester_name || activeTerm}" semester in the GPA Calculator`}
+                : `Add ${totals.courseCount} courses to a "${activeTerm}" semester in the GPA Calculator`}
         >
           Promote to GPA Calculator
         </button>
@@ -483,6 +564,42 @@ function Planner() {
             </li>
           ))}
         </ul>
+      )}
+
+      {plannedCourses.length > 0 && (
+        <section className="planned-course-panel" aria-label="Planned courses">
+          <div className="planned-course-panel-header">
+            <strong>Planned courses</strong>
+            <span>{projectedSemesterGpa == null ? 'Expected grades required' : `Projected GPA ${projectedSemesterGpa.toFixed(2)}`}</span>
+          </div>
+          <div className="planned-course-list">
+            {plannedCourses.map(course => (
+              <article className="planned-course-card" key={course.courseCode}>
+                <div>
+                  <strong>{course.courseCode}</strong>
+                  <span>{course.courseName || 'Course'}</span>
+                  <small>
+                    {Number(course.suCredits || 0).toFixed(1)} SU
+                    {course.components.length > 0 ? ` · ${course.components.join(' + ')}` : ''}
+                  </small>
+                </div>
+                <label>
+                  Expected grade
+                  <select
+                    value={course.expectedGrade}
+                    onChange={event => setExpectedGrade(course.courseCode, event.target.value)}
+                    aria-label={`Expected grade for ${course.courseCode}`}
+                  >
+                    <option value="">Select</option>
+                    {GRADE_OPTIONS.map(grade => (
+                      <option key={grade} value={grade}>{grade}</option>
+                    ))}
+                  </select>
+                </label>
+              </article>
+            ))}
+          </div>
+        </section>
       )}
 
       <div className="planner-layout">

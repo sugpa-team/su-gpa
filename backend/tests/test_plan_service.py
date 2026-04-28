@@ -13,8 +13,8 @@ def plans(requirement_engine, monkeypatch):
 
 
 SAMPLE_SECTIONS = [
-    {"course_code": "REQ 101", "crn": "10001", "class_index": 0},
-    {"course_code": "CORE 101", "crn": "10002", "class_index": 0},
+    {"course_code": "REQ 101", "crn": "10001", "class_index": 0, "expected_grade": "B"},
+    {"course_code": "CORE 101", "crn": "10002", "class_index": 0, "expected_grade": "A-"},
 ]
 
 
@@ -47,7 +47,7 @@ def test_update_plan_changes_name_and_sections(plans):
     updated = plans.update_plan(
         created["id"],
         name="Renamed",
-        sections=[{"course_code": "AREA 101", "crn": "20001"}],
+        sections=[{"course_code": "AREA 101", "crn": "20001", "expected_grade": "C+"}],
     )
     assert updated["name"] == "Renamed"
     assert len(updated["sections"]) == 1
@@ -81,6 +81,8 @@ def test_promote_creates_semester_and_adds_courses(plans, requirement_engine):
     assert len(semesters) == 1
     assert semesters[0]["name"] == "202602"
     assert sorted(c["course_code"] for c in semesters[0]["courses"]) == ["CORE 101", "REQ 101"]
+    grades = {c["course_code"]: c["grade"] for c in semesters[0]["courses"]}
+    assert grades == {"CORE 101": "A-", "REQ 101": "B"}
 
 
 def test_promote_dedupes_multiple_components_for_same_course(plans, requirement_engine):
@@ -88,8 +90,8 @@ def test_promote_dedupes_multiple_components_for_same_course(plans, requirement_
         "202602",
         "Lecture plus recitation",
         [
-            {"course_code": "REQ 101", "crn": "10001", "class_index": 0},
-            {"course_code": "REQ 101", "crn": "10002", "class_index": 1},
+            {"course_code": "REQ 101", "crn": "10001", "class_index": 0, "expected_grade": "B"},
+            {"course_code": "REQ 101", "crn": "10002", "class_index": 1, "expected_grade": "B"},
         ],
     )
     result = plans.promote_plan_to_semester(plan["id"])
@@ -104,8 +106,8 @@ def test_promote_skips_courses_not_in_catalog(plans, requirement_engine):
         "202602",
         "Mixed plan",
         [
-            {"course_code": "REQ 101", "crn": "10001"},
-            {"course_code": "BOGUS 999", "crn": "99999"},
+            {"course_code": "REQ 101", "crn": "10001", "expected_grade": "B"},
+            {"course_code": "BOGUS 999", "crn": "99999", "expected_grade": "B"},
         ],
     )
     result = plans.promote_plan_to_semester(plan["id"])
@@ -116,43 +118,11 @@ def test_promote_skips_courses_not_in_catalog(plans, requirement_engine):
     assert result["skipped"][0]["reason"] == "Course not in catalog"
 
 
-def test_promote_moves_matching_schedule_term_to_next_semester(plans, requirement_engine):
+def test_promote_reuses_existing_semester_with_matching_name(plans, requirement_engine):
     requirement_engine.create_semester("202602")  # pre-existing semester
     plan = plans.create_plan("202602", "Spring 26", SAMPLE_SECTIONS)
     result = plans.promote_plan_to_semester(plan["id"])
 
-    assert result["semester_name"] == "202701"
-    assert result["created_semester"] is True
-    assert result["imported_courses"] == 2
-    assert [semester["name"] for semester in result["summary"]["semesters"]] == [
-        "202602",
-        "202701",
-    ]
-
-
-def test_promote_uses_next_term_when_schedule_term_already_exists(plans, requirement_engine):
-    requirement_engine.create_semester("202502")
-    plan = plans.create_plan("202502", "Next semester", SAMPLE_SECTIONS)
-
-    result = plans.promote_plan_to_semester(plan["id"])
-
-    assert result["schedule_term"] == "202502"
-    assert result["semester_name"] == "202601"
-    assert result["created_semester"] is True
-    assert result["imported_courses"] == 2
-    assert [semester["name"] for semester in result["summary"]["semesters"]] == [
-        "202502",
-        "202601",
-    ]
-
-
-def test_promote_reuses_next_term_after_first_promotion(plans, requirement_engine):
-    plan = plans.create_plan("202502", "Next semester", SAMPLE_SECTIONS)
-    requirement_engine.create_semester("202601")
-
-    result = plans.promote_plan_to_semester(plan["id"])
-
-    assert result["semester_name"] == "202601"
     assert result["created_semester"] is False
     assert result["imported_courses"] == 2
     assert len(result["summary"]["semesters"]) == 1
@@ -163,7 +133,7 @@ def test_promote_allows_retake_within_three_regular_terms(plans, requirement_eng
     semester_id = summary["semesters"][-1]["id"]
     requirement_engine.add_course_to_semester(semester_id, "REQ 101", "C")
     plan = plans.create_plan("202502", "Retake in time", [
-        {"course_code": "REQ 101", "crn": "10001", "class_index": 0},
+        {"course_code": "REQ 101", "crn": "10001", "class_index": 0, "expected_grade": "B"},
     ])
 
     result = plans.promote_plan_to_semester(plan["id"])
@@ -178,7 +148,7 @@ def test_promote_blocks_retake_after_three_regular_terms(plans, requirement_engi
     semester_id = summary["semesters"][-1]["id"]
     requirement_engine.add_course_to_semester(semester_id, "REQ 101", "C")
     plan = plans.create_plan("202601", "Late retake", [
-        {"course_code": "REQ 101", "crn": "10001", "class_index": 0},
+        {"course_code": "REQ 101", "crn": "10001", "class_index": 0, "expected_grade": "B"},
     ])
 
     result = plans.promote_plan_to_semester(plan["id"])
@@ -217,6 +187,8 @@ def test_create_rejects_malformed_sections(plans):
         plans.create_plan("202602", "Plan A", "not a list")
     with pytest.raises(ValueError):
         plans.create_plan("202602", "Plan A", [{"course_code": "REQ 101"}])  # no crn
+    with pytest.raises(ValueError):
+        plans.create_plan("202602", "Plan A", [{"course_code": "REQ 101", "crn": "10001"}])
 
 
 def test_promote_bypasses_prereq_validation(plans, requirement_engine):
@@ -237,7 +209,7 @@ def test_promote_bypasses_prereq_validation(plans, requirement_engine):
     requirement_engine._requirements_data.cache_clear()
 
     plan = plans.create_plan("202602", "skip-prereq", [
-        {"course_code": "REQ 101", "crn": "10001"},
+        {"course_code": "REQ 101", "crn": "10001", "expected_grade": "B"},
     ])
     result = plans.promote_plan_to_semester(plan["id"])
 

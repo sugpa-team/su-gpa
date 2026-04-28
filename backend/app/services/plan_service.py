@@ -10,11 +10,11 @@ the schema bootstrap; we just register an extra table here on first use).
 from __future__ import annotations
 
 import json
-import re
 import sqlite3
 from pathlib import Path
 
 from app.services import taken_course_service
+from app.services.gpa_service import normalize_letter_grade
 
 # Reuse the same DB path the rest of the app uses. Resolved at call time
 # so monkeypatched DB_PATH (in tests) is picked up.
@@ -96,56 +96,20 @@ def _validate_sections(sections: object) -> list[dict]:
             raise ValueError("Each section entry must be an object.")
         course_code = str(item.get("course_code", "") or "").strip()
         crn = str(item.get("crn", "") or "").strip()
+        expected_grade = normalize_letter_grade(item.get("expected_grade"))
         if not course_code or not crn:
             raise ValueError("Each section entry needs course_code and crn.")
+        if expected_grade is None:
+            raise ValueError("Each section entry needs expected_grade.")
         cleaned.append(
             {
                 "course_code": course_code,
                 "crn": crn,
                 "class_index": int(item.get("class_index", 0) or 0),
+                "expected_grade": expected_grade,
             }
         )
     return cleaned
-
-
-def _next_academic_term(term: str) -> str:
-    match = re.fullmatch(r"(\d{4})(0[1-3])", str(term).strip())
-    if not match:
-        return str(term).strip()
-    year = int(match.group(1))
-    suffix = match.group(2)
-    if suffix == "01":
-        return f"{year}02"
-    return f"{year + 1}01"
-
-
-def _semester_names(conn: sqlite3.Connection) -> set[str]:
-    return {
-        str(row["name"])
-        for row in conn.execute("SELECT name FROM semesters").fetchall()
-    }
-
-
-def resolve_promote_semester_name(term: str) -> str:
-    """Return the GPA Calculator semester name a planner term should use.
-
-    The schedule data term can be the current in-progress Bannerweb term
-    (e.g. 202502). In that case promoting a "next semester" plan should
-    create/use the following academic term instead of appending to the
-    existing imported semester.
-    """
-    plan_term = str(term).strip()
-    if not plan_term:
-        return plan_term
-
-    taken_course_service.init_taken_courses_db()
-    with _connect() as conn:
-        names = _semester_names(conn)
-
-    next_term = _next_academic_term(plan_term)
-    if plan_term in names or next_term in names:
-        return next_term
-    return plan_term
 
 
 def create_plan(term: str, name: str, sections: object) -> dict:
@@ -203,9 +167,8 @@ def delete_plan(plan_id: int) -> None:
 def promote_plan_to_semester(plan_id: int) -> dict:
     """Materialize a plan as a real semester in the GPA tracker.
 
-    Creates a target semester for the plan (or reuses an existing one),
-    then inserts each course directly. If the schedule term already exists
-    in the transcript, the target is the following academic term. Bypasses
+    Creates a semester named after the plan's term (or reuses an existing
+    semester with that name), then inserts each course directly. Bypasses
     add_course_to_semester's prerequisite + overload validation: the
     planner is a record of user intent, not a sanity-checked transcript
     entry. (E.g. a student may be planning a course alongside its
@@ -216,7 +179,6 @@ def promote_plan_to_semester(plan_id: int) -> dict:
     """
     plan = get_plan(plan_id)
     term = plan["term"]
-    semester_name = resolve_promote_semester_name(term)
     sections = plan["sections"]
 
     taken_course_service.init_taken_courses_db()
@@ -227,18 +189,22 @@ def promote_plan_to_semester(plan_id: int) -> dict:
     seen_plan_courses: set[str] = set()
     with _connect() as conn:
         existing = conn.execute(
-            "SELECT id FROM semesters WHERE name = ? LIMIT 1", (semester_name,)
+            "SELECT id FROM semesters WHERE name = ? LIMIT 1", (term,)
         ).fetchone()
         if existing:
             semester_id = existing["id"]
             created_semester = False
         else:
-            cursor = conn.execute("INSERT INTO semesters (name) VALUES (?)", (semester_name,))
+            cursor = conn.execute("INSERT INTO semesters (name) VALUES (?)", (term,))
             semester_id = cursor.lastrowid
             created_semester = True
 
         for entry in sections:
             raw_code = entry["course_code"]
+            expected_grade = normalize_letter_grade(entry.get("expected_grade"))
+            if expected_grade is None:
+                skipped.append({"course_code": raw_code, "reason": "Expected grade is required"})
+                continue
             normalized = " ".join(str(raw_code).upper().split())
             if normalized in seen_plan_courses:
                 continue
@@ -250,7 +216,7 @@ def promote_plan_to_semester(plan_id: int) -> dict:
 
             can_retake, retake_reason = taken_course_service.can_retake_course(
                 normalized,
-                semester_name,
+                term,
             )
             if not can_retake:
                 skipped.append({"course_code": raw_code, "reason": retake_reason})
@@ -271,7 +237,7 @@ def promote_plan_to_semester(plan_id: int) -> dict:
                         (semester_id, course_code, grade, is_overload)
                     VALUES (?, ?, ?, ?)
                     """,
-                    (semester_id, normalized, None, 0),
+                    (semester_id, normalized, expected_grade, 0),
                 )
                 imported += 1
             except sqlite3.Error as error:
@@ -280,8 +246,7 @@ def promote_plan_to_semester(plan_id: int) -> dict:
     return {
         "plan_id": plan_id,
         "semester_id": semester_id,
-        "semester_name": semester_name,
-        "schedule_term": term,
+        "semester_name": term,
         "created_semester": created_semester,
         "imported_courses": imported,
         "skipped": skipped,

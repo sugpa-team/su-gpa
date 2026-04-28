@@ -13,6 +13,7 @@ class SectionEntry(BaseModel):
     course_code: str
     crn: str
     class_index: int = 0
+    expected_grade: str | None = None
 
 
 class PlanCreateRequest(BaseModel):
