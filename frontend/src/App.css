@@ -1095,6 +1095,9 @@ textarea:hover:not(:disabled) {
 .planner-course-row {
   border-bottom: 1px solid #f1f5f9;
 }
+.planner-course-row.retake-blocked {
+  opacity: 0.72;
+}
 .planner-course-toggle {
   width: 100%;
   text-align: left;

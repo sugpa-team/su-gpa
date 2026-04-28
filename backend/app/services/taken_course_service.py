@@ -134,6 +134,27 @@ def _normalize_course_code(course_code: str) -> str:
     return alias_map.get(normalized, normalized)
 
 
+def _regular_term_index(term: str) -> int | None:
+    term = str(term or "").strip()
+    if len(term) != 6 or not term.isdigit():
+        return None
+    year = int(term[:4])
+    suffix = term[4:]
+    if suffix == "01":
+        return year * 2
+    if suffix == "02":
+        return year * 2 + 1
+    return None
+
+
+def _regular_term_distance(from_term: str, to_term: str) -> int | None:
+    from_index = _regular_term_index(from_term)
+    to_index = _regular_term_index(to_term)
+    if from_index is None or to_index is None:
+        return None
+    return to_index - from_index
+
+
 def _course_catalog() -> dict[str, dict]:
     return {
         _normalize_course_code(course["Course"]): course
@@ -452,6 +473,64 @@ def get_taken_course_codes() -> set[str]:
     with _connect() as conn:
         rows = conn.execute("SELECT DISTINCT course_code FROM semester_courses").fetchall()
     return {_normalize_course_code(row[0]) for row in rows}
+
+
+def get_retake_eligibility(target_term: str) -> dict[str, dict]:
+    """Return retake eligibility for courses already present in regular terms.
+
+    A course can be retaken for at most three regular semesters after the
+    latest regular-term attempt. Summer terms (`YYYY03`) are ignored.
+    """
+    init_taken_courses_db()
+    with _connect() as conn:
+        conn.row_factory = sqlite3.Row
+        rows = conn.execute(
+            """
+            SELECT sc.course_code, s.name AS semester_name
+            FROM semester_courses sc
+            JOIN semesters s ON s.id = sc.semester_id
+            ORDER BY s.id ASC, sc.id ASC
+            """
+        ).fetchall()
+
+    latest_by_course: dict[str, tuple[str, int]] = {}
+    for row in rows:
+        term = str(row["semester_name"] or "").strip()
+        term_index = _regular_term_index(term)
+        if term_index is None:
+            continue
+        course_code = _normalize_course_code(row["course_code"])
+        current = latest_by_course.get(course_code)
+        if current is None or term_index > current[1]:
+            latest_by_course[course_code] = (term, term_index)
+
+    out: dict[str, dict] = {}
+    for course_code, (last_term, _) in latest_by_course.items():
+        distance = _regular_term_distance(last_term, target_term)
+        can_retake = distance is None or 0 <= distance <= 3
+        out[course_code] = {
+            "course_code": course_code,
+            "last_taken_term": last_term,
+            "target_term": str(target_term).strip(),
+            "regular_terms_since_last_taken": distance,
+            "can_retake": can_retake,
+            "reason": None
+            if can_retake
+            else (
+                f"{course_code} was last taken in {last_term}; retakes are only allowed "
+                "within three regular semesters."
+            ),
+        }
+    return out
+
+
+def can_retake_course(course_code: str, target_term: str) -> tuple[bool, str | None]:
+    status = get_retake_eligibility(target_term).get(_normalize_course_code(course_code))
+    if status is None:
+        return True, None
+    if status["can_retake"]:
+        return True, None
+    return False, status["reason"]
 
 
 def _previous_semester_course_codes(

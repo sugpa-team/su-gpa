@@ -116,14 +116,93 @@ def test_promote_skips_courses_not_in_catalog(plans, requirement_engine):
     assert result["skipped"][0]["reason"] == "Course not in catalog"
 
 
-def test_promote_reuses_existing_semester_with_matching_name(plans, requirement_engine):
+def test_promote_moves_matching_schedule_term_to_next_semester(plans, requirement_engine):
     requirement_engine.create_semester("202602")  # pre-existing semester
     plan = plans.create_plan("202602", "Spring 26", SAMPLE_SECTIONS)
     result = plans.promote_plan_to_semester(plan["id"])
 
+    assert result["semester_name"] == "202701"
+    assert result["created_semester"] is True
+    assert result["imported_courses"] == 2
+    assert [semester["name"] for semester in result["summary"]["semesters"]] == [
+        "202602",
+        "202701",
+    ]
+
+
+def test_promote_uses_next_term_when_schedule_term_already_exists(plans, requirement_engine):
+    requirement_engine.create_semester("202502")
+    plan = plans.create_plan("202502", "Next semester", SAMPLE_SECTIONS)
+
+    result = plans.promote_plan_to_semester(plan["id"])
+
+    assert result["schedule_term"] == "202502"
+    assert result["semester_name"] == "202601"
+    assert result["created_semester"] is True
+    assert result["imported_courses"] == 2
+    assert [semester["name"] for semester in result["summary"]["semesters"]] == [
+        "202502",
+        "202601",
+    ]
+
+
+def test_promote_reuses_next_term_after_first_promotion(plans, requirement_engine):
+    plan = plans.create_plan("202502", "Next semester", SAMPLE_SECTIONS)
+    requirement_engine.create_semester("202601")
+
+    result = plans.promote_plan_to_semester(plan["id"])
+
+    assert result["semester_name"] == "202601"
     assert result["created_semester"] is False
     assert result["imported_courses"] == 2
     assert len(result["summary"]["semesters"]) == 1
+
+
+def test_promote_allows_retake_within_three_regular_terms(plans, requirement_engine):
+    summary = requirement_engine.create_semester("202401")
+    semester_id = summary["semesters"][-1]["id"]
+    requirement_engine.add_course_to_semester(semester_id, "REQ 101", "C")
+    plan = plans.create_plan("202502", "Retake in time", [
+        {"course_code": "REQ 101", "crn": "10001", "class_index": 0},
+    ])
+
+    result = plans.promote_plan_to_semester(plan["id"])
+
+    assert result["semester_name"] == "202502"
+    assert result["imported_courses"] == 1
+    assert result["skipped"] == []
+
+
+def test_promote_blocks_retake_after_three_regular_terms(plans, requirement_engine):
+    summary = requirement_engine.create_semester("202401")
+    semester_id = summary["semesters"][-1]["id"]
+    requirement_engine.add_course_to_semester(semester_id, "REQ 101", "C")
+    plan = plans.create_plan("202601", "Late retake", [
+        {"course_code": "REQ 101", "crn": "10001", "class_index": 0},
+    ])
+
+    result = plans.promote_plan_to_semester(plan["id"])
+
+    assert result["semester_name"] == "202601"
+    assert result["imported_courses"] == 0
+    assert len(result["skipped"]) == 1
+    assert result["skipped"][0]["course_code"] == "REQ 101"
+    assert "within three regular semesters" in result["skipped"][0]["reason"]
+
+
+def test_retake_window_ignores_summer_terms(requirement_engine):
+    fall = requirement_engine.create_semester("202401")
+    fall_id = fall["semesters"][-1]["id"]
+    requirement_engine.add_course_to_semester(fall_id, "REQ 101", "C")
+    summer = requirement_engine.create_semester("202403")
+    summer_id = summer["semesters"][-1]["id"]
+    requirement_engine.add_course_to_semester(summer_id, "CORE 101", "B")
+
+    eligibility = requirement_engine.get_retake_eligibility("202502")
+
+    assert eligibility["REQ 101"]["can_retake"] is True
+    assert eligibility["REQ 101"]["regular_terms_since_last_taken"] == 3
+    assert "CORE 101" not in eligibility
 
 
 def test_create_rejects_empty_term_or_name(plans):

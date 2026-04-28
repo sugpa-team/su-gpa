@@ -210,8 +210,9 @@ function Planner() {
       setPlanMessage('Complete each selected course before promoting it.')
       return
     }
+    const targetSemesterName = planner.promote_semester_name || activeTerm
     if (!window.confirm(
-      `This will create a semester named "${activeTerm}" in your GPA Calculator (or add to the existing one) and add ${totals.courseCount} courses (without grades). Continue?`,
+      `This will create a semester named "${targetSemesterName}" in your GPA Calculator (or add to the existing one) and add ${totals.courseCount} courses (without grades). Continue?`,
     )) return
     setBusy(true)
     try {
@@ -341,6 +342,7 @@ function Planner() {
   }
 
   function toggleSection(course, classIndex, section) {
+    if (course.retake_allowed === false) return
     const key = sectionKey(course.code, classIndex, section)
     setSelectedSections(curr => {
       const next = new Map(curr)
@@ -454,9 +456,9 @@ function Planner() {
           disabled={busy || !activePlanId || missingClassComponents.length > 0}
           title={!activePlanId
             ? 'Save the plan first'
-            : missingClassComponents.length > 0
-              ? 'Complete lecture/recitation selections first'
-              : `Add ${totals.courseCount} courses to a "${activeTerm}" semester in the GPA Calculator`}
+              : missingClassComponents.length > 0
+                ? 'Complete lecture/recitation selections first'
+                : `Add ${totals.courseCount} courses to a "${planner.promote_semester_name || activeTerm}" semester in the GPA Calculator`}
         >
           Promote to GPA Calculator
         </button>
@@ -510,8 +512,9 @@ function Planner() {
             {filteredCourses.slice(0, 200).map(course => {
               const expanded = !!expandedCourses[course.code]
               const sectionsTotal = course.classes.reduce((sum, cls) => sum + cls.sections.length, 0)
+              const retakeBlocked = course.retake_allowed === false
               return (
-                <li key={course.code} className="planner-course-row">
+                <li key={course.code} className={`planner-course-row ${retakeBlocked ? 'retake-blocked' : ''}`}>
                   <button
                     type="button"
                     className="planner-course-toggle"
@@ -519,6 +522,7 @@ function Planner() {
                   >
                     <strong>{course.code}</strong> {course.name || ''}
                     <span className="planner-course-meta">
+                      {retakeBlocked ? `${course.retake_reason || 'Retake window expired'} · ` : ''}
                       {course.su_credits != null ? `${course.su_credits} SU · ` : ''}
                       {sectionsTotal} section{sectionsTotal === 1 ? '' : 's'}
                       {course.requirement_categories.length > 0 ? ` · ${course.requirement_categories.join(', ')}` : ''}
@@ -534,6 +538,7 @@ function Planner() {
                             <button
                               type="button"
                               className={`planner-section-button ${selected ? 'selected' : ''}`}
+                              disabled={retakeBlocked}
                               onClick={() => toggleSection(course, classIndex, section)}
                             >
                               <span>

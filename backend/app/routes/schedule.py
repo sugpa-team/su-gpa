@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException
 
+from app.services import plan_service
 from app.services.schedule_service import (
     get_course_schedule,
     get_planner_courses,
@@ -10,6 +11,7 @@ from app.services.taken_course_service import (
     _course_catalog,
     _prerequisites_by_course,
     get_category_membership,
+    get_retake_eligibility,
     get_taken_course_codes,
 )
 
@@ -53,8 +55,18 @@ def get_planner_view(term: str) -> dict:
     except LookupError as error:
         raise HTTPException(status_code=404, detail=str(error)) from error
 
+    promote_semester_name = plan_service.resolve_promote_semester_name(term)
+    retake_eligibility = get_retake_eligibility(promote_semester_name)
+    for course in courses:
+        retake_status = retake_eligibility.get(" ".join(str(course.get("code", "")).upper().split()))
+        if retake_status:
+            course["retake_allowed"] = retake_status["can_retake"]
+            course["retake_reason"] = retake_status["reason"]
+            course["last_taken_term"] = retake_status["last_taken_term"]
+
     return {
         "term": term,
+        "promote_semester_name": promote_semester_name,
         "taken_course_codes": sorted(get_taken_course_codes()),
         "courses": courses,
     }
