@@ -22,6 +22,23 @@ function sectionKey(courseCode, classIndex, section) {
   return `${courseCode}|${classIndex}|${section.crn}`
 }
 
+function classComponentLabel(course, classIndex) {
+  return course.classes[classIndex]?.type || `Class ${classIndex + 1}`
+}
+
+function requiredClassIndexes(course) {
+  return course.classes
+    .map((cls, classIndex) => ({ cls, classIndex }))
+    .filter(({ cls }) => (cls.sections || []).length > 0)
+    .map(({ classIndex }) => classIndex)
+}
+
+function scheduleGridLabel(item) {
+  const courseCode = item.courseCode.replace(/\s+/g, '')
+  const group = String(item.section.group || '').trim() || (item.classIndex === 0 ? '0' : item.classType)
+  return `${courseCode} - ${group}`
+}
+
 function Planner() {
   const [terms, setTerms] = useState([])
   const [activeTerm, setActiveTerm] = useState(null)
@@ -87,10 +104,16 @@ function Planner() {
       const classIndex = entry.class_index || 0
       const section = course.classes[classIndex]?.sections.find(s => String(s.crn) === String(entry.crn))
       if (!section) return
+      for (const [selectedKey, selectedItem] of next.entries()) {
+        if (selectedItem.courseCode === course.code && selectedItem.classIndex === classIndex) {
+          next.delete(selectedKey)
+        }
+      }
       next.set(sectionKey(course.code, classIndex, section), {
         courseCode: course.code,
         courseName: course.name,
         classIndex,
+        classType: classComponentLabel(course, classIndex),
         section,
         suCredits: course.su_credits,
         ectsCredits: course.ects_credits,
@@ -124,6 +147,10 @@ function Planner() {
     }
     if (selectedSections.size === 0) {
       setPlanMessage('Select at least one section before saving.')
+      return
+    }
+    if (missingClassComponents.length > 0) {
+      setPlanMessage('Complete each selected course before saving.')
       return
     }
     setBusy(true)
@@ -179,8 +206,12 @@ function Planner() {
       setPlanMessage('Save the plan first, then promote it.')
       return
     }
+    if (missingClassComponents.length > 0) {
+      setPlanMessage('Complete each selected course before promoting it.')
+      return
+    }
     if (!window.confirm(
-      `This will create a semester named "${activeTerm}" in your GPA Calculator (or add to the existing one) and add ${selectedSections.size} courses (without grades). Continue?`,
+      `This will create a semester named "${activeTerm}" in your GPA Calculator (or add to the existing one) and add ${totals.courseCount} courses (without grades). Continue?`,
     )) return
     setBusy(true)
     try {
@@ -281,6 +312,26 @@ function Planner() {
     })
   }, [selectedSections, takenCodes])
 
+  const missingClassComponents = useMemo(() => {
+    if (!planner) return []
+    const selectedByCourse = new Map()
+    selectedSections.forEach(item => {
+      if (!selectedByCourse.has(item.courseCode)) selectedByCourse.set(item.courseCode, new Set())
+      selectedByCourse.get(item.courseCode).add(item.classIndex)
+    })
+
+    const missing = []
+    selectedByCourse.forEach((selectedIndexes, courseCode) => {
+      const course = planner.courses.find(c => c.code === courseCode)
+      if (!course) return
+      const missingLabels = requiredClassIndexes(course)
+        .filter(classIndex => !selectedIndexes.has(classIndex))
+        .map(classIndex => classComponentLabel(course, classIndex))
+      if (missingLabels.length > 0) missing.push({ course: courseCode, missing: missingLabels })
+    })
+    return missing
+  }, [planner, selectedSections])
+
   function toggleCategory(cat) {
     setEnabledCategories(curr => ({ ...curr, [cat]: !curr[cat] }))
   }
@@ -296,10 +347,16 @@ function Planner() {
       if (next.has(key)) {
         next.delete(key)
       } else {
+        for (const [selectedKey, selectedItem] of next.entries()) {
+          if (selectedItem.courseCode === course.code && selectedItem.classIndex === classIndex) {
+            next.delete(selectedKey)
+          }
+        }
         next.set(key, {
           courseCode: course.code,
           courseName: course.name,
           classIndex,
+          classType: classComponentLabel(course, classIndex),
           section,
           suCredits: course.su_credits,
           ectsCredits: course.ects_credits,
@@ -394,8 +451,12 @@ function Planner() {
         <button
           type="button"
           onClick={handlePromoteToSemester}
-          disabled={busy || !activePlanId}
-          title={!activePlanId ? 'Save the plan first' : `Add ${selectedSections.size} courses to a "${activeTerm}" semester in the GPA Calculator`}
+          disabled={busy || !activePlanId || missingClassComponents.length > 0}
+          title={!activePlanId
+            ? 'Save the plan first'
+            : missingClassComponents.length > 0
+              ? 'Complete lecture/recitation selections first'
+              : `Add ${totals.courseCount} courses to a "${activeTerm}" semester in the GPA Calculator`}
         >
           Promote to GPA Calculator
         </button>
@@ -407,6 +468,16 @@ function Planner() {
           {prereqWarnings.map(w => (
             <li key={w.course}>
               <strong>{w.course}</strong> requires {w.missing.join(', ')} which you have not taken.
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {missingClassComponents.length > 0 && (
+        <ul className="planner-warnings" role="alert">
+          {missingClassComponents.map(w => (
+            <li key={w.course}>
+              <strong>{w.course}</strong> also needs {w.missing.join(', ')}.
             </li>
           ))}
         </ul>
@@ -512,7 +583,7 @@ function Planner() {
                       >
                         {occupants.map(k => {
                           const item = selectedSections.get(k)
-                          return item ? <div key={k}>{item.courseCode}</div> : null
+                          return item ? <div key={k}>{scheduleGridLabel(item)}</div> : null
                         })}
                       </td>
                     )

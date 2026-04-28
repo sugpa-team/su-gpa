@@ -83,6 +83,22 @@ def test_promote_creates_semester_and_adds_courses(plans, requirement_engine):
     assert sorted(c["course_code"] for c in semesters[0]["courses"]) == ["CORE 101", "REQ 101"]
 
 
+def test_promote_dedupes_multiple_components_for_same_course(plans, requirement_engine):
+    plan = plans.create_plan(
+        "202602",
+        "Lecture plus recitation",
+        [
+            {"course_code": "REQ 101", "crn": "10001", "class_index": 0},
+            {"course_code": "REQ 101", "crn": "10002", "class_index": 1},
+        ],
+    )
+    result = plans.promote_plan_to_semester(plan["id"])
+
+    assert result["imported_courses"] == 1
+    assert result["skipped"] == []
+    assert result["summary"]["semesters"][0]["courses"][0]["course_code"] == "REQ 101"
+
+
 def test_promote_skips_courses_not_in_catalog(plans, requirement_engine):
     plan = plans.create_plan(
         "202602",

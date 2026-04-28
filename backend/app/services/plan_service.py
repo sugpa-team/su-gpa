@@ -181,6 +181,7 @@ def promote_plan_to_semester(plan_id: int) -> dict:
 
     imported = 0
     skipped: list[dict] = []
+    seen_plan_courses: set[str] = set()
     with _connect() as conn:
         existing = conn.execute(
             "SELECT id FROM semesters WHERE name = ? LIMIT 1", (term,)
@@ -196,6 +197,10 @@ def promote_plan_to_semester(plan_id: int) -> dict:
         for entry in sections:
             raw_code = entry["course_code"]
             normalized = " ".join(str(raw_code).upper().split())
+            if normalized in seen_plan_courses:
+                continue
+            seen_plan_courses.add(normalized)
+
             if normalized not in courses_by_code:
                 skipped.append({"course_code": raw_code, "reason": "Course not in catalog"})
                 continue

@@ -1100,6 +1100,7 @@ textarea:hover:not(:disabled) {
   text-align: left;
   background: transparent;
   border: none;
+  color: #111827;
   padding: 0.5rem;
   cursor: pointer;
   display: flex;
@@ -1107,7 +1108,10 @@ textarea:hover:not(:disabled) {
   gap: 0.15rem;
   font-size: 0.9em;
 }
-.planner-course-toggle:hover { background: #f8fafc; }
+.planner-course-toggle:hover {
+  background: #f8fafc;
+  color: #111827;
+}
 .planner-course-meta { color: #64748b; font-size: 0.85em; }
 .planner-section-list {
   list-style: none;
@@ -1123,6 +1127,7 @@ textarea:hover:not(:disabled) {
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
+  color: #111827;
   padding: 0.4rem 0.5rem;
   cursor: pointer;
   display: flex;
@@ -1130,9 +1135,20 @@ textarea:hover:not(:disabled) {
   gap: 0.15rem;
   font-size: 0.8em;
 }
+.planner-section-button:hover {
+  background: #eef6ff;
+  border-color: #bfdbfe;
+  color: #111827;
+}
 .planner-section-button.selected {
   background: #dbeafe;
   border-color: #60a5fa;
+  color: #0f172a;
+}
+.planner-section-button.selected:hover {
+  background: #bfdbfe;
+  border-color: #3b82f6;
+  color: #0f172a;
 }
 .planner-section-times {
   color: #475569;
