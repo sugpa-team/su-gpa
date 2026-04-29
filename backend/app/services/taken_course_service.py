@@ -155,6 +155,11 @@ def _regular_term_distance(from_term: str, to_term: str) -> int | None:
     return to_index - from_index
 
 
+def _counts_for_retake_window(term: str) -> bool:
+    term = str(term or "").strip()
+    return not (len(term) == 6 and term.isdigit() and term[4:] == "03")
+
+
 def _course_catalog() -> dict[str, dict]:
     catalog: dict[str, dict] = {}
     for course in load_courses():
@@ -536,6 +541,166 @@ def can_retake_course(course_code: str, target_term: str) -> tuple[bool, str | N
     return False, status["reason"]
 
 
+def _can_retake_course_in_semester(
+    conn: sqlite3.Connection,
+    course_code: str,
+    target_semester_id: int,
+) -> tuple[bool, str | None]:
+    normalized_course_code = _normalize_course_code(course_code)
+    semester_rows = conn.execute(
+        """
+        SELECT id, name
+        FROM semesters
+        ORDER BY id ASC
+        """
+    ).fetchall()
+    target_semester = next(
+        (row for row in semester_rows if row["id"] == target_semester_id),
+        None,
+    )
+    if target_semester is None:
+        raise LookupError(f"Semester not found: {target_semester_id}")
+
+    target_term = str(target_semester["name"] or "").strip()
+    if not _counts_for_retake_window(target_term):
+        return True, None
+
+    target_term_index = _regular_term_index(target_term)
+    counted_semester_ids = [
+        row["id"]
+        for row in semester_rows
+        if _counts_for_retake_window(str(row["name"] or ""))
+    ]
+    if target_semester_id not in counted_semester_ids:
+        return True, None
+    target_position = counted_semester_ids.index(target_semester_id)
+
+    attempt_rows = conn.execute(
+        """
+        SELECT sc.semester_id, s.name AS semester_name
+        FROM semester_courses sc
+        JOIN semesters s ON s.id = sc.semester_id
+        WHERE sc.course_code = ?
+        """,
+        (normalized_course_code,),
+    ).fetchall()
+
+    latest_distance: int | None = None
+    latest_term = ""
+    for row in attempt_rows:
+        attempt_semester_id = row["semester_id"]
+        if attempt_semester_id == target_semester_id:
+            continue
+
+        attempt_term = str(row["semester_name"] or "").strip()
+        if not _counts_for_retake_window(attempt_term):
+            continue
+
+        attempt_term_index = _regular_term_index(attempt_term)
+        distance = (
+            target_term_index - attempt_term_index
+            if target_term_index is not None and attempt_term_index is not None
+            else None
+        )
+        if distance is None:
+            if attempt_semester_id not in counted_semester_ids:
+                continue
+            distance = target_position - counted_semester_ids.index(attempt_semester_id)
+
+        if distance < 0:
+            continue
+        if latest_distance is None or distance < latest_distance:
+            latest_distance = distance
+            latest_term = attempt_term
+
+    if latest_distance is None or latest_distance <= 3:
+        return True, None
+
+    return (
+        False,
+        (
+            f"{normalized_course_code} was last taken in {latest_term}; retakes are only "
+            "allowed within three regular semesters."
+        ),
+    )
+
+
+def _retake_blocked_course_codes_for_semester(
+    conn: sqlite3.Connection,
+    target_semester_id: int,
+) -> set[str]:
+    semester_rows = conn.execute(
+        """
+        SELECT id, name
+        FROM semesters
+        ORDER BY id ASC
+        """
+    ).fetchall()
+    target_semester = next(
+        (row for row in semester_rows if row["id"] == target_semester_id),
+        None,
+    )
+    if target_semester is None:
+        raise LookupError(f"Semester not found: {target_semester_id}")
+
+    target_term = str(target_semester["name"] or "").strip()
+    if not _counts_for_retake_window(target_term):
+        return set()
+
+    target_term_index = _regular_term_index(target_term)
+    counted_semester_ids = [
+        row["id"]
+        for row in semester_rows
+        if _counts_for_retake_window(str(row["name"] or ""))
+    ]
+    if target_semester_id not in counted_semester_ids:
+        return set()
+    target_position = counted_semester_ids.index(target_semester_id)
+
+    attempt_rows = conn.execute(
+        """
+        SELECT sc.course_code, sc.semester_id, s.name AS semester_name
+        FROM semester_courses sc
+        JOIN semesters s ON s.id = sc.semester_id
+        """
+    ).fetchall()
+
+    latest_distance_by_course: dict[str, int] = {}
+    for row in attempt_rows:
+        attempt_semester_id = row["semester_id"]
+        if attempt_semester_id == target_semester_id:
+            continue
+
+        attempt_term = str(row["semester_name"] or "").strip()
+        if not _counts_for_retake_window(attempt_term):
+            continue
+
+        attempt_term_index = _regular_term_index(attempt_term)
+        distance = (
+            target_term_index - attempt_term_index
+            if target_term_index is not None and attempt_term_index is not None
+            else None
+        )
+        if distance is None:
+            if attempt_semester_id not in counted_semester_ids:
+                continue
+            distance = target_position - counted_semester_ids.index(attempt_semester_id)
+
+        if distance < 0:
+            continue
+
+        course_code = _normalize_course_code(row["course_code"])
+        current = latest_distance_by_course.get(course_code)
+        if current is None or distance < current:
+            latest_distance_by_course[course_code] = distance
+
+    return {
+        course_code
+        for course_code, latest_distance in latest_distance_by_course.items()
+        if latest_distance > 3
+    }
+
+
 def _previous_semester_course_codes(
     conn: sqlite3.Connection,
     semester_id: int,
@@ -632,6 +797,24 @@ def _ordered_semester_ids(conn: sqlite3.Connection) -> list[int]:
     return [row["id"] for row in rows]
 
 
+def _counted_semesters_before(conn: sqlite3.Connection, semester_id: int) -> int:
+    semester_rows = conn.execute(
+        """
+        SELECT id, name
+        FROM semesters
+        ORDER BY id ASC
+        """
+    ).fetchall()
+    if not any(row["id"] == semester_id for row in semester_rows):
+        raise LookupError(f"Semester not found: {semester_id}")
+    return sum(
+        1
+        for row in semester_rows
+        if row["id"] < semester_id
+        and _counts_for_retake_window(str(row["name"] or ""))
+    )
+
+
 def _has_course_in_any_semester(
     conn: sqlite3.Connection,
     semester_ids: list[int],
@@ -656,15 +839,30 @@ def _enforce_proj_201_by_semester_four(
     conn: sqlite3.Connection,
     courses_by_code: dict[str, dict],
 ) -> int | None:
-    semester_ids = _ordered_semester_ids(conn)
-    if len(semester_ids) < 4:
+    semester_rows = conn.execute(
+        """
+        SELECT id, name
+        FROM semesters
+        ORDER BY id ASC
+        """
+    ).fetchall()
+    counted_semester_ids = [
+        row["id"]
+        for row in semester_rows
+        if _counts_for_retake_window(str(row["name"] or ""))
+    ]
+    if len(counted_semester_ids) < 4:
         return None
 
-    first_three = semester_ids[:3]
-    fourth_semester_id = semester_ids[3]
+    fourth_semester_id = counted_semester_ids[3]
+    earlier_semester_ids = [
+        row["id"]
+        for row in semester_rows
+        if row["id"] < fourth_semester_id
+    ]
     normalized_proj = _normalize_course_code(PROJ_201_CODE)
 
-    if _has_course_in_any_semester(conn, first_three, normalized_proj):
+    if _has_course_in_any_semester(conn, earlier_semester_ids, normalized_proj):
         return None
     if _semester_has_course(conn, fourth_semester_id, normalized_proj):
         return fourth_semester_id
@@ -709,6 +907,13 @@ def _ensure_graduation_project_rules(
     course_code: str,
     courses_by_code: dict[str, dict],
 ) -> None:
+    if course_code == PROJ_201_CODE:
+        if _counted_semesters_before(conn, semester_id) >= 4:
+            raise ValueError(
+                "PROJ 201 cannot be added after the fourth regular semester."
+            )
+        return
+
     if course_code not in {"ENS 491", "ENS 492"}:
         return
 
@@ -783,8 +988,11 @@ def _eligible_course_codes_for_semester(
     courses_by_code: dict[str, dict],
 ) -> list[str]:
     completed_before_semester = _previous_semester_course_codes(conn, semester_id)
+    retake_blocked_codes = _retake_blocked_course_codes_for_semester(conn, semester_id)
     eligible = []
     for course_code in all_course_codes:
+        if course_code in retake_blocked_codes:
+            continue
         required_prerequisites = prerequisites_by_course.get(course_code, set())
         if not required_prerequisites.issubset(completed_before_semester):
             continue
@@ -1407,6 +1615,13 @@ def add_course_to_semester(
             normalized_course_code,
             courses_by_code,
         )
+        can_retake, retake_reason = _can_retake_course_in_semester(
+            conn,
+            normalized_course_code,
+            semester_id,
+        )
+        if not can_retake:
+            raise ValueError(retake_reason)
 
         existing_row = conn.execute(
             """
