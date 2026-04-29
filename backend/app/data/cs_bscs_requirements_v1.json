@@ -123,7 +123,7 @@
     "Area Electives": [
       { "course": "BIO 48006", "name": "Special Topics in BIO: Gene Regulation and Disease", "ects_credits": 6, "su_credits": 3, "faculty": "FENS" },
       { "course": "CS 414", "name": "Network Science", "ects_credits": 6, "su_credits": 3, "faculty": "FENS" },
-      { "course": "CS 415", "name": "Introduction to deep learning", "ects_credits": 6, "su_credits": 3, "faculty": "FENS" },
+      { "course": "CS 415", "name": "Introduction to Deep Learning", "ects_credits": 6, "su_credits": 3, "faculty": "FENS" },
       { "course": "CS 435", "name": "Quantum Programming I", "ects_credits": 6, "su_credits": 3, "faculty": "FENS" },
       { "course": "CS 438", "name": "Blockchain: Security and Applications", "ects_credits": 6, "su_credits": 3, "faculty": "FENS" },
       { "course": "CS 440", "name": "Quantum Programming II", "ects_credits": 6, "su_credits": 3, "faculty": "FENS" },

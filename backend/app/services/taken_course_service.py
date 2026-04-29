@@ -156,11 +156,14 @@ def _regular_term_distance(from_term: str, to_term: str) -> int | None:
 
 
 def _course_catalog() -> dict[str, dict]:
-    return {
-        _normalize_course_code(course["Course"]): course
-        for course in load_courses()
-        if course.get("Course")
-    }
+    catalog: dict[str, dict] = {}
+    for course in load_courses():
+        if not course.get("Course"):
+            continue
+        raw_code = " ".join(str(course["Course"]).upper().split())
+        catalog[raw_code] = course
+        catalog[_normalize_course_code(raw_code)] = course
+    return catalog
 
 
 def _course_su_credits(course_code: str, courses_by_code: dict[str, dict]) -> float:

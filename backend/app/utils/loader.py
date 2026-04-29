@@ -39,10 +39,26 @@ def _seed_courses(conn: sqlite3.Connection) -> None:
         )
         for course in courses
     ]
+    if rows:
+        json_course_codes = {row[0] for row in rows}
+        stale_rows = conn.execute("SELECT course FROM courses").fetchall()
+        conn.executemany(
+            "DELETE FROM courses WHERE course = ?",
+            [
+                (row[0],)
+                for row in stale_rows
+                if row[0] not in json_course_codes
+            ],
+        )
     conn.executemany(
         """
         INSERT INTO courses (course, name, ects_credits, su_credits, faculty)
         VALUES (?, ?, ?, ?, ?)
+        ON CONFLICT(course) DO UPDATE SET
+            name = excluded.name,
+            ects_credits = excluded.ects_credits,
+            su_credits = excluded.su_credits,
+            faculty = excluded.faculty
         """,
         rows,
     )
@@ -53,10 +69,6 @@ def ensure_courses_db() -> None:
 
     with sqlite3.connect(DB_PATH) as conn:
         conn.execute(CREATE_COURSES_TABLE_SQL)
-
-        row_count = conn.execute("SELECT COUNT(*) FROM courses").fetchone()[0]
-        if row_count > 0:
-            return
 
         try:
             _seed_courses(conn)
