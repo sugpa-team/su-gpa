@@ -1,4 +1,5 @@
 import json
+import sqlite3
 import sys
 from pathlib import Path
 
@@ -98,6 +99,7 @@ def requirement_engine(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     requirements_path = tmp_path / "requirements.json"
     faculty_courses_path = tmp_path / "faculty_courses.json"
     db_path = tmp_path / "taken_courses.db"
+    program_requirements_db_path = tmp_path / "program_requirements.db"
 
     requirements_path.write_text(
         json.dumps(FIXTURE_REQUIREMENTS, indent=2),
@@ -108,9 +110,31 @@ def requirement_engine(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
         encoding="utf-8",
     )
 
+    # Seed fixture requirements into the temp program_requirements DB
+    with sqlite3.connect(program_requirements_db_path) as conn:
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS program_requirements (
+                id           INTEGER PRIMARY KEY AUTOINCREMENT,
+                program_code TEXT UNIQUE NOT NULL,
+                program_name TEXT NOT NULL,
+                requirements_json TEXT NOT NULL,
+                seeded_at    TEXT DEFAULT (datetime('now'))
+            )
+            """
+        )
+        conn.execute(
+            """
+            INSERT INTO program_requirements (program_code, program_name, requirements_json)
+            VALUES (?, ?, ?)
+            """,
+            ("BSCS", "Fixture Program", json.dumps(FIXTURE_REQUIREMENTS)),
+        )
+
     monkeypatch.setattr(service, "REQUIREMENTS_PATH", requirements_path)
     monkeypatch.setattr(service, "FACULTY_COURSES_PATH", faculty_courses_path)
     monkeypatch.setattr(service, "DB_PATH", db_path)
+    monkeypatch.setattr(service, "PROGRAM_REQUIREMENTS_DB_PATH", program_requirements_db_path)
     monkeypatch.setattr(service, "load_courses", lambda: FIXTURE_COURSES)
 
     service._prerequisites_by_course.cache_clear()

@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -7,8 +9,16 @@ from app.routes.plans import router as plans_router
 from app.routes.profile import router as profile_router
 from app.routes.schedule import router as schedule_router
 from app.routes.taken_courses import router as taken_courses_router
+from app.services.taken_course_service import init_program_requirements_db
 
-app = FastAPI(title="su-gpa backend")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_program_requirements_db()
+    yield
+
+
+app = FastAPI(title="su-gpa backend", lifespan=lifespan)
 
 # Add CORS middleware
 app.add_middleware(

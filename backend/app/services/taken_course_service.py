@@ -13,6 +13,7 @@ from app.utils.loader import load_courses
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 DB_PATH = DATA_DIR / "taken_courses.db"
+PROGRAM_REQUIREMENTS_DB_PATH = DATA_DIR / "program_requirements.db"
 REQUIREMENTS_PATH = DATA_DIR / "cs_bscs_requirements_v1.json"
 FACULTY_COURSES_PATH = DATA_DIR / "faculty_courses_SU.json"
 MAX_OVERLOAD_COURSES_PER_SEMESTER = 2
@@ -99,6 +100,45 @@ def init_taken_courses_db() -> None:
             conn.execute(
                 "ALTER TABLE semester_courses ADD COLUMN bannerweb_ects_credits REAL"
             )
+
+
+def init_program_requirements_db() -> None:
+    """Create the program_requirements table and seed it from the JSON file if empty."""
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    with sqlite3.connect(PROGRAM_REQUIREMENTS_DB_PATH) as conn:
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS program_requirements (
+                id          INTEGER PRIMARY KEY AUTOINCREMENT,
+                program_code TEXT UNIQUE NOT NULL,
+                program_name TEXT NOT NULL,
+                requirements_json TEXT NOT NULL,
+                seeded_at   TEXT DEFAULT (datetime('now'))
+            )
+            """
+        )
+        row_count = conn.execute(
+            "SELECT COUNT(*) FROM program_requirements"
+        ).fetchone()[0]
+        if row_count == 0 and REQUIREMENTS_PATH.exists():
+            try:
+                with REQUIREMENTS_PATH.open("r", encoding="utf-8") as f:
+                    data = json.load(f)
+                prog = data.get("program", {})
+                conn.execute(
+                    """
+                    INSERT OR IGNORE INTO program_requirements
+                        (program_code, program_name, requirements_json)
+                    VALUES (?, ?, ?)
+                    """,
+                    (
+                        prog.get("program_code", "BSCS"),
+                        prog.get("program_name", "Computer Science and Engineering"),
+                        json.dumps(data),
+                    ),
+                )
+            except (OSError, json.JSONDecodeError):
+                pass
 
 
 def add_taken_course(course_code: str, grade: str) -> None:
@@ -262,6 +302,17 @@ def _program_required_totals() -> tuple[float | None, float | None]:
 
 @lru_cache(maxsize=1)
 def _requirements_data() -> dict:
+    init_program_requirements_db()
+    try:
+        with sqlite3.connect(PROGRAM_REQUIREMENTS_DB_PATH) as conn:
+            row = conn.execute(
+                "SELECT requirements_json FROM program_requirements LIMIT 1"
+            ).fetchone()
+        if row:
+            return json.loads(row[0])
+    except (sqlite3.Error, json.JSONDecodeError, OSError):
+        pass
+    # Fallback: read directly from JSON if DB unavailable
     if not REQUIREMENTS_PATH.exists():
         return {}
     try:
