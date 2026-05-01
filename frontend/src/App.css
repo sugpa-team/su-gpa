@@ -312,6 +312,15 @@ textarea {
   font: inherit;
 }
 
+input[type=checkbox],
+input[type=radio] {
+  min-height: unset;
+  width: auto;
+  padding: 0;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
 input,
 select,
 textarea {
@@ -652,7 +661,7 @@ textarea:hover:not(:disabled) {
   background: #ffffff;
   padding: 18px;
   display: grid;
-  gap: 12px;
+  gap: 8px;
   box-shadow: 0 6px 20px rgba(18, 99, 63, 0.05);
   transition:
     transform 0.18s ease,
@@ -677,6 +686,12 @@ textarea:hover:not(:disabled) {
   margin: 0;
   font-size: 18px;
   line-height: 1.3;
+}
+
+.requirement-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #374151;
 }
 
 .requirement-card-header strong {
@@ -1125,13 +1140,15 @@ textarea:hover:not(:disabled) {
 .planner-filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1rem;
+  gap: 0.4rem 0.75rem;
   font-size: 0.85em;
 }
 .planner-filters label {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.35rem;
+  white-space: nowrap;
+  cursor: pointer;
 }
 .planner-course-list {
   list-style: none;

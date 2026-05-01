@@ -102,8 +102,8 @@ function MainPage({ profile, onProfileUpdated, programs }) {
       )}
 
       {activeTab === 'course-catalog' && <CourseCatalog courses={courses} loading={coursesLoading} />}
-      {activeTab === 'graduation-requirements' && <GraduationRequirements />}
-      {activeTab === 'bannerweb-degree-requirements-helper' && <DegreeRequirementsHelper />}
+      {activeTab === 'graduation-requirements' && <GraduationRequirements dataVersion={dataVersion} />}
+      {activeTab === 'bannerweb-degree-requirements-helper' && <DegreeRequirementsHelper onDataChanged={handleDataChanged} />}
       {activeTab === 'planner' && <Planner />}
     </main>
   )
