@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { apiRequest } from '../lib/api'
+import CreditSummaryCard from '../components/CreditSummaryCard'
 
 function formatValue(value, suffix = '') {
   if (value === null || value === undefined) {
@@ -23,12 +24,7 @@ function GraduationRequirements({ dataVersion = 0 }) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [categories, setCategories] = useState([])
-  const [overallCredits, setOverallCredits] = useState({
-    requiredSu: 0,
-    requiredEcts: 0,
-    completedSu: 0,
-    completedEcts: 0,
-  })
+  const [creditTotals, setCreditTotals] = useState({ completed: 0, required: null })
 
   const overview = useMemo(() => {
     const safeCategories = categories || []
@@ -42,42 +38,27 @@ function GraduationRequirements({ dataVersion = 0 }) {
         ? progressValues.reduce((sum, value) => sum + Number(value), 0) / progressValues.length
         : 0
 
-    const remainingSu = Math.max(0, Number(overallCredits.requiredSu) - Number(overallCredits.completedSu))
-    const remainingEcts = Math.max(0, Number(overallCredits.requiredEcts) - Number(overallCredits.completedEcts))
-    const remainingCourses = safeCategories.reduce(
-      (sum, item) => sum + Number(item.remaining_courses || 0),
-      0,
-    )
-
     return {
       overallPercent,
-      remainingSu,
-      remainingEcts,
-      remainingCourses,
       completedCount: safeCategories.filter(item => Number(item.progress_percent || 0) >= 100).length,
       totalCount: safeCategories.length,
-      requiredSu: Number(overallCredits.requiredSu || 0),
-      requiredEcts: Number(overallCredits.requiredEcts || 0),
     }
-  }, [categories, overallCredits])
+  }, [categories])
 
   useEffect(() => {
     let ignore = false
 
     async function loadProgress() {
       try {
-        const [requirementsResponse, gpaResponse] = await Promise.all([
-          apiRequest('/api/graduation-requirements'),
-          apiRequest('/api/gpa'),
-        ])
+        const requirementsResponse = await apiRequest('/api/graduation-requirements')
 
         if (!ignore) {
           setCategories(requirementsResponse.categories || [])
-          setOverallCredits({
-            requiredSu: Number(gpaResponse.program_required_su_credits || 0),
-            requiredEcts: Number(gpaResponse.program_required_ects_credits || 0),
-            completedSu: Number(gpaResponse.total_planned_su_credits || 0),
-            completedEcts: Number(gpaResponse.total_planned_ects_credits || 0),
+          setCreditTotals({
+            completed: Number(requirementsResponse.total_credits_completed || 0),
+            required: requirementsResponse.total_credits_required != null
+              ? Number(requirementsResponse.total_credits_required)
+              : null,
           })
           setError(null)
         }
@@ -118,7 +99,11 @@ function GraduationRequirements({ dataVersion = 0 }) {
 
       {!loading && !error && (
         <>
-          <section className="requirements-overview" aria-label="Overall graduation progress">
+          <section
+            className="requirements-overview"
+            style={{ gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}
+            aria-label="Overall graduation progress"
+          >
             <article className="requirements-overview-card">
               <span>Overall Completion</span>
               <strong>{overview.overallPercent.toFixed(1)}%</strong>
@@ -133,19 +118,15 @@ function GraduationRequirements({ dataVersion = 0 }) {
                 {overview.completedCount}/{overview.totalCount}
               </strong>
             </article>
-
-            <article className="requirements-overview-card">
-              <span>Remaining Totals</span>
-              <strong>
-                SU Credits {formatValue(overview.remainingSu)} / {formatValue(overview.requiredSu)}
-              </strong>
-              <small>
-                ECTS Credits {formatValue(overview.remainingEcts)} / {formatValue(overview.requiredEcts)}
-              </small>
-            </article>
           </section>
 
-          <div className="requirements-grid">
+          <CreditSummaryCard
+            totalCompleted={creditTotals.completed}
+            totalRequired={creditTotals.required}
+            categories={categories}
+          />
+
+          <div className="requirements-grid" style={{ marginTop: '16px' }}>
             {categories.map(item => {
               const progressPercent = Number(item.progress_percent || 0)
 

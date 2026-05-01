@@ -1347,6 +1347,95 @@ textarea:hover:not(:disabled) {
   transform: translateY(-50%);
 }
 
+.dashboard-summary-strip {
+  width: min(1180px, calc(100% - 32px));
+  margin: 20px auto 0;
+}
+
+.credit-summary-card {
+  border: 1px solid #dfe7e2;
+  border-radius: 16px;
+  background: #ffffff;
+  padding: 18px;
+  display: grid;
+  gap: 10px;
+  box-shadow: 0 6px 20px rgba(18, 99, 63, 0.05);
+}
+
+.credit-summary-card .eyebrow {
+  margin: 0;
+}
+
+.credit-summary-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.credit-summary-total-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111111;
+}
+
+.credit-summary-total-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111111;
+  white-space: nowrap;
+}
+
+.credit-summary-pct {
+  color: #5f6b65;
+  font-weight: 600;
+}
+
+.credit-summary-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.credit-summary-row {
+  display: grid;
+  grid-template-columns: 14px 1fr auto auto;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 6px;
+  border-radius: 8px;
+}
+
+.credit-summary-row:hover {
+  background: #f3faf6;
+}
+
+.credit-summary-connector {
+  font-family: monospace;
+  color: #b0bdb6;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.credit-summary-cat {
+  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.credit-summary-fraction {
+  color: #111111;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-align: right;
+}
+
 @media (max-width: 1024px) {
   .planner-layout {
     grid-template-columns: 1fr;

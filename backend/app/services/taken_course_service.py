@@ -1426,7 +1426,24 @@ def get_graduation_requirements_progress() -> dict:
             }
         )
 
-    return {"categories": category_progress}
+    total_credits_completed = round(
+        sum(_row_su_credits(row, courses_by_code) for row in latest_attempt_rows), 2
+    )
+    total_ects_completed = 0.0
+    for row in latest_attempt_rows:
+        ects = _row_ects_credits(row, courses_by_code)
+        if ects is not None:
+            total_ects_completed += ects
+    total_ects_completed = round(total_ects_completed, 2)
+    program_required_su, program_required_ects = _program_required_totals()
+
+    return {
+        "categories": category_progress,
+        "total_credits_completed": total_credits_completed,
+        "total_credits_required": float(program_required_su) if program_required_su is not None else None,
+        "total_ects_completed": total_ects_completed,
+        "total_ects_required": float(program_required_ects) if program_required_ects is not None else None,
+    }
 
 
 def get_requirements_course_catalog() -> dict:

@@ -5,6 +5,7 @@ import DegreeRequirementsHelper from './DegreeRequirementsHelper'
 import GpaCalculator from './GpaCalculator'
 import GraduationRequirements from './GraduationRequirements'
 import Planner from './Planner'
+import CreditSummaryCard from '../components/CreditSummaryCard'
 import { apiRequest } from '../lib/api'
 
 function MainPage({ profile, onProfileUpdated, programs }) {
@@ -13,6 +14,7 @@ function MainPage({ profile, onProfileUpdated, programs }) {
   const [coursesLoading, setCoursesLoading] = useState(true)
   const [coursesError, setCoursesError] = useState(null)
   const [dataVersion, setDataVersion] = useState(0)
+  const [creditSummary, setCreditSummary] = useState({ completed: 0, required: null, categories: [] })
   const handleDataChanged = () => setDataVersion(value => value + 1)
 
   useEffect(() => {
@@ -37,6 +39,28 @@ function MainPage({ profile, onProfileUpdated, programs }) {
     }
 
     loadCourses()
+
+    return () => {
+      ignore = true
+    }
+  }, [dataVersion])
+
+  useEffect(() => {
+    let ignore = false
+
+    apiRequest('/api/graduation-requirements')
+      .then(data => {
+        if (!ignore) {
+          setCreditSummary({
+            completed: Number(data.total_credits_completed || 0),
+            required: data.total_credits_required != null
+              ? Number(data.total_credits_required)
+              : null,
+            categories: data.categories || [],
+          })
+        }
+      })
+      .catch(() => {})
 
     return () => {
       ignore = true
@@ -87,6 +111,14 @@ function MainPage({ profile, onProfileUpdated, programs }) {
           Next Semester Planner
         </button>
       </section>
+
+      <div className="dashboard-summary-strip">
+        <CreditSummaryCard
+          totalCompleted={creditSummary.completed}
+          totalRequired={creditSummary.required}
+          categories={creditSummary.categories}
+        />
+      </div>
 
       {coursesError && <p className="error" role="alert">{coursesError}</p>}
 

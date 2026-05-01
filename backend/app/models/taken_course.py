@@ -108,6 +108,10 @@ class GraduationCategoryProgress(BaseModel):
 
 class GraduationRequirementsProgressResponse(BaseModel):
     categories: list[GraduationCategoryProgress]
+    total_credits_completed: float = 0.0
+    total_credits_required: float | None = None
+    total_ects_completed: float = 0.0
+    total_ects_required: float | None = None
 
 
 class BannerwebAnalyzeRequest(BaseModel):
