@@ -417,6 +417,16 @@ function Planner() {
     })
   }
 
+  function removeCourseFromCalendar(courseCode) {
+    setSelectedSections(curr => {
+      const next = new Map(curr)
+      for (const [key, item] of next.entries()) {
+        if (item.courseCode === courseCode) next.delete(key)
+      }
+      return next
+    })
+  }
+
   function toggleSection(course, classIndex, section) {
     if (course.retake_allowed === false) return
     const key = sectionKey(course.code, classIndex, section)
@@ -705,7 +715,20 @@ function Planner() {
                       >
                         {occupants.map(k => {
                           const item = selectedSections.get(k)
-                          return item ? <div key={k}>{scheduleGridLabel(item)}</div> : null
+                          return item ? (
+                            <div className="planner-grid-event" key={k}>
+                              <span>{scheduleGridLabel(item)}</span>
+                              <button
+                                type="button"
+                                className="planner-grid-remove"
+                                onClick={() => removeCourseFromCalendar(item.courseCode)}
+                                aria-label={`Remove ${item.courseCode} from calendar`}
+                                title={`Remove ${item.courseCode}`}
+                              >
+                                x
+                              </button>
+                            </div>
+                          ) : null
                         })}
                       </td>
                     )
