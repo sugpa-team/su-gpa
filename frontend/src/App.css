@@ -1268,6 +1268,7 @@ textarea:hover:not(:disabled) {
 }
 .planner-grid {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   font-size: 0.85em;
 }
@@ -1279,6 +1280,9 @@ textarea:hover:not(:disabled) {
 .planner-grid thead th {
   background: #f1f5f9;
   font-weight: 600;
+}
+.planner-grid thead th:first-child {
+  width: 60px;
 }
 .planner-grid tbody th {
   background: #f8fafc;
@@ -1297,6 +1301,50 @@ textarea:hover:not(:disabled) {
   font-size: 0.75em;
   font-weight: 700;
   color: #991b1b;
+}
+.planner-grid-event {
+  position: relative;
+  display: block;
+  max-width: 100%;
+  white-space: nowrap;
+  line-height: 1;
+}
+.planner-grid-event + .planner-grid-event {
+  margin-top: 0.2rem;
+}
+.planner-grid-event span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  padding: 0 0.6rem;
+}
+.planner-grid-remove {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  border: 0;
+  background: transparent;
+  color: #0f172a;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+.planner-grid-remove:hover:not(:disabled),
+.planner-grid-remove:focus-visible {
+  border-color: transparent;
+  background: transparent;
+  color: #dc2626;
+  outline: 0;
+}
+.planner-grid-remove:active:not(:disabled) {
+  transform: translateY(-50%);
 }
 
 @media (max-width: 1024px) {
