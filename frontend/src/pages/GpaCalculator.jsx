@@ -21,6 +21,15 @@ function formatNumber(value) {
   return Number(value || 0).toFixed(2)
 }
 
+const TERM_SUFFIX = { '01': 'Fall', '02': 'Spring', '03': 'Summer' }
+
+function parseSemesterName(name) {
+  const str = String(name || '').trim()
+  const match = str.match(/^(\d{4})(01|02|03)$/)
+  if (!match) return { year: str, season: null }
+  return { year: match[1], season: TERM_SUFFIX[match[2]] }
+}
+
 function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLoading, dataVersion = 0 }) {
   const [summary, setSummary] = useState(EMPTY_SUMMARY)
   const [loading, setLoading] = useState(true)
@@ -425,7 +434,14 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
             <article className="semester-panel" key={semester.id}>
               <div className="semester-panel-header">
                 <div>
-                  <h2>{semester.name}</h2>
+                  <h2 className="semester-panel-title">
+                    {(() => {
+                      const { year, season } = parseSemesterName(semester.name)
+                      return season
+                        ? <>{year} <span className={`semester-season-tag season-${season.toLowerCase()}`}>{season}</span></>
+                        : year
+                    })()}
+                  </h2>
                   <p>
                     {formatNumber(semester.total_su_credits)} / {formatNumber(summary.max_semester_su_credits)} SU
                     Credits
