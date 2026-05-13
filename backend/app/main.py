@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.routes.api import router as api_router
+from app.routes.course_feedback import router as course_feedback_router
 from app.routes.courses import router as courses_router
 from app.routes.plans import router as plans_router
 from app.routes.profile import router as profile_router
@@ -35,6 +36,7 @@ app.include_router(api_router, prefix="/api", tags=["live-gpa"])
 app.include_router(profile_router, prefix="/api", tags=["profile"])
 app.include_router(schedule_router, prefix="/api/schedule", tags=["schedule"])
 app.include_router(plans_router, prefix="/api/plans", tags=["plans"])
+app.include_router(course_feedback_router, prefix="/api/course-feedback", tags=["course-feedback"])
 
 
 @app.get("/hello")

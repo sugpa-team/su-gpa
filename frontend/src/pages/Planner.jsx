@@ -25,6 +25,23 @@ const GRADE_POINTS = {
   D: 1,
   F: 0,
 }
+const FEEDBACK_LABELS = {
+  easy: 'Easy',
+  medium: 'Medium',
+  hard: 'Hard',
+  low: 'Low',
+  high: 'High',
+  'exam-heavy': 'Exam-heavy',
+  'project-heavy': 'Project-heavy',
+  mixed: 'Mixed',
+  yes: 'Recommended',
+  maybe: 'Maybe',
+  no: 'Not recommended',
+}
+
+function labelForFeedback(value) {
+  return FEEDBACK_LABELS[value] || value || '-'
+}
 
 function colorFor(courseCode) {
   let hash = 0
@@ -71,6 +88,10 @@ function Planner() {
   const [planNameDraft, setPlanNameDraft] = useState('')
   const [planMessage, setPlanMessage] = useState(null)
   const [busy, setBusy] = useState(false)
+  const [feedbackSummaries, setFeedbackSummaries] = useState({})
+  const [recommendations, setRecommendations] = useState([])
+  const [recommendationsLoading, setRecommendationsLoading] = useState(false)
+  const [recommendationsError, setRecommendationsError] = useState(null)
 
   useEffect(() => {
     let ignore = false
@@ -82,6 +103,18 @@ function Planner() {
         setActiveTerm(list[list.length - 1] || null)
       })
       .catch(err => !ignore && setError(err.message))
+    return () => { ignore = true }
+  }, [])
+
+  useEffect(() => {
+    let ignore = false
+    apiRequest('/api/course-feedback/summary')
+      .then(data => {
+        if (!ignore) {
+          setFeedbackSummaries(data.summaries || {})
+        }
+      })
+      .catch(() => {})
     return () => { ignore = true }
   }, [])
 
@@ -106,6 +139,31 @@ function Planner() {
       })
       .catch(err => !ignore && setError(err.message))
       .finally(() => !ignore && setLoading(false))
+    return () => { ignore = true }
+  }, [activeTerm])
+
+  useEffect(() => {
+    if (!activeTerm) return
+    let ignore = false
+    setRecommendationsLoading(true)
+    setRecommendationsError(null)
+    apiRequest(`/api/course-feedback/recommendations?term=${encodeURIComponent(activeTerm)}&limit=6`)
+      .then(data => {
+        if (!ignore) {
+          setRecommendations(data.recommendations || [])
+        }
+      })
+      .catch(err => {
+        if (!ignore) {
+          setRecommendations([])
+          setRecommendationsError(err.message)
+        }
+      })
+      .finally(() => {
+        if (!ignore) {
+          setRecommendationsLoading(false)
+        }
+      })
     return () => { ignore = true }
   }, [activeTerm])
 
@@ -260,6 +318,11 @@ function Planner() {
     setPlanNameDraft('')
     setSelectedSections(new Map())
     setPlanMessage(null)
+  }
+
+  function focusCourse(courseCode) {
+    setSearch(courseCode)
+    setExpandedCourses(current => ({ ...current, [courseCode]: true }))
   }
 
   const allCategories = useMemo(() => {
@@ -556,6 +619,42 @@ function Planner() {
       </div>
       {planMessage && <p className="status" role="status">{planMessage}</p>}
 
+      <section className="planner-recommendations" aria-label="Course recommendations">
+        <div className="planned-course-panel-header">
+          <strong>Recommended courses</strong>
+          <span>{recommendationsLoading ? 'Loading...' : `${recommendations.length} suggestions`}</span>
+        </div>
+        {recommendationsError && <p className="status">{recommendationsError}</p>}
+        {!recommendationsLoading && !recommendationsError && recommendations.length === 0 && (
+          <p className="status">No eligible recommendations for this term yet.</p>
+        )}
+        {recommendations.length > 0 && (
+          <div className="planner-recommendation-list">
+            {recommendations.map(item => (
+              <article className="planner-recommendation-card" key={item.course_code}>
+                <div>
+                  <strong>{item.course_code}</strong>
+                  <span>{item.course_name || 'Course'}</span>
+                  {item.feedback && (
+                    <small>
+                      {labelForFeedback(item.feedback.recommendation)} | {labelForFeedback(item.feedback.workload)} workload
+                    </small>
+                  )}
+                </div>
+                <ul>
+                  {(item.reasons || []).slice(0, 3).map(reason => (
+                    <li key={reason}>{reason}</li>
+                  ))}
+                </ul>
+                <button type="button" className="ghost-button" onClick={() => focusCourse(item.course_code)}>
+                  View
+                </button>
+              </article>
+            ))}
+          </div>
+        )}
+      </section>
+
       {prereqWarnings.length > 0 && (
         <ul className="planner-warnings" role="alert">
           {prereqWarnings.map(w => (
@@ -640,6 +739,7 @@ function Planner() {
               const expanded = !!expandedCourses[course.code]
               const sectionsTotal = course.classes.reduce((sum, cls) => sum + cls.sections.length, 0)
               const retakeBlocked = course.retake_allowed === false
+              const feedback = feedbackSummaries[course.code]
               return (
                 <li key={course.code} className={`planner-course-row ${retakeBlocked ? 'retake-blocked' : ''}`}>
                   <button
@@ -649,10 +749,11 @@ function Planner() {
                   >
                     <strong>{course.code}</strong> {course.name || ''}
                     <span className="planner-course-meta">
-                      {retakeBlocked ? `${course.retake_reason || 'Retake window expired'} · ` : ''}
-                      {course.su_credits != null ? `${course.su_credits} SU · ` : ''}
+                      {retakeBlocked ? `${course.retake_reason || 'Retake window expired'} | ` : ''}
+                      {course.su_credits != null ? `${course.su_credits} SU | ` : ''}
                       {sectionsTotal} section{sectionsTotal === 1 ? '' : 's'}
-                      {course.requirement_categories.length > 0 ? ` · ${course.requirement_categories.join(', ')}` : ''}
+                      {course.requirement_categories.length > 0 ? ` | ${course.requirement_categories.join(', ')}` : ''}
+                      {feedback ? ` | ${labelForFeedback(feedback.recommendation)} | ${labelForFeedback(feedback.workload)} workload` : ''}
                     </span>
                   </button>
                   {expanded && (

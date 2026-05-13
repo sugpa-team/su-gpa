@@ -288,7 +288,6 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
     let current = summary
     while (current.semesters.length < 2) {
       const name = `Semester ${current.semesters.length + 1}`
-      // eslint-disable-next-line no-await-in-loop
       const nextSummary = await apiRequest('/taken-courses/semesters', {
         method: 'POST',
         body: JSON.stringify({ name }),
@@ -324,7 +323,6 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
           if (existing.has(normalizeCourseCode(resolved))) {
             continue
           }
-          // eslint-disable-next-line no-await-in-loop
           await apiRequest('/api/courses', {
             method: 'POST',
             body: JSON.stringify({ semester_id: mapping.semester.id, course_code: resolved }),
