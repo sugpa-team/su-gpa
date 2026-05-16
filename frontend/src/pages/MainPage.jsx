@@ -5,6 +5,7 @@ import DegreeRequirementsHelper from './DegreeRequirementsHelper'
 import GpaCalculator from './GpaCalculator'
 import GraduationRequirements from './GraduationRequirements'
 import Planner from './Planner'
+import Settings from './Settings'
 import { apiRequest } from '../lib/api'
 import './MainPage.css'
 
@@ -14,6 +15,7 @@ const TABS = [
   { id: 'graduation-requirements',               label: 'Graduation' },
   { id: 'bannerweb-degree-requirements-helper',  label: 'Bannerweb Helper' },
   { id: 'planner',                               label: 'Planner' },
+  { id: 'settings',                              label: 'Settings' },
 ]
 
 function MainPage({ profile, onProfileUpdated, programs }) {
@@ -103,6 +105,10 @@ function MainPage({ profile, onProfileUpdated, programs }) {
 
         {activeTab === 'planner' && (
           <Planner />
+        )}
+
+        {activeTab === 'settings' && (
+          <Settings />
         )}
       </div>
     </main>

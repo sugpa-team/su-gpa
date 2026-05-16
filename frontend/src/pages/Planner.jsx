@@ -14,14 +14,6 @@ const SECTION_COLORS = [
 ]
 const GRADE_OPTIONS = ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F']
 const GRADE_POINTS  = { A: 4, 'A-': 3.7, 'B+': 3.3, B: 3, 'B-': 2.7, 'C+': 2.3, C: 2, 'C-': 1.7, 'D+': 1.3, D: 1, F: 0 }
-const FEEDBACK_LABELS = {
-  easy: 'Easy', medium: 'Medium', hard: 'Hard',
-  low: 'Low', high: 'High',
-  'exam-heavy': 'Exam-heavy', 'project-heavy': 'Project-heavy', mixed: 'Mixed',
-  yes: 'Recommended', maybe: 'Maybe', no: 'Not recommended',
-}
-
-function labelForFeedback(value) { return FEEDBACK_LABELS[value] || value || '-' }
 
 function colorFor(courseCode) {
   let hash = 0
@@ -66,7 +58,6 @@ function Planner() {
   const [planNameDraft, setPlanNameDraft]             = useState('')
   const [planMessage, setPlanMessage]                 = useState(null)
   const [busy, setBusy]                               = useState(false)
-  const [feedbackSummaries, setFeedbackSummaries]     = useState({})
   const [recommendations, setRecommendations]         = useState([])
   const [recommendationsLoading, setRecommendationsLoading] = useState(false)
   const [recommendationsError, setRecommendationsError]     = useState(null)
@@ -81,14 +72,6 @@ function Planner() {
         setActiveTerm(list[list.length - 1] || null)
       })
       .catch(err => !ignore && setError(err.message))
-    return () => { ignore = true }
-  }, [])
-
-  useEffect(() => {
-    let ignore = false
-    apiRequest('/api/course-feedback/summary')
-      .then(data => { if (!ignore) setFeedbackSummaries(data.summaries || {}) })
-      .catch(() => {})
     return () => { ignore = true }
   }, [])
 
@@ -120,6 +103,11 @@ function Planner() {
       .finally(() => { if (!ignore) setRecommendationsLoading(false) })
     return () => { ignore = true }
   }, [activeTerm])
+
+  function focusCourse(courseCode) {
+    setSearch(courseCode)
+    setExpandedCourses(current => ({ ...current, [courseCode]: true }))
+  }
 
   function rebuildSelectionFromPlan(plan, plannerData) {
     if (!plan || !plannerData) return new Map()
@@ -209,11 +197,6 @@ function Planner() {
 
   function handleNewPlan() {
     setActivePlanId(null); setPlanNameDraft(''); setSelectedSections(new Map()); setPlanMessage(null)
-  }
-
-  function focusCourse(courseCode) {
-    setSearch(courseCode)
-    setExpandedCourses(current => ({ ...current, [courseCode]: true }))
   }
 
   const allCategories = useMemo(() => {
@@ -529,7 +512,7 @@ function Planner() {
         </section>
       )}
 
-      
+
       <section className="pl-recs" aria-label="Course recommendations">
         <div className="pl-panel-head">
           <strong className="pl-panel-title">Recommended for You</strong>
@@ -548,11 +531,6 @@ function Planner() {
                 <div className="pl-rec-main">
                   <strong className="pl-rec-code">{item.course_code}</strong>
                   <span className="pl-rec-name">{item.course_name || 'Course'}</span>
-                  {item.feedback && (
-                    <span className="pl-rec-feedback">
-                      {labelForFeedback(item.feedback.recommendation)} · {labelForFeedback(item.feedback.workload)} workload
-                    </span>
-                  )}
                 </div>
                 {(item.reasons || []).length > 0 && (
                   <ul className="pl-rec-reasons">
@@ -568,7 +546,6 @@ function Planner() {
         )}
       </section>
 
-      
       <div className="pl-layout">
 
         
@@ -604,7 +581,6 @@ function Planner() {
               const expanded      = !!expandedCourses[course.code]
               const sectionsTotal = course.classes.reduce((sum, cls) => sum + cls.sections.length, 0)
               const retakeBlocked = course.retake_allowed === false
-              const feedback      = feedbackSummaries[course.code]
 
               return (
                 <li key={course.code} className={['pl-course-item', retakeBlocked ? 'pl-course-item--blocked' : ''].join(' ').trim()}>
@@ -621,7 +597,6 @@ function Planner() {
                       {(course.requirement_categories || []).map(cat => (
                         <span key={cat} className="pl-tag pl-tag--cat">{cat}</span>
                       ))}
-                      {feedback && <span className="pl-tag pl-tag--feedback">{labelForFeedback(feedback.recommendation)}</span>}
                     </div>
                   </button>
 
