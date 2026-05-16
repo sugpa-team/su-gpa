@@ -1,0 +1,416 @@
+
+
+.gr-root {
+  --gr-bg:          #0b0b12;
+  --gr-surface:     #111119;
+  --gr-surface-alt: #16161f;
+  --gr-border:      rgba(255 255 255 / 0.07);
+  --gr-border-mid:  rgba(255 255 255 / 0.12);
+
+  --gr-text:        #e4e0f0;
+  --gr-text-muted:  #a9a2bc;
+  --gr-text-subtle: #807891;
+
+  --gr-accent:      #e8a030;
+  --gr-accent-dim:  rgba(232 160 48 / 0.10);
+  --gr-accent-glow: rgba(232 160 48 / 0.18);
+
+  --gr-done:        #3dd68c;
+  --gr-done-dim:    rgba(61 214 140 / 0.10);
+  --gr-done-border: rgba(61 214 140 / 0.20);
+
+  --gr-blue:        #5b8ef0;
+  --gr-blue-dim:    rgba(91 142 240 / 0.15);
+
+  --gr-danger:      #e05858;
+  --gr-danger-dim:  rgba(224 88 88 / 0.12);
+
+  --gr-radius-sm:   6px;
+  --gr-radius:      12px;
+  --gr-radius-lg:   18px;
+
+  --gr-font-ui:      'DM Sans', system-ui, sans-serif;
+  --gr-font-mono:    'DM Mono', 'Courier New', monospace;
+  --gr-font-display: 'Sora', system-ui, sans-serif;
+
+  --gr-transition:   160ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  font-family: var(--gr-font-ui);
+  color:       var(--gr-text);
+  box-sizing:  border-box;
+}
+
+.gr-root,
+.gr-root *,
+.gr-root *::before,
+.gr-root *::after {
+  box-sizing: border-box;
+}
+
+.gr-root button,
+.gr-root input,
+.gr-root select,
+.gr-root textarea {
+  min-height: 0;
+}
+
+.gr-header {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--gr-border);
+  margin-bottom: 1.5rem;
+}
+
+.gr-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gr-accent);
+  margin: 0 0 0.35rem;
+}
+
+.gr-title {
+  font-family: var(--gr-font-display);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--gr-text);
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.gr-status {
+  font-size: 0.83rem;
+  color: var(--gr-text-muted);
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.gr-feedback {
+  font-size: 0.8rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--gr-radius-sm);
+  border: 1px solid transparent;
+  margin-bottom: 1rem;
+}
+
+.gr-feedback--error {
+  background: var(--gr-danger-dim);
+  border-color: rgba(224 88 88 / 0.25);
+  color: #f08080;
+}
+
+.gr-overview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.gr-overview-card {
+  background: var(--gr-surface);
+  border: 1px solid var(--gr-border);
+  border-radius: var(--gr-radius-lg);
+  padding: 1.2rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.gr-overview-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gr-text-muted);
+}
+
+.gr-overview-value {
+  font-family: var(--gr-font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gr-accent);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.gr-overview-value em {
+  font-style: normal;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--gr-text-muted);
+}
+
+.gr-category-dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 0.15rem;
+}
+
+.gr-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gr-border-mid);
+  transition: background var(--gr-transition);
+}
+
+.gr-dot--done {
+  background: var(--gr-done);
+  box-shadow: 0 0 6px rgba(61 214 140 / 0.4);
+}
+
+.gr-meter {
+  height: 3px;
+  background: var(--gr-border-mid);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.gr-meter-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--gr-accent), #f0c060);
+  border-radius: 99px;
+  transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gr-meter-fill--done {
+  background: linear-gradient(to right, var(--gr-done), #60e8a0);
+}
+
+.gr-root > .credit-summary-card {
+  margin-bottom: 1rem;
+  border-color: var(--gr-border);
+  background: var(--gr-surface);
+  color: var(--gr-text);
+  box-shadow: none;
+}
+
+.gr-root > .credit-summary-card .eyebrow {
+  color: var(--gr-accent);
+}
+
+.gr-root > .credit-summary-card .credit-summary-total-label,
+.gr-root > .credit-summary-card .credit-summary-total-value,
+.gr-root > .credit-summary-card .credit-summary-fraction {
+  color: var(--gr-text);
+}
+
+.gr-root > .credit-summary-card .credit-summary-pct,
+.gr-root > .credit-summary-card .credit-summary-cat {
+  color: var(--gr-text-muted);
+}
+
+.gr-root > .credit-summary-card .credit-summary-connector {
+  color: rgba(228 224 240 / 0.28);
+}
+
+.gr-root > .credit-summary-card .credit-summary-row:hover {
+  background: var(--gr-accent-dim);
+}
+
+.gr-root > .credit-summary-card .credit-meter {
+  background: var(--gr-border-mid);
+}
+
+.gr-root > .credit-summary-card .credit-meter-fill,
+.gr-root > .credit-summary-card .credit-meter span {
+  background: linear-gradient(90deg, var(--gr-accent) 0%, #f0c060 100%);
+}
+
+.gr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.875rem;
+  margin-top: 1rem;
+}
+
+.gr-card {
+  background: var(--gr-surface);
+  border: 1px solid var(--gr-border);
+  border-radius: var(--gr-radius-lg);
+  padding: 1.1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  transition: border-color var(--gr-transition);
+}
+
+.gr-card:hover {
+  border-color: var(--gr-border-mid);
+}
+
+.gr-card--done {
+  border-color: var(--gr-done-border);
+  background: linear-gradient(
+    160deg,
+    var(--gr-surface) 60%,
+    rgba(61 214 140 / 0.05) 100%
+  );
+}
+
+.gr-card--done:hover {
+  border-color: rgba(61 214 140 / 0.35);
+}
+
+.gr-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.gr-card-title {
+  font-family: var(--gr-font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gr-text);
+  margin: 0;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.gr-pct-badge {
+  font-family: var(--gr-font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.2em 0.55em;
+  border-radius: 99px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  background: var(--gr-accent-dim);
+  color: var(--gr-accent);
+  border: 1px solid rgba(232 160 48 / 0.22);
+}
+
+.gr-pct-badge--done {
+  background: var(--gr-done-dim);
+  color: var(--gr-done);
+  border-color: var(--gr-done-border);
+}
+
+.gr-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gr-meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.gr-meta-labels {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.gr-meta-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gr-text-muted);
+}
+
+.gr-meta-value {
+  font-family: var(--gr-font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--gr-text);
+}
+
+.gr-meta-value em {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--gr-text-muted);
+}
+
+.gr-mini-meter {
+  height: 2px;
+  background: var(--gr-border-mid);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.gr-mini-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gr-mini-fill--su {
+  background: var(--gr-accent);
+}
+
+.gr-mini-fill--ects {
+  background: var(--gr-blue);
+}
+
+.gr-meta-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--gr-border);
+  flex-wrap: wrap;
+}
+
+.gr-meta-footer .gr-meta-label {
+  margin-right: auto;
+}
+
+.gr-remaining {
+  font-family: var(--gr-font-mono);
+  font-size: 0.7rem;
+  color: var(--gr-text-subtle);
+  background: var(--gr-surface-alt, #16161f);
+  border: 1px solid var(--gr-border);
+  padding: 0.15em 0.5em;
+  border-radius: 99px;
+}
+
+@media (max-width: 600px) {
+  .gr-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .gr-overview-value {
+    font-size: 1.6rem;
+  }
+
+  .gr-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gr-eyebrow,
+.gr-overview-label,
+.gr-pct-badge,
+.gr-meta-label,
+.gr-root > .credit-summary-card .eyebrow {
+  font-weight: 800;
+}
+
+.gr-status,
+.gr-overview-value em,
+.gr-root > .credit-summary-card .credit-summary-pct,
+.gr-root > .credit-summary-card .credit-summary-cat,
+.gr-meta-value em,
+.gr-remaining {
+  color: #c8c2d6;
+  font-weight: 600;
+}
+
+.gr-card-title,
+.gr-overview-value,
+.gr-meta-value,
+.gr-root > .credit-summary-card .credit-summary-total-label,
+.gr-root > .credit-summary-card .credit-summary-total-value,
+.gr-root > .credit-summary-card .credit-summary-fraction {
+  font-weight: 800;
+}

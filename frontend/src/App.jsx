@@ -10,18 +10,16 @@ function App() {
   const hasSelectedProgram = Boolean(profile.program_id && profile.entry_term)
 
   if (loading) {
-    return <p className="status app-state">Loading...</p>
+    return <p className="app-loading" role="status">Loading…</p>
   }
 
   if (error) {
     return (
-      <main className="onboarding-page">
-        <section className="onboarding-card">
-          <p className="error" role="alert">
-            {error}
-          </p>
-        </section>
-      </main>
+      <div className="app-error-shell">
+        <div className="app-error-card">
+          <p className="app-error-message" role="alert">{error}</p>
+        </div>
+      </div>
     )
   }
 

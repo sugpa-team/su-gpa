@@ -9,7 +9,7 @@ function SearchableDropdown({
   label,
   value,
   placeholder,
-  options,
+  options = [],
   disabled,
   onInputChange,
   onOptionSelect,
@@ -19,9 +19,7 @@ function SearchableDropdown({
 
   const filteredOptions = useMemo(() => {
     const query = normalizeText(value)
-    if (!query) {
-      return options
-    }
+    if (!query) return options
     return options.filter(option => normalizeText(option.label).includes(query))
   }, [options, value])
 
@@ -30,7 +28,8 @@ function SearchableDropdown({
       <label htmlFor={id} className={hideLabel ? 'visually-hidden' : undefined}>
         {label}
       </label>
-      <div className={`searchable-dropdown-shell ${open ? 'open' : ''}`}>
+
+      <div className={['searchable-dropdown-shell', open ? 'open' : ''].join(' ').trim()}>
         <input
           id={id}
           type="text"
@@ -38,16 +37,12 @@ function SearchableDropdown({
           placeholder={placeholder}
           disabled={disabled}
           onFocus={() => setOpen(true)}
-          onBlur={() => {
-            setTimeout(() => setOpen(false), 120)
-          }}
-          onChange={event => {
-            onInputChange(event.target.value)
-            setOpen(true)
-          }}
+          onBlur={() => { setTimeout(() => setOpen(false), 120) }}
+          onChange={event => { onInputChange(event.target.value); setOpen(true) }}
         />
         <span className="searchable-dropdown-arrow" aria-hidden="true" />
       </div>
+
       {open && !disabled && (
         <div className="searchable-dropdown-menu" role="listbox">
           {filteredOptions.length > 0 ? (
@@ -56,11 +51,9 @@ function SearchableDropdown({
                 key={option.value}
                 type="button"
                 className="searchable-dropdown-option"
+                role="option"
                 onMouseDown={event => event.preventDefault()}
-                onClick={() => {
-                  onOptionSelect(option)
-                  setOpen(false)
-                }}
+                onClick={() => { onOptionSelect(option); setOpen(false) }}
               >
                 {option.label}
               </button>
@@ -75,4 +68,3 @@ function SearchableDropdown({
 }
 
 export default SearchableDropdown
-
