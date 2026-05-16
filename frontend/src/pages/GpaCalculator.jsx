@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import SearchableDropdown from '../components/SearchableDropdown'
 import { apiRequest } from '../lib/api'
+import './GpaCalculator.css'
 
 const EMPTY_SUMMARY = {
   semesters: [],
@@ -79,9 +80,7 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
     for (const semester of summary.semesters) {
       for (const course of semester.courses) {
         const courseCode = String(course.course_code || '').trim().toUpperCase()
-        if (!courseCode) {
-          continue
-        }
+        if (!courseCode) continue
         if (!attemptsByCourse.has(courseCode)) {
           attemptsByCourse.set(courseCode, [])
         }
@@ -95,15 +94,14 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
     }
 
     for (const semesterIds of attemptsByCourse.values()) {
-      if (semesterIds.length < 2) {
-        continue
-      }
+      if (semesterIds.length < 2) continue
       const latestSemesterId = semesterIds[semesterIds.length - 1]
       result[latestSemesterId] = true
     }
 
     return result
   }, [summary.semesters])
+
   const currentProgram = useMemo(
     () => programs.find(program => program.id === profile.program_id),
     [profile.program_id, programs],
@@ -112,7 +110,6 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
   async function runAction(action) {
     setSaving(true)
     setError(null)
-
     try {
       await action()
     } catch (requestError) {
@@ -123,9 +120,7 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
   }
 
   function updateSummary(nextSummary) {
-    if (nextSummary) {
-      setSummary(nextSummary)
-    }
+    if (nextSummary) setSummary(nextSummary)
   }
 
   function getNextSemesterNameFrom(semesters) {
@@ -201,17 +196,11 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
 
   async function handleProgramUpdate(event) {
     event.preventDefault()
-    if (!programDraftId) {
-      return
-    }
-    if (Number(programDraftId) === profile.program_id) {
-      return
-    }
+    if (!programDraftId) return
+    if (Number(programDraftId) === profile.program_id) return
 
     const confirmed = window.confirm('This will reset your graduation tracking. Continue?')
-    if (!confirmed) {
-      return
-    }
+    if (!confirmed) return
 
     const selectedProgram = programs.find(program => program.id === Number(programDraftId))
     if (!selectedProgram) {
@@ -241,20 +230,11 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
     const overloadSlotsRemaining = Math.max(0, 2 - (semester.overload_course_count || 0))
 
     return courses.filter(course => {
-      if (course.su_credits === null || course.su_credits === undefined) {
-        return false
-      }
-      if (eligibleCourseCodes.size > 0 && !eligibleCourseCodes.has(course.course)) {
-        return false
-      }
-
+      if (course.su_credits === null || course.su_credits === undefined) return false
+      if (eligibleCourseCodes.size > 0 && !eligibleCourseCodes.has(course.course)) return false
       const credits = Number(course.su_credits || 0)
-      if (usedCourseCodes.has(course.course)) {
-        return false
-      }
-      if (credits <= remainingCredits) {
-        return true
-      }
+      if (usedCourseCodes.has(course.course)) return false
+      if (credits <= remainingCredits) return true
       return overloadSlotsRemaining > 0
     })
   }
@@ -266,18 +246,13 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
   }
 
   function normalizeCourseCode(value) {
-    return String(value || '')
-      .trim()
-      .toUpperCase()
-      .replace(/\s+/g, ' ')
+    return String(value || '').trim().toUpperCase().replace(/\s+/g, ' ')
   }
 
   function resolveCourseCode(desiredCode) {
     const normalizedDesired = normalizeCourseCode(desiredCode).replace(/\s/g, '')
     const exact = courses.find(course => normalizeCourseCode(course.course) === normalizeCourseCode(desiredCode))
-    if (exact) {
-      return exact.course
-    }
+    if (exact) return exact.course
     const relaxed = courses.find(
       course => normalizeCourseCode(course.course).replace(/\s/g, '') === normalizedDesired,
     )
@@ -317,12 +292,8 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
         )
         for (const desiredCode of mapping.desired) {
           const resolved = resolveCourseCode(desiredCode)
-          if (!resolved) {
-            continue
-          }
-          if (existing.has(normalizeCourseCode(resolved))) {
-            continue
-          }
+          if (!resolved) continue
+          if (existing.has(normalizeCourseCode(resolved))) continue
           await apiRequest('/api/courses', {
             method: 'POST',
             body: JSON.stringify({ semester_id: mapping.semester.id, course_code: resolved }),
@@ -336,28 +307,33 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
   }
 
   return (
-    <section className="planner-shell" aria-labelledby="planner-title">
-      <div className="planner-header">
-        <div>
-          <p className="eyebrow">Sabanci University</p>
-          <h1 id="planner-title">SUGpa</h1>
-          <p className="program-context">
+    <section className="gc-root" aria-labelledby="planner-title">
+
+      
+      <header className="gc-header">
+        <div className="gc-header-left">
+          <p className="gc-eyebrow">Sabancı University</p>
+          <h1 id="planner-title" className="gc-brand">SUGpa</h1>
+          <p className="gc-program-label">
             {currentProgram
-              ? `${currentProgram.faculty} / ${currentProgram.program_name} / ${profile.entry_term || '-'}`
-              : 'Program not selected'}
+              ? `${currentProgram.faculty} · ${currentProgram.program_name} · ${profile.entry_term || '—'}`
+              : 'No program selected'}
           </p>
         </div>
-        <div className="gpa-score" aria-live="polite">
-          <span>Overall GPA</span>
-          <strong>{formatNumber(cgpa)}</strong>
+        <div className="gc-gpa-badge" aria-live="polite">
+          <span className="gc-gpa-label">Overall GPA</span>
+          <strong className="gc-gpa-value">{formatNumber(cgpa)}</strong>
+          <span className="gc-gpa-denom">/4.00</span>
         </div>
-      </div>
+      </header>
 
-      <form className="program-update-form" onSubmit={handleProgramUpdate}>
-        <label htmlFor="program-update">Selected Program</label>
-        <div className="program-update-controls">
+      
+      <form className="gc-program-form" onSubmit={handleProgramUpdate}>
+        <label className="gc-field-label" htmlFor="program-update">Program</label>
+        <div className="gc-program-row">
           <select
             id="program-update"
+            className="gc-select"
             value={programDraftId}
             onChange={event => setProgramDraftId(event.target.value)}
             disabled={saving}
@@ -369,59 +345,72 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
             ))}
           </select>
           <button
+            className="gc-btn gc-btn--primary"
             type="submit"
             disabled={saving || !programDraftId || Number(programDraftId) === profile.program_id}
           >
-            Update Program
+            Update
           </button>
         </div>
       </form>
 
-      <div className="summary-strip">
-        <div>
-          <span>Total Semesters</span>
-          <strong>{summary.semesters.length}</strong>
+      
+      <div className="gc-stats">
+        <div className="gc-stat">
+          <span className="gc-stat-label">Semesters</span>
+          <strong className="gc-stat-value">{summary.semesters.length}</strong>
         </div>
-        <div>
-          <span>SU Credits</span>
-          <strong>{formatNumber(totalPlannedSuCredits)}/{formatNumber(summary.program_required_su_credits ?? 0)}</strong>
+        <div className="gc-stat">
+          <span className="gc-stat-label">SU Credits</span>
+          <strong className="gc-stat-value">
+            {formatNumber(totalPlannedSuCredits)}
+            <em>/{formatNumber(summary.program_required_su_credits ?? 0)}</em>
+          </strong>
         </div>
-        <div>
-          <span>ECTS Credits</span>
-          <strong>{formatNumber(totalPlannedEctsCredits)}/{formatNumber(summary.program_required_ects_credits ?? 0)}</strong>
+        <div className="gc-stat">
+          <span className="gc-stat-label">ECTS Credits</span>
+          <strong className="gc-stat-value">
+            {formatNumber(totalPlannedEctsCredits)}
+            <em>/{formatNumber(summary.program_required_ects_credits ?? 0)}</em>
+          </strong>
         </div>
       </div>
 
-      <div className="semester-form">
-        <button type="button" onClick={handleCreateSemester} disabled={saving}>
-          Add Semester
+      
+      <div className="gc-toolbar">
+        <button className="gc-btn gc-btn--primary" type="button" onClick={handleCreateSemester} disabled={saving}>
+          <span className="gc-btn-icon">+</span> Add Semester
         </button>
         <button
+          className="gc-btn gc-btn--ghost"
           type="button"
-          className="ghost-button"
           onClick={handleAddFirstYearCourses}
           disabled={saving || loading || coursesLoading || courses.length === 0}
         >
-          Add 1st year courses (Sem 1-2)
+          Seed 1st Year Courses
         </button>
       </div>
 
-      {loading && <p className="status">Loading planner...</p>}
-      {error && <p className="error" role="alert">{error}</p>}
+      
+      {loading && <p className="gc-feedback gc-feedback--info">Loading planner…</p>}
+      {error && <p className="gc-feedback gc-feedback--error" role="alert">{error}</p>}
 
       {!loading && summary.semesters.length === 0 && (
-        <p className="empty-state">Create a semester to start planning courses and grades.</p>
+        <div className="gc-empty">
+          <div className="gc-empty-icon">📋</div>
+          <p>Add a semester to start planning your courses and grades.</p>
+        </div>
       )}
 
-      <div className="semesters-grid">
+      
+      <div className="gc-grid">
         {summary.semesters.map(semester => {
           const options = courseOptionsForSemester(semester)
           const selectedCode = selectedCourses[semester.id]
           const selectedCourse = options.find(course => course.course === selectedCode)
           const willExceedLimitWithSelection =
             selectedCourse &&
-            semester.total_su_credits + Number(selectedCourse.su_credits || 0) >
-              summary.max_semester_su_credits
+            semester.total_su_credits + Number(selectedCourse.su_credits || 0) > summary.max_semester_su_credits
           const isAlreadyOverLimit = semester.total_su_credits > summary.max_semester_su_credits
           const creditPercent = Math.min(
             100,
@@ -429,59 +418,65 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
           )
 
           return (
-            <article className="semester-panel" key={semester.id}>
-              <div className="semester-panel-header">
-                <div>
-                  <h2 className="semester-panel-title">
+            <article className="gc-semester" key={semester.id}>
+
+              
+              <div className="gc-semester-head">
+                <div className="gc-semester-title-group">
+                  <h2 className="gc-semester-title">
                     {(() => {
                       const { year, season } = parseSemesterName(semester.name)
                       return season
-                        ? <>{year} <span className={`semester-season-tag season-${season.toLowerCase()}`}>{season}</span></>
+                        ? <>{year} <span className={`gc-season gc-season--${season.toLowerCase()}`}>{season}</span></>
                         : year
                     })()}
                   </h2>
-                  <p>
-                    {formatNumber(semester.total_su_credits)} / {formatNumber(summary.max_semester_su_credits)} SU
-                    Credits
+                  <p className="gc-semester-credits">
+                    {formatNumber(semester.total_su_credits)}<span className="gc-credits-sep"> / </span>{formatNumber(summary.max_semester_su_credits)} SU
                   </p>
                 </div>
-                <div className="semester-gpa">
-                  <span>GPA</span>
-                  <strong>{formatNumber(summary.semester_gpa[semester.id] ?? semester.gpa)}</strong>
+                <div className="gc-semester-gpa">
+                  <span className="gc-semester-gpa-label">GPA</span>
+                  <strong className="gc-semester-gpa-value">
+                    {formatNumber(summary.semester_gpa[semester.id] ?? semester.gpa)}
+                  </strong>
                 </div>
               </div>
 
-              <div className="credit-meter" aria-hidden="true">
-                <span style={{ width: `${creditPercent}%` }} />
+              
+              <div className="gc-meter" aria-hidden="true">
+                <div
+                  className={['gc-meter-fill', isAlreadyOverLimit ? 'gc-meter-fill--over' : ''].join(' ').trim()}
+                  style={{ width: `${creditPercent}%` }}
+                />
               </div>
 
+              
               {semester.courses.length === 0 ? (
-                <p className="semester-empty">No courses added yet.</p>
+                <p className="gc-no-courses">No courses added yet.</p>
               ) : (
-                <div className="semester-course-list">
+                <ul className="gc-course-list">
                   {semester.courses.map(course => (
-                    <div className="semester-course" key={course.id}>
-                      <div>
-                        <strong>{course.course_code}</strong>
-                        <span>{course.course_name || 'Course'}</span>
-                        <small>{formatNumber(course.su_credits)} SU Credits</small>
+                    <li className="gc-course" key={course.id}>
+                      <div className="gc-course-info">
+                        <strong className="gc-course-code">{course.course_code}</strong>
+                        <span className="gc-course-name">{course.course_name || 'Course'}</span>
+                        <span className="gc-course-credits">{formatNumber(course.su_credits)} SU</span>
                       </div>
                       <select
-                        className="grade-select"
+                        className="gc-grade-select"
                         value={course.grade || ''}
                         onChange={event => handleGradeChange(course.id, event.target.value)}
                         disabled={saving}
                         aria-label={`Grade for ${course.course_code}`}
                       >
-                        <option value="">Grade</option>
+                        <option value="">—</option>
                         {GRADE_OPTIONS.map(grade => (
-                          <option key={grade} value={grade}>
-                            {grade}
-                          </option>
+                          <option key={grade} value={grade}>{grade}</option>
                         ))}
                       </select>
                       <button
-                        className="remove-course-button"
+                        className="gc-remove-btn"
                         type="button"
                         onClick={() => handleRemoveCourse(course.id)}
                         disabled={saving}
@@ -489,18 +484,19 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
                       >
                         ×
                       </button>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               )}
 
-              <div className="add-course-row add-course-row-bottom">
+              
+              <div className="gc-add-row">
                 <SearchableDropdown
                   id={`semester-${semester.id}-course`}
                   label="Add course"
                   hideLabel
                   value={selectedCourseInputs[semester.id] || ''}
-                  placeholder={options.length === 0 ? 'No course fits remaining credits' : 'Type to search course'}
+                  placeholder={options.length === 0 ? 'No courses fit remaining credits' : 'Search course…'}
                   options={options.map(course => ({
                     value: course.course,
                     label: courseLabel(course),
@@ -508,7 +504,6 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
                   disabled={saving || options.length === 0}
                   onInputChange={nextValue => {
                     setSelectedCourseInputs(current => ({ ...current, [semester.id]: nextValue }))
-
                     const matched = options.find(
                       course => course.course.toLowerCase() === nextValue.trim().toLowerCase(),
                     )
@@ -523,6 +518,7 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
                   }}
                 />
                 <button
+                  className="gc-btn gc-btn--primary"
                   type="button"
                   onClick={() => handleAddCourse(semester.id)}
                   disabled={saving || !selectedCourses[semester.id]}
@@ -530,24 +526,24 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
                   Add
                 </button>
               </div>
+
+              
               {(isAlreadyOverLimit || willExceedLimitWithSelection) && (
-                <p className="error" role="status">
-                  This semester has exceeded the 20 SU credit limit. You must request an overload.
+                <p className="gc-feedback gc-feedback--warning" role="status">
+                  Exceeded 20 SU credit limit — an overload request is required.
                 </p>
               )}
               {semester.notes?.map(note => (
-                <p key={note} className="status" role="status">
-                  {note}
-                </p>
+                <p key={note} className="gc-feedback gc-feedback--info" role="status">{note}</p>
               ))}
               {semesterHasLatestRetake[semester.id] && (
-                <p className="status" role="status">
-                  Retaken courses are counted by latest attempt in overall GPA.
+                <p className="gc-feedback gc-feedback--info" role="status">
+                  Retaken courses counted by latest attempt in overall GPA.
                 </p>
               )}
 
               <button
-                className="delete-semester-button"
+                className="gc-delete-btn"
                 type="button"
                 onClick={() => handleDeleteSemester(semester.id)}
                 disabled={saving}
@@ -563,4 +559,3 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
 }
 
 export default GpaCalculator
-

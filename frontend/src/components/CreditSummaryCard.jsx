@@ -1,8 +1,8 @@
-function statusIcon(pct) {
+function statusMod(pct) {
   if (pct === null || pct === undefined) return null
-  if (pct >= 100) return { symbol: '✅', label: 'Satisfied' }
-  if (pct >= 50) return { symbol: '🔶', label: 'In progress' }
-  return { symbol: '🔴', label: 'Behind' }
+  if (pct >= 100) return { mod: 'done',     label: 'Satisfied'   }
+  if (pct >= 50)  return { mod: 'progress', label: 'In progress' }
+  return              { mod: 'behind',    label: 'Behind'      }
 }
 
 function CreditSummaryCard({ totalCompleted, totalRequired, categories }) {
@@ -27,7 +27,7 @@ function CreditSummaryCard({ totalCompleted, totalRequired, categories }) {
 
       {totalPct !== null && (
         <div className="credit-meter" aria-label={`${totalPct.toFixed(0)}% of total credits completed`}>
-          <span style={{ width: `${totalPct}%` }} />
+          <div className="credit-meter-fill" style={{ width: `${totalPct}%` }} />
         </div>
       )}
 
@@ -35,8 +35,7 @@ function CreditSummaryCard({ totalCompleted, totalRequired, categories }) {
         <ul className="credit-summary-rows">
           {rows.map((cat, i) => {
             const isLast = i === rows.length - 1
-            const pct = cat.progress_percent
-            const icon = statusIcon(pct)
+            const status = statusMod(cat.progress_percent)
             return (
               <li key={cat.category} className="credit-summary-row">
                 <span className="credit-summary-connector" aria-hidden="true">
@@ -45,14 +44,16 @@ function CreditSummaryCard({ totalCompleted, totalRequired, categories }) {
                 <span className="credit-summary-cat">{cat.category}</span>
                 <span className="credit-summary-fraction">
                   {cat.completed_su ?? 0} / {cat.required_su ?? '—'}
-                  {pct !== null && (
-                    <span className="credit-summary-pct"> ({pct.toFixed(0)}%)</span>
+                  {cat.progress_percent != null && (
+                    <span className="credit-summary-pct"> ({cat.progress_percent?.toFixed(0)}%)</span>
                   )}
                 </span>
-                {icon && (
-                  <span aria-label={icon.label} role="img">
-                    {icon.symbol}
-                  </span>
+                {status && (
+                  <span
+                    className={`credit-summary-status credit-summary-status--${status.mod}`}
+                    aria-label={status.label}
+                    role="img"
+                  />
                 )}
               </li>
             )

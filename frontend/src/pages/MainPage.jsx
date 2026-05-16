@@ -5,8 +5,16 @@ import DegreeRequirementsHelper from './DegreeRequirementsHelper'
 import GpaCalculator from './GpaCalculator'
 import GraduationRequirements from './GraduationRequirements'
 import Planner from './Planner'
-import CreditSummaryCard from '../components/CreditSummaryCard'
 import { apiRequest } from '../lib/api'
+import './MainPage.css'
+
+const TABS = [
+  { id: 'gpa-calculator',                        label: 'GPA Calculator' },
+  { id: 'course-catalog',                         label: 'Course Catalog' },
+  { id: 'graduation-requirements',               label: 'Graduation' },
+  { id: 'bannerweb-degree-requirements-helper',  label: 'Bannerweb Helper' },
+  { id: 'planner',                               label: 'Planner' },
+]
 
 function MainPage({ profile, onProfileUpdated, programs }) {
   const [activeTab, setActiveTab] = useState('gpa-calculator')
@@ -14,7 +22,6 @@ function MainPage({ profile, onProfileUpdated, programs }) {
   const [coursesLoading, setCoursesLoading] = useState(true)
   const [coursesError, setCoursesError] = useState(null)
   const [dataVersion, setDataVersion] = useState(0)
-  const [creditSummary, setCreditSummary] = useState({ completed: 0, required: null, categories: [] })
   const handleDataChanged = () => setDataVersion(value => value + 1)
 
   useEffect(() => {
@@ -40,103 +47,64 @@ function MainPage({ profile, onProfileUpdated, programs }) {
 
     loadCourses()
 
-    return () => {
-      ignore = true
-    }
-  }, [dataVersion])
-
-  useEffect(() => {
-    let ignore = false
-
-    apiRequest('/api/graduation-requirements')
-      .then(data => {
-        if (!ignore) {
-          setCreditSummary({
-            completed: Number(data.total_credits_completed || 0),
-            required: data.total_credits_required != null
-              ? Number(data.total_credits_required)
-              : null,
-            categories: data.categories || [],
-          })
-        }
-      })
-      .catch(() => {})
-
-    return () => {
-      ignore = true
-    }
+    return () => { ignore = true }
   }, [dataVersion])
 
   return (
-    <main className="main-page">
-      <section className="tabs-shell" aria-label="Main sections">
-        <button
-          type="button"
-          className={`tab-button ${activeTab === 'gpa-calculator' ? 'active' : ''}`}
-          onClick={() => setActiveTab('gpa-calculator')}
-          aria-pressed={activeTab === 'gpa-calculator'}
-        >
-          GPA Calculator
-        </button>
-        <button
-          type="button"
-          className={`tab-button ${activeTab === 'course-catalog' ? 'active' : ''}`}
-          onClick={() => setActiveTab('course-catalog')}
-          aria-pressed={activeTab === 'course-catalog'}
-        >
-          Course Catalog
-        </button>
-        <button
-          type="button"
-          className={`tab-button ${activeTab === 'graduation-requirements' ? 'active' : ''}`}
-          onClick={() => setActiveTab('graduation-requirements')}
-          aria-pressed={activeTab === 'graduation-requirements'}
-        >
-          Graduation Requirements
-        </button>
-        <button
-          type="button"
-          className={`tab-button ${activeTab === 'bannerweb-degree-requirements-helper' ? 'active' : ''}`}
-          onClick={() => setActiveTab('bannerweb-degree-requirements-helper')}
-          aria-pressed={activeTab === 'bannerweb-degree-requirements-helper'}
-        >
-          Bannerweb Degree Requirements Helper
-        </button>
-        <button
-          type="button"
-          className={`tab-button ${activeTab === 'planner' ? 'active' : ''}`}
-          onClick={() => setActiveTab('planner')}
-          aria-pressed={activeTab === 'planner'}
-        >
-          Next Semester Planner
-        </button>
-      </section>
+    <main className="mp-root">
 
-      <div className="dashboard-summary-strip">
-        <CreditSummaryCard
-          totalCompleted={creditSummary.completed}
-          totalRequired={creditSummary.required}
-          categories={creditSummary.categories}
-        />
-      </div>
+      
+      <nav className="mp-nav" aria-label="Main sections">
+        <div className="mp-nav-inner">
+          {TABS.map(tab => (
+            <button
+              key={tab.id}
+              type="button"
+              className={['mp-tab', activeTab === tab.id ? 'mp-tab--active' : ''].join(' ').trim()}
+              onClick={() => setActiveTab(tab.id)}
+              aria-pressed={activeTab === tab.id}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </nav>
 
-      {coursesError && <p className="error" role="alert">{coursesError}</p>}
-
-      {activeTab === 'gpa-calculator' && (
-        <GpaCalculator
-          profile={profile}
-          onProfileUpdated={onProfileUpdated}
-          programs={programs}
-          courses={courses}
-          coursesLoading={coursesLoading}
-          dataVersion={dataVersion}
-        />
+      
+      
+      {coursesError && (
+        <p className="mp-error" role="alert">{coursesError}</p>
       )}
 
-      {activeTab === 'course-catalog' && <CourseCatalog courses={courses} loading={coursesLoading} />}
-      {activeTab === 'graduation-requirements' && <GraduationRequirements dataVersion={dataVersion} />}
-      {activeTab === 'bannerweb-degree-requirements-helper' && <DegreeRequirementsHelper onDataChanged={handleDataChanged} />}
-      {activeTab === 'planner' && <Planner />}
+      
+      <div className="mp-panel">
+        {activeTab === 'gpa-calculator' && (
+          <GpaCalculator
+            profile={profile}
+            onProfileUpdated={onProfileUpdated}
+            programs={programs}
+            courses={courses}
+            coursesLoading={coursesLoading}
+            dataVersion={dataVersion}
+          />
+        )}
+
+        {activeTab === 'course-catalog' && (
+          <CourseCatalog courses={courses} loading={coursesLoading} />
+        )}
+
+        {activeTab === 'graduation-requirements' && (
+          <GraduationRequirements dataVersion={dataVersion} />
+        )}
+
+        {activeTab === 'bannerweb-degree-requirements-helper' && (
+          <DegreeRequirementsHelper onDataChanged={handleDataChanged} />
+        )}
+
+        {activeTab === 'planner' && (
+          <Planner />
+        )}
+      </div>
     </main>
   )
 }
