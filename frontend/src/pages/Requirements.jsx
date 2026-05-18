@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { apiRequest } from '../lib/api'
 import CreditSummaryCard from '../components/CreditSummaryCard'
-import './GraduationRequirements.css'
-import './DegreeRequirementsHelper.css'
+import './Requirements.css'
 
 function formatValue(value) {
   if (value === null || value === undefined) return '-'
