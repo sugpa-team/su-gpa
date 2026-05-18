@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import CourseCatalog from './CourseCatalog'
 import GpaCalculator from './GpaCalculator'
+import OnboardingTour, { useOnboardingTour } from './OnboardingTour'
 import Planner from './Planner'
 import Requirements from './Requirements'
 import { apiRequest } from '../lib/api'
@@ -9,13 +9,13 @@ import './MainPage.css'
 
 const TABS = [
   { id: 'gpa-calculator',        label: 'GPA Calculator' },
-  { id: 'course-catalog',        label: 'Course Catalog' },
   { id: 'requirements',          label: 'Requirements' },
   { id: 'planner',               label: 'Planner' },
 ]
 
 function MainPage({ profile, onProfileUpdated, programs }) {
   const [activeTab, setActiveTab] = useState('gpa-calculator')
+  const { visible: tourVisible, dismiss: dismissTour } = useOnboardingTour()
   const [courses, setCourses] = useState([])
   const [coursesLoading, setCoursesLoading] = useState(true)
   const [coursesError, setCoursesError] = useState(null)
@@ -50,6 +50,7 @@ function MainPage({ profile, onProfileUpdated, programs }) {
 
   return (
     <main className="mp-root">
+      {tourVisible && <OnboardingTour onDone={dismissTour} />}
 
       
       <nav className="mp-nav" aria-label="Main sections">
@@ -87,16 +88,12 @@ function MainPage({ profile, onProfileUpdated, programs }) {
           />
         )}
 
-        {activeTab === 'course-catalog' && (
-          <CourseCatalog courses={courses} loading={coursesLoading} />
-        )}
-
         {activeTab === 'requirements' && (
           <Requirements dataVersion={dataVersion} onDataChanged={handleDataChanged} />
         )}
 
         {activeTab === 'planner' && (
-          <Planner />
+          <Planner courses={courses} coursesLoading={coursesLoading} />
         )}
       </div>
     </main>

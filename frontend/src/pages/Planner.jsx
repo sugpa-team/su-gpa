@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { apiRequest } from '../lib/api'
+import CourseCatalog from './CourseCatalog'
 import './Planner.css'
 
 const DAY_LABELS  = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
@@ -50,7 +51,7 @@ function scheduleGridLabel(item) {
   return `${courseCode} - ${group}`
 }
 
-function Planner() {
+function Planner({ courses = [], coursesLoading = false }) {
   const [terms, setTerms]                             = useState([])
   const [activeTerm, setActiveTerm]                   = useState(null)
   const [planner, setPlanner]                         = useState(null)
@@ -70,6 +71,7 @@ function Planner() {
   const [recommendations, setRecommendations]         = useState([])
   const [recommendationsLoading, setRecommendationsLoading] = useState(false)
   const [recommendationsError, setRecommendationsError]     = useState(null)
+  const [catalogOpen, setCatalogOpen]                       = useState(false)
 
   useEffect(() => {
     let ignore = false
@@ -406,7 +408,41 @@ function Planner() {
             {terms.map(t => <option key={t} value={t}>{t}</option>)}
           </select>
         </div>
+        <button
+          type="button"
+          className="pl-btn pl-btn--catalog"
+          onClick={() => setCatalogOpen(true)}
+        >
+          Course Catalog
+        </button>
       </header>
+
+      {catalogOpen && (
+        <div
+          className="pl-catalog-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Course Catalog"
+          onClick={e => { if (e.target === e.currentTarget) setCatalogOpen(false) }}
+        >
+          <div className="pl-catalog-modal">
+            <div className="pl-catalog-modal-header">
+              <h3 className="pl-catalog-modal-title">Course Catalog</h3>
+              <button
+                type="button"
+                className="pl-catalog-close"
+                onClick={() => setCatalogOpen(false)}
+                aria-label="Close course catalog"
+              >
+                ×
+              </button>
+            </div>
+            <div className="pl-catalog-modal-body">
+              <CourseCatalog courses={courses} loading={coursesLoading} />
+            </div>
+          </div>
+        </div>
+      )}
 
       
       <div className="pl-totals">
