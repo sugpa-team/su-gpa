@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react'
 
 import CourseCatalog from './CourseCatalog'
-import DegreeRequirementsHelper from './DegreeRequirementsHelper'
 import GpaCalculator from './GpaCalculator'
-import GraduationRequirements from './GraduationRequirements'
 import Planner from './Planner'
+import Requirements from './Requirements'
 import { apiRequest } from '../lib/api'
 import './MainPage.css'
 
 const TABS = [
-  { id: 'gpa-calculator',                        label: 'GPA Calculator' },
-  { id: 'course-catalog',                         label: 'Course Catalog' },
-  { id: 'graduation-requirements',               label: 'Graduation' },
-  { id: 'bannerweb-degree-requirements-helper',  label: 'Bannerweb Helper' },
-  { id: 'planner',                               label: 'Planner' },
+  { id: 'gpa-calculator',        label: 'GPA Calculator' },
+  { id: 'course-catalog',        label: 'Course Catalog' },
+  { id: 'requirements',          label: 'Requirements' },
+  { id: 'planner',               label: 'Planner' },
 ]
 
 function MainPage({ profile, onProfileUpdated, programs }) {
@@ -93,12 +91,8 @@ function MainPage({ profile, onProfileUpdated, programs }) {
           <CourseCatalog courses={courses} loading={coursesLoading} />
         )}
 
-        {activeTab === 'graduation-requirements' && (
-          <GraduationRequirements dataVersion={dataVersion} />
-        )}
-
-        {activeTab === 'bannerweb-degree-requirements-helper' && (
-          <DegreeRequirementsHelper onDataChanged={handleDataChanged} />
+        {activeTab === 'requirements' && (
+          <Requirements dataVersion={dataVersion} onDataChanged={handleDataChanged} />
         )}
 
         {activeTab === 'planner' && (
