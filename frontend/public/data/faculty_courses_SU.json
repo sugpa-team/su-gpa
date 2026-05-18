@@ -1,0 +1,244 @@
+{
+  "program_name": "COMPUTER SCIENCE AND ENGINEERING UNDERGRADUATE PROGRAM (BSCS)",
+  "category_name": "FENS Faculty Courses",
+  "courses": [
+    {
+      "code": "CHEM 212",
+      "name": "General Chemistry for Engineers",
+      "ects_credits": 7,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "CS 201",
+      "name": "Programming Fundamentals",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "CS 204",
+      "name": "Advanced Programming",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "CS 210",
+      "name": "Introduction to Data Science",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "DSA 210",
+      "name": "Introduction to Data Science",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "EE 200",
+      "name": "Electronic Circuit Implementations",
+      "ects_credits": 2,
+      "su_credits": 2,
+      "faculty": "FENS"
+    },
+    {
+      "code": "EE 202",
+      "name": "Electronic Circuits II",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "ENS 201",
+      "name": "Electromagnetics I",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "ENS 202",
+      "name": "Thermodynamics",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "ENS 203",
+      "name": "Electronic Circuits I",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "ENS 204",
+      "name": "Mechanics",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "ENS 205",
+      "name": "Introduction to Materials Science",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "ENS 206",
+      "name": "Systems Modeling and Control",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "ENS 207",
+      "name": "Introduction to Energy Systems",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "ENS 208",
+      "name": "Introduction to Industrial Engineering",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "ENS 209",
+      "name": "Introduction to Computer Aided Drafting and Solid Modeling",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "ENS 210",
+      "name": "Computational Biology",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "ENS 211",
+      "name": "Signals",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "ENS 214",
+      "name": "Dynamics",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "ENS 216",
+      "name": "Information Systems: A Historical Perspective",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "MAT 204",
+      "name": "Electrical, Optical and Magnetic Properties of Materials",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "MATH 201",
+      "name": "Linear Algebra",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "MATH 202",
+      "name": "Differential Equations",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "MATH 203",
+      "name": "Introduction to Probability",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "MATH 204",
+      "name": "Discrete Mathematics",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "MATH 212",
+      "name": "Linear Algebra and Differential Equations",
+      "ects_credits": 7,
+      "su_credits": 4,
+      "faculty": "FENS"
+    },
+    {
+      "code": "NS 201",
+      "name": "Discovering Life",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "NS 207",
+      "name": "Organic Chemistry",
+      "ects_credits": 7,
+      "su_credits": 4,
+      "faculty": "FENS"
+    },
+    {
+      "code": "NS 213",
+      "name": "Basic Concepts of Physics for Scientists and Engineers",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "NS 214",
+      "name": "Oscillations, Waves and Optics",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "NS 216",
+      "name": "Life on Earth",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "NS 218",
+      "name": "Fundamentals of Nanoscience",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "PHYS 113",
+      "name": "Basic Concepts of Physics for Scientists and Engineers",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    },
+    {
+      "code": "PHYS 211",
+      "name": "Modern Physics",
+      "ects_credits": 6,
+      "su_credits": 3,
+      "faculty": "FENS"
+    }
+  ]
+}

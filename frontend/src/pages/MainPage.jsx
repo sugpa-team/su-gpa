@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import GpaCalculator from './GpaCalculator'
 import OnboardingTour, { useOnboardingTour } from './OnboardingTour'
 import Planner from './Planner'
+import Settings from './Settings'
 import Requirements from './Requirements'
 import { apiRequest } from '../lib/api'
 import './MainPage.css'
@@ -94,6 +95,10 @@ function MainPage({ profile, onProfileUpdated, programs }) {
 
         {activeTab === 'planner' && (
           <Planner courses={courses} coursesLoading={coursesLoading} />
+        )}
+
+        {activeTab === 'settings' && (
+          <Settings />
         )}
       </div>
     </main>

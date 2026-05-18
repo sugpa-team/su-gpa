@@ -1,6 +1,6 @@
 name: scrape-suchedule
 
-# Refreshes backend/app/data/schedule_data/{term}.min.json every day by
+# Refreshes frontend/public/data/schedule_data/{term}.min.json every day by
 # re-running the suchedule scraper. Opens an auto-PR if the data changed.
 # Mirrors the upstream pattern from aburakayaz/suchedule.
 
@@ -57,12 +57,12 @@ jobs:
 
       - name: Scrape ${{ steps.pick-term.outputs.term }}
         run: |
-          cd backend/app/data/scraper_suchedule
+          cd scripts/scrape_suchedule
           python scrape.py ${{ steps.pick-term.outputs.term }}
 
       - name: Show diff
         run: |
-          git diff --stat backend/app/data/schedule_data/ || true
+          git diff --stat frontend/public/data/schedule_data/ || true
 
       - name: Open PR if data changed
         uses: peter-evans/create-pull-request@v6
@@ -72,7 +72,7 @@ jobs:
           commit-message: 'Refresh schedule data for term ${{ steps.pick-term.outputs.term }}'
           title: 'Refresh schedule data for term ${{ steps.pick-term.outputs.term }}'
           body: |
-            Daily refresh of `backend/app/data/schedule_data/${{ steps.pick-term.outputs.term }}.min.json`.
+            Daily refresh of `frontend/public/data/schedule_data/${{ steps.pick-term.outputs.term }}.min.json`.
 
             Triggered by `.github/workflows/scrape-suchedule.yaml`.
             Source: BannerWeb (`https://suis.sabanciuniv.edu/prod/bwckschd.p_disp_dyn_sched`).
