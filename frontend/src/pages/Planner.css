@@ -858,11 +858,24 @@
   border: none;
   color: rgba(0 0 0 / 0.45);
   cursor: pointer;
-  font-size: 0.75rem;
-  padding: 0;
+  font-size: 0.85rem;
+  padding: 2px 4px;
+  min-width: 20px;
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
   flex-shrink: 0;
   transition: color var(--pl-transition);
+}
+
+@media (pointer: coarse) {
+  .pl-event-remove {
+    min-width: 28px;
+    min-height: 28px;
+    font-size: 1rem;
+  }
 }
 
 .pl-event-remove:hover { color: rgba(0 0 0 / 0.85); }

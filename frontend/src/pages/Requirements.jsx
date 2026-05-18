@@ -281,15 +281,14 @@ function Requirements({ dataVersion = 0, onDataChanged }) {
     <section className="gr-root drh-root" aria-labelledby="requirements-title">
 
       {/* Header with import toggle */}
-      <header className="gr-header" style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
+      <header className="gr-header">
         <div>
           <p className="gr-eyebrow">Graduation Progress</p>
           <h2 id="requirements-title" className="gr-title">Graduation Requirements</h2>
         </div>
         <button
           type="button"
-          className="drh-btn drh-btn--secondary"
-          style={{ flexShrink: 0, marginTop: '0.3rem' }}
+          className="drh-btn drh-btn--secondary gr-header-action"
           onClick={() => setImportOpen(open => !open)}
         >
           {importOpen ? 'Hide Import' : 'Import from Bannerweb'}
@@ -298,7 +297,7 @@ function Requirements({ dataVersion = 0, onDataChanged }) {
 
       {/* Bannerweb import panel */}
       {importOpen && (
-        <div style={{ marginBottom: '1.75rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div className="gr-import-panel">
 
           <article className="drh-instructions" aria-label="How to copy data from Bannerweb">
             <h3 className="drh-instructions-title">How to use</h3>

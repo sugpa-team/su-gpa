@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 
 import GpaCalculator from './GpaCalculator'
-import OnboardingTour, { useOnboardingTour } from './OnboardingTour'
+import OnboardingTour from './OnboardingTour'
+import { useOnboardingTour } from '../hooks/useOnboardingTour'
 import Planner from './Planner'
 import Settings from './Settings'
 import Requirements from './Requirements'

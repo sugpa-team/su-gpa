@@ -44,22 +44,6 @@ const MAKERS = [
   { handle: '@mehmeterseker', color: '#3dd68c' },
 ]
 
-const STORAGE_KEY = 'su-gpa-tour-v1'
-
-export function useOnboardingTour() {
-  const [visible, setVisible] = useState(() => {
-    try { return !localStorage.getItem(STORAGE_KEY) }
-    catch { return true }
-  })
-
-  function dismiss() {
-    try { localStorage.setItem(STORAGE_KEY, '1') } catch {}
-    setVisible(false)
-  }
-
-  return { visible, dismiss }
-}
-
 export default function OnboardingTour({ onDone }) {
   const [step, setStep] = useState(0)
   const current = STEPS[step]
