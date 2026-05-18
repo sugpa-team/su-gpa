@@ -895,3 +895,94 @@
 
   .pl-header { flex-direction: column; align-items: flex-start; }
 }
+
+/* ── Course Catalog button ─────────────────────────────────── */
+
+.pl-btn--catalog {
+  background: var(--pl-accent-dim);
+  border: 1px solid var(--pl-accent);
+  color: var(--pl-accent);
+  border-radius: var(--pl-radius-sm);
+  padding: 0.45rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--pl-transition), box-shadow var(--pl-transition);
+  white-space: nowrap;
+}
+
+.pl-btn--catalog:hover {
+  background: var(--pl-accent-glow);
+  box-shadow: 0 0 0 1px var(--pl-accent);
+}
+
+/* ── Course Catalog modal overlay ──────────────────────────── */
+
+.pl-catalog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0 0 0 / 0.72);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.pl-catalog-modal {
+  background: var(--pl-surface);
+  border: 1px solid var(--pl-border-mid);
+  border-radius: var(--pl-radius-lg);
+  width: 100%;
+  max-width: 1100px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0 0 0 / 0.6);
+}
+
+.pl-catalog-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--pl-border);
+  flex-shrink: 0;
+}
+
+.pl-catalog-modal-title {
+  font-family: var(--pl-font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--pl-text);
+  margin: 0;
+}
+
+.pl-catalog-close {
+  background: transparent;
+  border: 1px solid var(--pl-border-mid);
+  border-radius: var(--pl-radius-sm);
+  color: var(--pl-text-muted);
+  font-size: 1.25rem;
+  line-height: 1;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color var(--pl-transition), border-color var(--pl-transition);
+}
+
+.pl-catalog-close:hover {
+  color: var(--pl-text);
+  border-color: var(--pl-border-mid);
+}
+
+.pl-catalog-modal-body {
+  overflow-y: auto;
+  flex: 1;
+  padding: 1.25rem 1.5rem;
+}
