@@ -142,7 +142,7 @@ function Planner({ courses = [], coursesLoading = false }) {
   }
 
   function handleLoadPlan(planId) {
-    const plan = savedPlans.find(p => p.id === Number(planId))
+    const plan = savedPlans.find(p => String(p.id) === String(planId))
     if (!plan) return
     setActivePlanId(plan.id); setPlanNameDraft(plan.name)
     setSelectedSections(rebuildSelectionFromPlan(plan, planner))
