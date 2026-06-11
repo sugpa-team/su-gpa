@@ -23,6 +23,7 @@ class SUcheduleCourseScraper:
         print("Course data is fetched.")
         self.write_json_file(courses=course_datas,places=self.places,instructors=self.instructors)
         print("Json file is created.")
+        self.update_terms_index()
 
     def get_course_codes(self) -> List[str]:
         """
@@ -342,6 +343,32 @@ class SUcheduleCourseScraper:
         with open(output_path, "w", encoding='utf-8') as file:
             json.dump(data, file, ensure_ascii=False)
         print(f"Wrote {output_path}")
+
+    def update_terms_index(self):
+        """
+        Keep frontend/public/data/terms.json in sync with the scraped terms so the
+        app picks up newly opened terms automatically (the planner only offers the
+        newest term in that list).
+        """
+        import os
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        repo_root = os.path.abspath(os.path.join(script_dir, os.pardir, os.pardir))
+        terms_path = os.path.join(repo_root, "frontend", "public", "data", "terms.json")
+
+        terms = []
+        if os.path.exists(terms_path):
+            with open(terms_path, encoding='utf-8') as file:
+                terms = json.load(file).get("terms", [])
+
+        term_code = str(self.term)
+        if term_code in terms:
+            return
+
+        terms = sorted(set(terms) | {term_code})
+        with open(terms_path, "w", encoding='utf-8') as file:
+            json.dump({"terms": terms}, file, ensure_ascii=False, indent=2)
+            file.write("\n")
+        print(f"Added term {term_code} to terms.json")
 
 
 if __name__ == '__main__':

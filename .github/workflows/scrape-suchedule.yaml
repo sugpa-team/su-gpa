@@ -62,7 +62,7 @@ jobs:
 
       - name: Show diff
         run: |
-          git diff --stat frontend/public/data/schedule_data/ || true
+          git diff --stat frontend/public/data/schedule_data/ frontend/public/data/terms.json || true
 
       - name: Open PR if data changed
         uses: peter-evans/create-pull-request@v6
@@ -72,7 +72,8 @@ jobs:
           commit-message: 'Refresh schedule data for term ${{ steps.pick-term.outputs.term }}'
           title: 'Refresh schedule data for term ${{ steps.pick-term.outputs.term }}'
           body: |
-            Daily refresh of `frontend/public/data/schedule_data/${{ steps.pick-term.outputs.term }}.min.json`.
+            Daily refresh of `frontend/public/data/schedule_data/${{ steps.pick-term.outputs.term }}.min.json`
+            (plus `terms.json` when a newly opened term appears — the planner offers the newest term in that list).
 
             Triggered by `.github/workflows/scrape-suchedule.yaml`.
             Source: BannerWeb (`https://suis.sabanciuniv.edu/prod/bwckschd.p_disp_dyn_sched`).

@@ -13,10 +13,14 @@ python scrape.py <term_code>
 Geçerli kodları görmek için: `https://suis.sabanciuniv.edu/prod/bwckschd.p_disp_dyn_sched`.
 Örn. `202502` = Bahar 2025-2026.
 
-Çıktı `frontend/public/data/schedule_data/{term}.min.json` dosyasına yazılır.
+Çıktı `frontend/public/data/schedule_data/{term}.min.json` dosyasına yazılır ve
+dönem kodu `frontend/public/data/terms.json` listesinde yoksa otomatik eklenir
+(Planner sayfası bu listedeki en yeni dönemi gösterir).
 
 GitHub Actions cron'u (`.github/workflows/scrape-suchedule.yaml`) bu
-scraper'ı her gün 00:00 UTC'de çalıştırır ve veri değiştiğinde otomatik PR açar.
+scraper'ı her gün 00:00 UTC'de Bannerweb'in ilan ettiği en güncel dönem için
+çalıştırır; yeni açılan dersler, saati değişen dersler veya yeni bir dönem
+tespit edilirse otomatik PR açar.
 
 ## Ne Yapıyor?
 
