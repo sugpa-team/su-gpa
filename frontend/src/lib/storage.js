@@ -3,6 +3,7 @@ const KEYS = {
   semesters: 'sugpa:semesters',
   plans: 'sugpa:plans',
   feedback: 'sugpa:feedback',
+  courseAttributions: 'sugpa:courseAttributions',
 }
 
 const DEFAULT_PROFILE = {
@@ -70,9 +71,32 @@ export function setFeedback(feedback) {
   writeJSON(KEYS.feedback, feedback)
 }
 
+export function getCourseAttributions() {
+  const raw = readJSON(KEYS.courseAttributions, {})
+  return raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {}
+}
+
+export function setCourseAttributions(attributions) {
+  writeJSON(KEYS.courseAttributions, attributions && typeof attributions === 'object' ? attributions : {})
+}
+
+export function mergeCourseAttributions(attributions) {
+  const existing = getCourseAttributions()
+  for (const [code, values] of Object.entries(attributions || {})) {
+    if (!code || !values || typeof values !== 'object') continue
+    const current = existing[code] || {}
+    existing[code] = {
+      engineering_ects: Math.max(Number(current.engineering_ects || 0), Number(values.engineering_ects || 0)),
+      basic_science_ects: Math.max(Number(current.basic_science_ects || 0), Number(values.basic_science_ects || 0)),
+    }
+  }
+  setCourseAttributions(existing)
+}
+
 export function resetTracking() {
   writeJSON(KEYS.semesters, [])
   writeJSON(KEYS.plans, [])
+  writeJSON(KEYS.courseAttributions, {})
 }
 
 export function resetAll() {
@@ -89,6 +113,7 @@ export function exportAll() {
     semesters: getSemesters(),
     plans: getPlans(),
     feedback: getFeedback(),
+    course_attributions: getCourseAttributions(),
   }
 }
 
@@ -107,5 +132,8 @@ export function importAll(payload) {
   }
   if (Array.isArray(payload.feedback)) {
     setFeedback(payload.feedback)
+  }
+  if (payload.course_attributions && typeof payload.course_attributions === 'object') {
+    setCourseAttributions(payload.course_attributions)
   }
 }

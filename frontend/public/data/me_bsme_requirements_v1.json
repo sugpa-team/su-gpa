@@ -1,0 +1,2471 @@
+{
+  "program": {
+    "faculty_code": "FENS",
+    "faculty_name": "Faculty of Engineering and Natural Sciences",
+    "department_code": "ME",
+    "department_name": "Mechatronics Engineering",
+    "program_code": "BSME",
+    "program_name": "Mechatronics Engineering Undergraduate Program (BSME)"
+  },
+  "source_notes": [
+    "Compiled on 2026-06-10 from Sabancı University public sources for admit term 202401 (2024-2025 Fall).",
+    "Prerequisites: Banner course detail pages (bwckctlg.p_disp_course_detail, cat_term 202401; ENS 311 from 202501). Where Banner lists alternatives (incl. legacy EL/TE/MS codes), only the current-curriculum alternative is kept because the app treats prerequisite lists as all-required.",
+    "University Courses are university-wide and mirror the BSCS/BSMS files; the 202401 HUM pool has 9 courses (no HUM 304/324).",
+    "ENS 491 has no course prerequisite in Banner; enrollment is restriction-based (80 SU credits completed).",
+    "Degree requirements: https://suis.sabanciuniv.edu/prod/SU_DEGREE.p_degree_detail?P_TERM=202401&P_PROGRAM=BSME&P_LANG=EN&P_LEVEL=UG",
+    "Core / Area elective lists: SU_DEGREE.p_list_courses P_AREA=BSME_CEL / BSME_AEL (same term).",
+    "ME 415 (Banner: MATH 201 or MATH 202) and ME 420 (Banner: ENS 207 or ME 307+ME 309 or ME 307+ENS 202 or ME 309+ENS 202) reduced to a single current-curriculum alternative."
+  ],
+  "requirement_summary": {
+    "total": {
+      "min_ects": 240,
+      "min_su": 125
+    },
+    "categories": [
+      {
+        "category": "University Courses",
+        "min_su": 41,
+        "min_courses": 16
+      },
+      {
+        "category": "Required Courses",
+        "min_su": 34,
+        "min_courses": 13
+      },
+      {
+        "category": "Core Electives",
+        "min_su": 26
+      },
+      {
+        "category": "Area Electives",
+        "min_su": 9
+      },
+      {
+        "category": "Free Electives",
+        "min_su": 15
+      },
+      {
+        "category": "Engineering",
+        "min_ects": 90
+      },
+      {
+        "category": "Faculty Courses",
+        "min_courses": 5
+      },
+      {
+        "category": "Basic Science",
+        "min_ects": 60
+      }
+    ]
+  },
+  "rules": {
+    "required_math_choice_rule": "Students are required to complete either MATH 212 or both (MATH 201 and MATH 202). If more courses are completed than needed, the additional courses will not be included in core, area and free elective course pools.",
+    "required_list_rule": "In addition to fulfilling the mathematics requirement, students must successfully complete all courses listed under required courses.",
+    "university_course_rule": "From the University Courses listed below, 16 courses and 41 SU credits must be completed. All freshman courses (1XX coded courses, including PROJ 201) and SPS 303 are required. One HUM-coded course from the listed pool is required.",
+    "free_elective_scope_rule": "Free electives include all courses that are not counted under University Courses, Required Courses, Core Electives, or Area Electives.",
+    "overflow_rule": "Excess Core Elective credits are transferred to Area Electives; excess Area Elective credits are transferred to Free Electives.",
+    "free_elective_faculty_rule": "A total of 15 SU credits must be taken from courses offered by FASS, SBS, and FENS, excluding University Courses. Language courses offered by SL are not included in free electives.",
+    "faculty_course_rule": "At least 5 faculty courses must be completed."
+  },
+  "categories": {
+    "University Courses": {
+      "all_required_freshman_courses": [
+        {
+          "course": "IF 100",
+          "name": "Computational Approaches to Problem Solving",
+          "ects_credits": 5,
+          "su_credits": 3,
+          "faculty": "FENS"
+        },
+        {
+          "course": "MATH 101",
+          "name": "Calculus I",
+          "ects_credits": 6,
+          "su_credits": 3,
+          "faculty": "FENS"
+        },
+        {
+          "course": "CIP 101N",
+          "name": "Civic Involvement Projects I-N",
+          "ects_credits": 1,
+          "su_credits": 0,
+          "faculty": "FASS"
+        },
+        {
+          "course": "NS 101",
+          "name": "Science of Nature I",
+          "ects_credits": 6,
+          "su_credits": 4,
+          "faculty": "FENS"
+        },
+        {
+          "course": "SPS 101",
+          "name": "Humanity and Society I",
+          "ects_credits": 6,
+          "su_credits": 3,
+          "faculty": "FASS"
+        },
+        {
+          "course": "TLL 101",
+          "name": "Turkish Language and Literature I",
+          "ects_credits": 3,
+          "su_credits": 2,
+          "faculty": "SL"
+        },
+        {
+          "course": "AL 102",
+          "name": "Academic Literacies",
+          "ects_credits": 5,
+          "su_credits": 3,
+          "faculty": "SL"
+        },
+        {
+          "course": "MATH 102",
+          "name": "Calculus II",
+          "ects_credits": 6,
+          "su_credits": 3,
+          "faculty": "FENS"
+        },
+        {
+          "course": "NS 102",
+          "name": "Science of Nature II",
+          "ects_credits": 6,
+          "su_credits": 4,
+          "faculty": "FENS"
+        },
+        {
+          "course": "SPS 102",
+          "name": "Humanity and Society II",
+          "ects_credits": 6,
+          "su_credits": 3,
+          "faculty": "FASS"
+        },
+        {
+          "course": "TLL 102",
+          "name": "Turkish Language and Literature II",
+          "ects_credits": 3,
+          "su_credits": 2,
+          "faculty": "SL"
+        },
+        {
+          "course": "HIST 191",
+          "name": "Principles of Ataturk and the History of the Turkish Revolution I",
+          "ects_credits": 3,
+          "su_credits": 2,
+          "faculty": "FASS"
+        },
+        {
+          "course": "HIST 192",
+          "name": "Principles of Ataturk and the History of the Turkish Revolution II",
+          "ects_credits": 3,
+          "su_credits": 2,
+          "faculty": "FASS"
+        },
+        {
+          "course": "PROJ 201",
+          "name": "Undergraduate Project Course",
+          "ects_credits": 1,
+          "su_credits": 1,
+          "faculty": "FENS"
+        },
+        {
+          "course": "SPS 303",
+          "name": "Law and Ethics",
+          "ects_credits": 5,
+          "su_credits": 3,
+          "faculty": "FASS"
+        }
+      ],
+      "choose_one_hum_course_from_pool": [
+        {
+          "course": "HUM 201",
+          "name": "Major Works of Literature",
+          "ects_credits": 5,
+          "su_credits": 3,
+          "faculty": "FASS"
+        },
+        {
+          "course": "HUM 202",
+          "name": "Major Works of Western Art",
+          "ects_credits": 5,
+          "su_credits": 3,
+          "faculty": "FASS"
+        },
+        {
+          "course": "HUM 207",
+          "name": "Major Works of Western Philosophy",
+          "ects_credits": 5,
+          "su_credits": 3,
+          "faculty": "FASS"
+        },
+        {
+          "course": "HUM 311",
+          "name": "Major Works of Literature: The World Before Modernity",
+          "ects_credits": 5,
+          "su_credits": 3,
+          "faculty": "FASS"
+        },
+        {
+          "course": "HUM 312",
+          "name": "Major Works of Modern Art",
+          "ects_credits": 5,
+          "su_credits": 3,
+          "faculty": "FASS"
+        },
+        {
+          "course": "HUM 317",
+          "name": "Major Works of Moral Philosophy",
+          "ects_credits": 5,
+          "su_credits": 3,
+          "faculty": "FASS"
+        },
+        {
+          "course": "HUM 321",
+          "name": "Major Works of Literature: The Modern World",
+          "ects_credits": 5,
+          "su_credits": 3,
+          "faculty": "FASS"
+        },
+        {
+          "course": "HUM 322",
+          "name": "Major Works of Art: The World Before Modernity",
+          "ects_credits": 5,
+          "su_credits": 3,
+          "faculty": "FASS"
+        },
+        {
+          "course": "HUM 371",
+          "name": "Major Works of Literature: The Islamic World",
+          "ects_credits": 5,
+          "su_credits": 3,
+          "faculty": "FASS"
+        }
+      ]
+    },
+    "Required Courses": [
+      {
+        "course": "CS 201",
+        "name": "Programming Fundamentals",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 203",
+        "name": "Electronic Circuits I",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 204",
+        "name": "Mechanics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 206",
+        "name": "Systems Modeling and Control",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 214",
+        "name": "Dynamics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 491",
+        "name": "Graduation Project (Design)",
+        "ects_credits": 2,
+        "su_credits": 1,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 492",
+        "name": "Graduation Project (Implementation)",
+        "ects_credits": 5,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MATH 201",
+        "name": "Linear Algebra",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS",
+        "math_requirement_option": true
+      },
+      {
+        "course": "MATH 202",
+        "name": "Differential Equations",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS",
+        "math_requirement_option": true
+      },
+      {
+        "course": "MATH 212",
+        "name": "Linear Algebra and Differential Equations",
+        "ects_credits": 7,
+        "su_credits": 4,
+        "faculty": "FENS",
+        "math_requirement_option": true
+      },
+      {
+        "course": "ME 301",
+        "name": "Mechanical Systems I",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 303",
+        "name": "Control System Design",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 305",
+        "name": "Power Electronics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 395",
+        "name": "Internship Project",
+        "ects_credits": 5,
+        "su_credits": 0,
+        "faculty": "FENS"
+      }
+    ],
+    "Core Electives": [
+      {
+        "course": "CS 204",
+        "name": "Advanced Programming",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 303",
+        "name": "Logic and Digital System Design",
+        "ects_credits": 7,
+        "su_credits": 4,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 404",
+        "name": "Artificial Intelligence",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 412",
+        "name": "Machine Learning",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 200",
+        "name": "Electronic Circuit Implementations",
+        "ects_credits": 2,
+        "su_credits": 2,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 202",
+        "name": "Electronic Circuits II",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 308",
+        "name": "Microcomputer Based System Design",
+        "ects_credits": 7,
+        "su_credits": 4,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 312",
+        "name": "Discrete-Time Signals and Systems",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 314",
+        "name": "Digital Communications",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 404",
+        "name": "Introduction to Microelectromechanical Systems",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 407",
+        "name": "Microelectronic Fabrication",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 417",
+        "name": "Computer Vision",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 473",
+        "name": "Biomedical Instrumentation",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 202",
+        "name": "Thermodynamics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 205",
+        "name": "Introduction to Materials Science",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 207",
+        "name": "Introduction to Energy Systems",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 209",
+        "name": "Introduction to Computer Aided Drafting and Solid Modeling",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 211",
+        "name": "Signals",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 311",
+        "name": "Numerical Analysis",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 409",
+        "name": "Numerical Analysis",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "IE 309",
+        "name": "Manufacturing Processes I",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "IE 402",
+        "name": "Integrated Manufacturing Systems",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 302",
+        "name": "Mechanical Systems II",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 304",
+        "name": "Motion Control Systems",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 307",
+        "name": "Fluid Dynamics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 308",
+        "name": "Industrial Control",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 309",
+        "name": "Heat and Mass Transfer",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 312",
+        "name": "Analysis and Synthesis of Mechanisms",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 402",
+        "name": "Plasmonics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 403",
+        "name": "Introduction to Robotics",
+        "ects_credits": 7,
+        "su_credits": 4,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 405",
+        "name": "Mechanical Vibrations",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 408",
+        "name": "Mechatronics System Design",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 409",
+        "name": "Foundations of Microsystems",
+        "ects_credits": 7,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 412",
+        "name": "Introduction to the Finite Element Method",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 415",
+        "name": "Computational Analysis and Simulation",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 420",
+        "name": "Renewable and Sustainable Energy Systems",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 425",
+        "name": "Autonomous Mobile Robotics",
+        "ects_credits": 7,
+        "su_credits": 4,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 435",
+        "name": "Scaling in Engineering Systems",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 437",
+        "name": "Biomechatronics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ME 441",
+        "name": "Advanced Vehicle Systems",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      }
+    ],
+    "Area Electives": [
+      {
+        "course": "BIO 301",
+        "name": "Molecular Biology",
+        "ects_credits": 7,
+        "su_credits": 4,
+        "faculty": "FENS"
+      },
+      {
+        "course": "BIO 303",
+        "name": "Genetics",
+        "ects_credits": 7,
+        "su_credits": 4,
+        "faculty": "FENS"
+      },
+      {
+        "course": "BIO 304",
+        "name": "Biological Function and Structure",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "BIO 306",
+        "name": "Microbiology",
+        "ects_credits": 7,
+        "su_credits": 4,
+        "faculty": "FENS"
+      },
+      {
+        "course": "BIO 310",
+        "name": "Introduction to Bioinformatics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "BIO 332",
+        "name": "Cell Biology",
+        "ects_credits": 7,
+        "su_credits": 4,
+        "faculty": "FENS"
+      },
+      {
+        "course": "BIO 421",
+        "name": "Tissue Engineering",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "BIO 423",
+        "name": "Neurobiology",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "BIO 444",
+        "name": "Bioengineering",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 300",
+        "name": "Data Structures",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 301",
+        "name": "Algorithms",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 302",
+        "name": "Formal Languages and Automata Theory",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 305",
+        "name": "Programming Languages",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 306",
+        "name": "Database Systems",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 307",
+        "name": "Operating Systems",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 308",
+        "name": "Software Engineering",
+        "ects_credits": 7,
+        "su_credits": 4,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 310",
+        "name": "Mobile Application Development",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 401",
+        "name": "Computer Architectures",
+        "ects_credits": 6,
+        "su_credits": 4,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 405",
+        "name": "Computer Graphics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 407",
+        "name": "Theory of Computation",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 408",
+        "name": "Computer Networks",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 411",
+        "name": "Cryptography",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 414",
+        "name": "Network Science",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 415",
+        "name": "Introduction to Deep Learning",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 419",
+        "name": "Digital Image and Video Analysis",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 432",
+        "name": "Computer and Network Security",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 435",
+        "name": "Quantum Programming I",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 436",
+        "name": "Cloud Computing",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 437",
+        "name": "Cybersecurity Practices and Applications",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 438",
+        "name": "Blockchain: Security and Applications",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 440",
+        "name": "Quantum Programming II",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 442",
+        "name": "Software Design Patterns",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 447",
+        "name": "Immersive Systems Development",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 449",
+        "name": "Human Computer Interaction",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 455",
+        "name": "Large Language Models: Theoretical Foundations and Practical Applications",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 460",
+        "name": "Automated Debugging",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 48004",
+        "name": "Special Topics in CS: Agile Software Development",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 48006",
+        "name": "Special Topics in CS: Decentralized Finance",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 48007",
+        "name": "Special Topics in CS: Internet of Things Sensing System",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 48008",
+        "name": "Special Topics in CS: Malware Analysis and Detection",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 48010",
+        "name": "Special Topics in CS: Performance Analysis and Engineering",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "CS 48011",
+        "name": "Special Topics in CS: Evolution and Biology for Artificial Intelligence",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "DSA 201",
+        "name": "Advanced Programming for Data Science",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "DSA 210",
+        "name": "Introduction to Data Science",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "DSA 301",
+        "name": "Data Visualization",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "DSA 428",
+        "name": "Big Data Processing",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "DSA 440",
+        "name": "Data and Artificial Intelligence (AI) Ethics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "DSA 473",
+        "name": "Time Series and Forecasting Models",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 302",
+        "name": "Digital Integrated Circuits",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 303",
+        "name": "Analog Integrated Circuits",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 306",
+        "name": "Introduction to Radio Frequency and Microwave Design",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 307",
+        "name": "Semiconductor Physics and Devices",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 310",
+        "name": "Hardware Description Languages",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 311",
+        "name": "Introduction to Signal Processing and Information Systems",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 313",
+        "name": "Introduction to Communication Systems",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 401",
+        "name": "Very Large Scale Integrated System Design I",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 402",
+        "name": "Very Large Scale Integrated System Design II",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 403",
+        "name": "Optoelectronics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 406",
+        "name": "Antennas and Propagation for Wireless Communication",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 409",
+        "name": "Microwaves",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 411",
+        "name": "RF Integrated Circuits",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 419",
+        "name": "Signal Processing Design and Implementation",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 440",
+        "name": "Mixed-Signal Integrated Circuits",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 444",
+        "name": "Optics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 48008",
+        "name": "Special Topics in EE: Heterogeneous Computing and System-on-Chip Design",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "EE 48009",
+        "name": "Special Topics in EE: Machine Learning for Communication Systems",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENRG 315",
+        "name": "Energy",
+        "ects_credits": 5,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENRG 322",
+        "name": "Battery Science and Engineering",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENRG 401",
+        "name": "Energy: Supply Chain, Economics and Geopolitics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENRG 420",
+        "name": "Energy Systems Optimization",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENRG 423",
+        "name": "Electric Power Systems: Operation, Technology and Economics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENRG 424",
+        "name": "Cell Design, Modelling and Battery Pack Development",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENRG 426",
+        "name": "Battery Management Systems",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 201",
+        "name": "Electromagnetics I",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 208",
+        "name": "Introduction to Industrial Engineering",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 216",
+        "name": "Information Systems: A Historical Perspective",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 410",
+        "name": "Advanced Solid Modeling Techniques",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 413",
+        "name": "Experimental Methods in Nanoscience I",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "ENS 414",
+        "name": "Experimental Methods in Nanoscience II",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "IE 303",
+        "name": "Decision Economics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "IE 403",
+        "name": "Quality Planning and Control",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "IE 405",
+        "name": "Decision Analysis",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "IE 409",
+        "name": "Project Scheduling and Management",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "IE 416",
+        "name": "Additive Manufacturing",
+        "ects_credits": 7,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "IE 435",
+        "name": "Production Dynamics and Control",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "IE 436",
+        "name": "Monte Carlo Methods in Finance",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "IE 48002",
+        "name": "Special Topics in IE: Advanced Statistics with R",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "IE 48005",
+        "name": "Special Topics in IE: Digital Manufacturing",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MATH 203",
+        "name": "Introduction to Probability",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MATH 204",
+        "name": "Discrete Mathematics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MATH 206",
+        "name": "Vector Calculus",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MATH 301",
+        "name": "Introduction to Mathematical Analysis",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MATH 305",
+        "name": "Complex Calculus",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MATH 306",
+        "name": "Statistical Modelling",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MATH 311",
+        "name": "Introduction to Algebra",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MATH 317",
+        "name": "Elementary Number Theory",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MATH 318",
+        "name": "Introduction to Combinatorics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MATH 484",
+        "name": "Mathematical Introduction to Quantum Algorithms and Post-Quantum Cryptography",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MAT 204",
+        "name": "Electrical, Optical and Magnetic Properties of Materials",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MAT 206",
+        "name": "Kinetics of Materials",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MAT 302",
+        "name": "Polymer Chemistry",
+        "ects_credits": 7,
+        "su_credits": 4,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MAT 305",
+        "name": "Polymer Engineering: Fundamentals",
+        "ects_credits": 5,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MAT 306",
+        "name": "Computational Techniques for Materials at the Nano-scale",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MAT 307",
+        "name": "Composite Materials",
+        "ects_credits": 7,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MAT 309",
+        "name": "Transport Phenomena in Materials Processing",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MAT 312",
+        "name": "Materials Characterization",
+        "ects_credits": 7,
+        "su_credits": 4,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MAT 424",
+        "name": "Materials Selection in Product Design",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MAT 48000",
+        "name": "Special Topics in Materials Science and Nanoengineering: Adhesion Science and Engineering",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "MAT 48005",
+        "name": "Special Topics in MAT: Polymer Engineering/Processing Fundamentals",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "NS 213",
+        "name": "Basic Concepts of Physics for Scientists and Engineers",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "NS 214",
+        "name": "Oscillations, Waves and Optics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "NS 218",
+        "name": "Fundamentals of Nanoscience",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "PHYS 113",
+        "name": "Basic Concepts of Physics for Scientists and Engineers",
+        "ects_credits": 7,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "PHYS 211",
+        "name": "Modern Physics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "PHYS 302",
+        "name": "Solid State Physics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "PHYS 303",
+        "name": "Quantum Mechanics I",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "PHYS 401",
+        "name": "Classical Mechanics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "PHYS 411",
+        "name": "Electromagnetic Theory I",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "PHYS 412",
+        "name": "Statistical Mechanics",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FENS"
+      },
+      {
+        "course": "VA 455",
+        "name": "Physical Computing",
+        "ects_credits": 6,
+        "su_credits": 3,
+        "faculty": "FASS"
+      }
+    ],
+    "Free Electives": {
+      "min_su_credits": 15,
+      "definition": "All courses not counted in University Courses, Required Courses, Core Electives, or Area Electives.",
+      "allowed_faculties": [
+        "FASS",
+        "SBS",
+        "FENS"
+      ],
+      "excluded_faculties": [
+        "SL"
+      ],
+      "excluded_categories": [
+        "University Courses"
+      ],
+      "credit_flow_rules": [
+        "Excess Core Elective credits count toward Area Electives.",
+        "Excess Area Elective credits count toward Free Electives."
+      ],
+      "notes": "Free elective pool is dynamic and computed after applying category assignment and overflow rules."
+    },
+    "Engineering": {
+      "min_ects_credits": 90
+    },
+    "Faculty Courses": {
+      "min_courses": 5
+    },
+    "Basic Science": {
+      "min_ects_credits": 60
+    }
+  },
+  "prerequisites": {
+    "courses": [
+      {
+        "code": "IF 100",
+        "name": "Computational Approaches to Problem Solving",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "MATH 101",
+        "name": "Calculus I",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "MATH 102",
+        "name": "Calculus II",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "MATH 201",
+        "name": "Linear Algebra",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "ENS 211",
+        "name": "Signals",
+        "prerequisites": [
+          "MATH 101"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "MATH 203",
+        "name": "Introduction to Probability",
+        "prerequisites": [
+          "MATH 102"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 435",
+        "name": "Quantum Programming I",
+        "prerequisites": [
+          "IF 100",
+          "MATH 201"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "CS 449",
+        "name": "Human Computer Interaction",
+        "prerequisites": [
+          "IF 100"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 201",
+        "name": "Programming Fundamentals",
+        "prerequisites": [
+          "IF 100"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "BIO 310",
+        "name": "Introduction to Bioinformatics",
+        "prerequisites": [
+          "IF 100",
+          "ENS 210"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "MATH 306",
+        "name": "Statistical Modelling",
+        "prerequisites": [
+          "MATH 203"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "DSA 210 / CS 210",
+        "name": "Introduction to Data Science",
+        "prerequisites": [
+          "IF 100",
+          "MATH 203"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "CS 412",
+        "name": "Machine Learning",
+        "prerequisites": [
+          "MATH 203",
+          "MATH 201"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "ENS 206",
+        "name": "Systems Modeling and Control",
+        "prerequisites": [
+          "MATH 203",
+          "MATH 201"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "CS 438",
+        "name": "Blockchain: Security and Applications",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "CS 302",
+        "name": "Formal Languages and Automata Theory",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "CS 303",
+        "name": "Logic and Digital System Design",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "CS 404",
+        "name": "Artificial Intelligence",
+        "prerequisites": [
+          "CS 201"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 417",
+        "name": "Computer Vision",
+        "prerequisites": [
+          "CS 201"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 204",
+        "name": "Advanced Programming",
+        "prerequisites": [
+          "CS 201"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 414",
+        "name": "Network Science",
+        "prerequisites": [
+          "MATH 306"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "ME 425",
+        "name": "Autonomous Mobile Robotics",
+        "prerequisites": [
+          "MATH 203",
+          "DSA 210 / CS 210"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "CS 415",
+        "name": "Introduction to Deep Learning",
+        "prerequisites": [
+          "DSA 210 / CS 210"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "ME 403",
+        "name": "Introduction to Robotics",
+        "prerequisites": [
+          "ENS 206"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 48006",
+        "name": "Special Topics in CS: Decentralized Finance",
+        "prerequisites": [
+          "CS 438"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 407",
+        "name": "Theory of Computation",
+        "prerequisites": [
+          "CS 302"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 308",
+        "name": "Microcomputer Based System Design",
+        "prerequisites": [
+          "CS 303"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 401",
+        "name": "Computer Architectures",
+        "prerequisites": [
+          "CS 303"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 307",
+        "name": "Operating Systems",
+        "prerequisites": [
+          "CS 204"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 306",
+        "name": "Database Systems",
+        "prerequisites": [
+          "CS 204"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 408",
+        "name": "Computer Networks",
+        "prerequisites": [
+          "CS 204"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 48007",
+        "name": "Special Topics in CS: Internet of Things Sensing System",
+        "prerequisites": [
+          "CS 204"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 300",
+        "name": "Data Structures",
+        "prerequisites": [
+          "CS 204"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 455",
+        "name": "Large Language Models: Theoretical Foundations and Practical Applications",
+        "prerequisites": [
+          "CS 414"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 308",
+        "name": "Software Engineering",
+        "prerequisites": [
+          "CS 204"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 310",
+        "name": "Mobile Application Development",
+        "prerequisites": [
+          "CS 204"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "MATH 204",
+        "name": "Discrete Mathematics",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "CS 305",
+        "name": "Programming Languages",
+        "prerequisites": [
+          "CS 204"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 432",
+        "name": "Computer and Network Security",
+        "prerequisites": [
+          "CS 408"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 437",
+        "name": "Cybersecurity Practices and Applications",
+        "prerequisites": [
+          "CS 408"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 48008",
+        "name": "Special Topics in CS: Malware Analysis and Detection",
+        "prerequisites": [
+          "CS 408"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 447",
+        "name": "Immersive Systems Development",
+        "prerequisites": [
+          "CS 48007"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 48010",
+        "name": "Special Topics in CS: Performance Analysis and Engineering",
+        "prerequisites": [
+          "CS 48007"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 460",
+        "name": "Automated Debugging",
+        "prerequisites": [
+          "CS 300"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 405",
+        "name": "Computer Graphics",
+        "prerequisites": [
+          "CS 300"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 442",
+        "name": "Software Design Patterns",
+        "prerequisites": [
+          "CS 308"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 301",
+        "name": "Algorithms",
+        "prerequisites": [
+          "CS 300",
+          "MATH 204"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "CS 48004",
+        "name": "Special Topics in CS: Agile Software Development",
+        "prerequisites": [
+          "CS 308"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 411",
+        "name": "Cryptography",
+        "prerequisites": [
+          "MATH 204"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "ENS 491",
+        "name": "Graduation Project (Design)",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "ENS 492",
+        "name": "Graduation Project (Implementation)",
+        "prerequisites": [
+          "ENS 491"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "CS 419",
+        "name": "Digital Image and Video Analysis",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "CS 436",
+        "name": "Cloud Computing",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "CS 48011",
+        "name": "Special Topics in CS: Evolution and Biology for Artificial Intelligence",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "DSA 201",
+        "name": "Advanced Programming for Data Science",
+        "prerequisites": [
+          "IF 100"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "DSA 301",
+        "name": "Data Visualization",
+        "prerequisites": [
+          "DSA 201"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "DSA 473",
+        "name": "Time Series and Forecasting Models",
+        "prerequisites": [
+          "MATH 306"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "ENRG 420",
+        "name": "Energy Systems Optimization",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "ENS 204",
+        "name": "Mechanics",
+        "prerequisites": [
+          "NS 101",
+          "MATH 102"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "ENS 205",
+        "name": "Introduction to Materials Science",
+        "prerequisites": [
+          "NS 102",
+          "MATH 102"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "ENS 208",
+        "name": "Introduction to Industrial Engineering",
+        "prerequisites": [
+          "IF 100",
+          "MATH 102"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "ENS 209",
+        "name": "Introduction to Computer Aided Drafting and Solid Modeling",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "ENS 409",
+        "name": "Numerical Analysis",
+        "prerequisites": [
+          "CS 201"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "IE 303",
+        "name": "Decision Economics",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "IE 309",
+        "name": "Manufacturing Processes I",
+        "prerequisites": [
+          "ENS 205"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "IE 402",
+        "name": "Integrated Manufacturing Systems",
+        "prerequisites": [
+          "IE 309",
+          "ENS 209"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "IE 403",
+        "name": "Quality Planning and Control",
+        "prerequisites": [
+          "MATH 306"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "IE 405",
+        "name": "Decision Analysis",
+        "prerequisites": [
+          "MATH 306"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "IE 409",
+        "name": "Project Scheduling and Management",
+        "prerequisites": [
+          "IE 311",
+          "IE 303"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "IE 416",
+        "name": "Additive Manufacturing",
+        "prerequisites": [
+          "ENS 209"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "IE 435",
+        "name": "Production Dynamics and Control",
+        "prerequisites": [
+          "IE 305"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "IE 436",
+        "name": "Monte Carlo Methods in Finance",
+        "prerequisites": [
+          "MATH 306"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "MATH 212",
+        "name": "Linear Algebra and Differential Equations",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "EE 200",
+        "name": "Electronic Circuit Implementations",
+        "prerequisites": [
+          "ENS 203"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 202",
+        "name": "Electronic Circuits II",
+        "prerequisites": [
+          "ENS 203"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 302",
+        "name": "Digital Integrated Circuits",
+        "prerequisites": [
+          "EE 202"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 303",
+        "name": "Analog Integrated Circuits",
+        "prerequisites": [
+          "EE 202"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 306",
+        "name": "Introduction to Radio Frequency and Microwave Design",
+        "prerequisites": [
+          "ENS 201",
+          "EE 200",
+          "EE 202"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "EE 307",
+        "name": "Semiconductor Physics and Devices",
+        "prerequisites": [
+          "ENS 203"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 310",
+        "name": "Hardware Description Languages",
+        "prerequisites": [
+          "CS 303"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 311",
+        "name": "Introduction to Signal Processing and Information Systems",
+        "prerequisites": [
+          "ENS 211"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 312",
+        "name": "Discrete-Time Signals and Systems",
+        "prerequisites": [
+          "ENS 211"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 313",
+        "name": "Introduction to Communication Systems",
+        "prerequisites": [
+          "ENS 211"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 314",
+        "name": "Digital Communications",
+        "prerequisites": [
+          "ENS 211"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 401",
+        "name": "Very Large Scale Integrated System Design I",
+        "prerequisites": [
+          "CS 303",
+          "EE 302"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "EE 402",
+        "name": "Very Large Scale Integrated System Design II",
+        "prerequisites": [
+          "EE 401"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 403",
+        "name": "Optoelectronics",
+        "prerequisites": [
+          "EE 307"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 404",
+        "name": "Introduction to Microelectromechanical Systems",
+        "prerequisites": [
+          "ENS 203"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 406",
+        "name": "Antennas and Propagation for Wireless Communication",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "EE 407",
+        "name": "Microelectronic Fabrication",
+        "prerequisites": [
+          "EE 307"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 409",
+        "name": "Microwaves",
+        "prerequisites": [
+          "ENS 201"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 411",
+        "name": "RF Integrated Circuits",
+        "prerequisites": [
+          "EE 306"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 419",
+        "name": "Signal Processing Design and Implementation",
+        "prerequisites": [
+          "EE 312"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "EE 440",
+        "name": "Mixed-Signal Integrated Circuits",
+        "prerequisites": [
+          "EE 302",
+          "EE 303"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "EE 444",
+        "name": "Optics",
+        "prerequisites": [
+          "ENS 201",
+          "ENS 203",
+          "ENS 211"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "EE 473",
+        "name": "Biomedical Instrumentation",
+        "prerequisites": [
+          "ENS 203"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "ENS 201",
+        "name": "Electromagnetics I",
+        "prerequisites": [
+          "NS 101",
+          "MATH 102"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "ENS 202",
+        "name": "Thermodynamics",
+        "prerequisites": [
+          "NS 102"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "ENS 203",
+        "name": "Electronic Circuits I",
+        "prerequisites": [
+          "MATH 102"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "ENS 207",
+        "name": "Introduction to Energy Systems",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "ENS 214",
+        "name": "Dynamics",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "MATH 202",
+        "name": "Differential Equations",
+        "prerequisites": [
+          "MATH 102"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "ME 301",
+        "name": "Mechanical Systems I",
+        "prerequisites": [
+          "ENS 204"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "ME 302",
+        "name": "Mechanical Systems II",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "ME 303",
+        "name": "Control System Design",
+        "prerequisites": [
+          "ENS 206"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "ME 304",
+        "name": "Motion Control Systems",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "ME 305",
+        "name": "Power Electronics",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "ME 307",
+        "name": "Fluid Dynamics",
+        "prerequisites": [
+          "NS 101",
+          "MATH 102"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "ME 308",
+        "name": "Industrial Control",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "ME 309",
+        "name": "Heat and Mass Transfer",
+        "prerequisites": [
+          "ME 307"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "ME 312",
+        "name": "Analysis and Synthesis of Mechanisms",
+        "prerequisites": [
+          "ENS 204"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "ME 395",
+        "name": "Internship Project",
+        "prerequisites": [
+          "PROJ 201"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "ME 402",
+        "name": "Plasmonics",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "ME 405",
+        "name": "Mechanical Vibrations",
+        "prerequisites": [
+          "ENS 214"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "ME 408",
+        "name": "Mechatronics System Design",
+        "prerequisites": [
+          "CS 201",
+          "ENS 203",
+          "ME 301",
+          "ME 303"
+        ],
+        "prerequisite_type": "multiple"
+      },
+      {
+        "code": "ME 409",
+        "name": "Foundations of Microsystems",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "ME 412",
+        "name": "Introduction to the Finite Element Method",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "ME 415",
+        "name": "Computational Analysis and Simulation",
+        "prerequisites": [
+          "MATH 201"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "ME 420",
+        "name": "Renewable and Sustainable Energy Systems",
+        "prerequisites": [
+          "ENS 207"
+        ],
+        "prerequisite_type": "single"
+      },
+      {
+        "code": "ME 435",
+        "name": "Scaling in Engineering Systems",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "ME 437",
+        "name": "Biomechatronics",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "ME 441",
+        "name": "Advanced Vehicle Systems",
+        "prerequisites": [],
+        "prerequisite_type": "none"
+      },
+      {
+        "code": "ENS 311",
+        "name": "Numerical Analysis",
+        "prerequisites": [
+          "CS 201"
+        ],
+        "prerequisite_type": "single"
+      }
+    ]
+  },
+  "category_choice_rules": {
+    "Required Courses": [
+      {
+        "id": "math_requirement",
+        "paths": [
+          [
+            "MATH 212"
+          ],
+          [
+            "MATH 201",
+            "MATH 202"
+          ]
+        ]
+      }
+    ]
+  }
+}

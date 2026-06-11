@@ -1,0 +1,68 @@
+{
+  "programs": [
+    {
+      "id": 1,
+      "faculty": "Faculty of Engineering and Natural Sciences",
+      "department": "Computer Science and Engineering",
+      "program_name": "Computer Science and Engineering Undergraduate Program (BSCS)",
+      "requirements_file": "data/cs_bscs_requirements_v1.json"
+    },
+    {
+      "id": 2,
+      "faculty": "Faculty of Engineering and Natural Sciences",
+      "department": "Industrial Engineering",
+      "program_name": "Industrial Engineering Undergraduate Program (BSMS)",
+      "requirements_file": "data/ie_bsie_requirements_v1.json"
+    },
+    {
+      "id": 3,
+      "faculty": "Faculty of Engineering and Natural Sciences",
+      "department": "Electronics Engineering",
+      "program_name": "Electronics Engineering Undergraduate Program (BSEE)",
+      "requirements_file": "data/ee_bsee_requirements_v1.json",
+      "curricula": [
+        {
+          "effective_from": "000000",
+          "effective_to": "202603",
+          "requirements_file": "data/ee_bsee_requirements_v1.json"
+        },
+        {
+          "effective_from": "202701",
+          "requirements_file": "data/ee_bsee_requirements_2027.json"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "faculty": "Faculty of Engineering and Natural Sciences",
+      "department": "Mechatronics Engineering",
+      "program_name": "Mechatronics Engineering Undergraduate Program (BSME)",
+      "requirements_file": "data/me_bsme_requirements_v1.json",
+      "curricula": [
+        {
+          "effective_from": "000000",
+          "effective_to": "202603",
+          "requirements_file": "data/me_bsme_requirements_v1.json"
+        },
+        {
+          "effective_from": "202701",
+          "requirements_file": "data/me_bsme_requirements_2027.json"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "faculty": "Faculty of Engineering and Natural Sciences",
+      "department": "Molecular Biology, Genetics and Bioengineering",
+      "program_name": "Molecular Biology, Genetics and Bioengineering Undergraduate Program (BSBIO)",
+      "requirements_file": "data/bio_bsbio_requirements_v1.json"
+    },
+    {
+      "id": 6,
+      "faculty": "Faculty of Engineering and Natural Sciences",
+      "department": "Materials Science and Nano Engineering",
+      "program_name": "Materials Science and Nano Engineering Undergraduate Program (BSMAT)",
+      "requirements_file": "data/mat_bsmat_requirements_v1.json"
+    }
+  ]
+}

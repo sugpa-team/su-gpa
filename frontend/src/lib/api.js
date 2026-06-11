@@ -1,5 +1,5 @@
-import { loadCourses, loadRequirements } from './staticData'
-import { getProfile, setProfile, getSemesters } from './storage'
+import { loadCourses, loadProgramRegistry } from './staticData'
+import { getProfile, setPlans, setProfile, getSemesters } from './storage'
 import {
   addCourseToSemester,
   createSemester,
@@ -8,6 +8,7 @@ import {
   deleteSemester,
   getSemestersSummary,
   importBannerwebParseResult,
+  resetPrereqCache,
   resetTrackingData,
   updateCourseRecord,
   updateSemesterCourseGrade,
@@ -55,18 +56,13 @@ function parseBody(options) {
 }
 
 async function programsFromRequirements() {
-  const requirements = await loadRequirements()
-  const program = requirements?.program
-  if (!program) return []
-  const programId = 1
-  return [
-    {
-      id: programId,
-      faculty: program.faculty_name,
-      department: program.department_name,
-      program_name: program.program_name,
-    },
-  ]
+  const programs = await loadProgramRegistry()
+  return programs.map(program => ({
+    id: program.id,
+    faculty: program.faculty,
+    department: program.department,
+    program_name: program.program_name,
+  }))
 }
 
 async function profilePayload() {
@@ -102,7 +98,11 @@ async function updateProfile(body) {
     program_name: matched.program_name,
     entry_term: entryTerm,
   })
-  if (trackingReset) await resetTrackingData()
+  if (trackingReset) {
+    await resetTrackingData()
+    setPlans([])
+    resetPrereqCache()
+  }
 
   return {
     profile: await profilePayload(),

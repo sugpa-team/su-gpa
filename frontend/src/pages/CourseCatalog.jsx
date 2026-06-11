@@ -62,7 +62,7 @@ function CourseCatalog({ courses, loading }) {
             type="search"
             value={courseSearch}
             onChange={event => setCourseSearch(event.target.value)}
-            placeholder="CS 201 or accounting…"
+            placeholder="Search by course code or name…"
           />
         </div>
       </div>

@@ -10,7 +10,14 @@ import {
   weightedGpaFromRows,
 } from './gpa'
 import { loadRequirements } from './staticData'
-import { getSemesters, newId, setSemesters } from './storage'
+import {
+  getCourseAttributions,
+  getSemesters,
+  mergeCourseAttributions,
+  newId,
+  setCourseAttributions,
+  setSemesters,
+} from './storage'
 
 const MAX_OVERLOAD_COURSES_PER_SEMESTER = 2
 const PROJ_201_CODE = 'PROJ 201'
@@ -59,6 +66,10 @@ function countsForRetakeWindow(name) {
 }
 
 let prereqMapCache = null
+
+export function resetPrereqCache() {
+  prereqMapCache = null
+}
 
 async function prerequisitesByCourse() {
   if (prereqMapCache) return prereqMapCache
@@ -378,6 +389,14 @@ async function programRequiredTotals() {
   return { minSu, minEcts }
 }
 
+function storedCourseAttribution(courseCode) {
+  const attribution = getCourseAttributions()[normalizeCourseCode(courseCode)] || {}
+  return {
+    engineering_ects: Number(attribution.engineering_ects || 0),
+    basic_science_ects: Number(attribution.basic_science_ects || 0),
+  }
+}
+
 export async function buildSemestersSummary() {
   const semesters = getSemesters()
   const catalog = await courseCatalog()
@@ -536,11 +555,14 @@ export async function addCourseToSemester(semesterId, courseCode, grade, options
   }
 
   semester.courses = semester.courses || []
+  const attribution = storedCourseAttribution(code)
   semester.courses.push({
     id: newId(),
     course_code: code,
     grade: normalizedGrade,
     is_overload: isOverload,
+    engineering_ects: attribution.engineering_ects,
+    basic_science_ects: attribution.basic_science_ects,
   })
   setSemesters(semesters)
   return buildSemestersSummary()
@@ -608,6 +630,7 @@ export async function deleteCourseFromSemester(semesterId, courseCode) {
 
 export async function resetTrackingData() {
   setSemesters([])
+  setCourseAttributions({})
 }
 
 export async function importBannerwebParseResult(parsed) {
@@ -630,6 +653,21 @@ export async function importBannerwebParseResult(parsed) {
   }
   const engineeringLookup = attributionLookup('ENGINEERING')
   const basicScienceLookup = attributionLookup('BASIC SCIENCE')
+  const learnedAttributions = {}
+  const rememberAttributions = (sectionName, fieldName) => {
+    const section = sections[sectionName] || {}
+    for (const course of section.courses || []) {
+      if (!course || typeof course !== 'object') continue
+      const code = normalizeCourseCode(course.course || '')
+      const ects = Number(course.ects_credits || 0)
+      if (!code || ects <= 0) continue
+      const current = learnedAttributions[code] || {}
+      current[fieldName] = Math.max(Number(current[fieldName] || 0), ects)
+      learnedAttributions[code] = current
+    }
+  }
+  rememberAttributions('ENGINEERING', 'engineering_ects')
+  rememberAttributions('BASIC SCIENCE', 'basic_science_ects')
 
   const coursesByTerm = {}
   for (const [sectionName, section] of Object.entries(sections)) {
@@ -693,14 +731,15 @@ export async function importBannerwebParseResult(parsed) {
       const currentCredits = semesterCreditTotal(semester, suCredits)
       const isOverload = currentCredits + newCredits > MAX_SEMESTER_SU_CREDITS
       const key = `${term}|${normalized}`
+      const learned = learnedAttributions[normalized] || {}
       semester.courses.push({
         id: newId(),
         course_code: normalized,
         grade,
         source: 'bannerweb',
         is_overload: isOverload,
-        engineering_ects: engineeringLookup.get(key) || 0,
-        basic_science_ects: basicScienceLookup.get(key) || 0,
+        engineering_ects: engineeringLookup.get(key) || learned.engineering_ects || 0,
+        basic_science_ects: basicScienceLookup.get(key) || learned.basic_science_ects || 0,
         bannerweb_category: course._bannerweb_category || null,
         bannerweb_su_credits: bannerwebSu != null ? Number(bannerwebSu) : null,
         bannerweb_ects_credits: bannerwebEcts != null ? Number(bannerwebEcts) : null,
@@ -709,6 +748,7 @@ export async function importBannerwebParseResult(parsed) {
     }
   }
 
+  mergeCourseAttributions(learnedAttributions)
   setSemesters(semesters)
   const summary = await buildSemestersSummary()
   return {

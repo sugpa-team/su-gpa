@@ -6,10 +6,12 @@ function statusMod(pct) {
 }
 
 function CreditSummaryCard({ totalCompleted, totalRequired, categories }) {
-  const totalPct =
-    totalRequired > 0 ? Math.min(100, (totalCompleted / totalRequired) * 100) : null
-
   const rows = (categories || []).filter(cat => cat.required_su != null)
+  const displayCompleted = Number.isFinite(Number(totalCompleted))
+    ? Number(totalCompleted).toFixed(2)
+    : totalCompleted
+  const totalPct =
+    totalRequired > 0 ? Math.min(100, (Number(totalCompleted || 0) / totalRequired) * 100) : null
 
   return (
     <div className="credit-summary-card">
@@ -18,7 +20,7 @@ function CreditSummaryCard({ totalCompleted, totalRequired, categories }) {
       <div className="credit-summary-total-row">
         <span className="credit-summary-total-label">Total Credits</span>
         <span className="credit-summary-total-value">
-          {totalCompleted ?? 0} / {totalRequired ?? '—'}
+          {displayCompleted ?? 0} / {totalRequired ?? '—'}
           {totalPct !== null && (
             <span className="credit-summary-pct"> ({totalPct.toFixed(0)}%)</span>
           )}

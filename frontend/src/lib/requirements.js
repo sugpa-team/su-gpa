@@ -10,13 +10,6 @@ import {
 import { loadFacultyCourses, loadRequirements } from './staticData'
 
 const FREE_ELECTIVE_FACULTIES = new Set(['FASS', 'SBS', 'FENS'])
-const BANNERWEB_PRIMARY_CATEGORIES = {
-  'UNIVERSITY COURSES': 'University Courses',
-  'REQUIRED COURSES': 'Required Courses',
-  'CORE ELECTIVES': 'Core Electives',
-  'AREA ELECTIVES': 'Area Electives',
-  'FREE ELECTIVES': 'Free Electives',
-}
 const CATEGORIES_WITH_REMAINING = new Set(['Core Electives', 'Area Electives'])
 export const MIN_GRADUATION_GPA = 2.0
 
@@ -55,6 +48,136 @@ function minSuPerCategory(categoryRequirements) {
   return out
 }
 
+function safeInt(value) {
+  if (value === null || value === undefined) return null
+  const n = Number(value)
+  return Number.isFinite(n) ? Math.floor(n) : null
+}
+
+function getFacultyCourseRules(categoryDefinitions) {
+  const definition = categoryDefinitions?.['Faculty Courses']
+  if (!definition || typeof definition !== 'object' || Array.isArray(definition)) return {}
+  return {
+    minMathCodedCourses: safeInt(definition.min_math_coded_courses),
+    minFensFacultyCourses: safeInt(definition.min_fens_faculty_courses),
+  }
+}
+
+function applyFacultyCourseRules(completedCodes, requiredCourses, categoryDefinitions) {
+  const required = safeInt(requiredCourses)
+  const completed = completedCodes.length
+  if (required === null) return { completedCourses: completed, remainingCourses: null }
+
+  const rules = getFacultyCourseRules(categoryDefinitions)
+  const mathCompleted = completedCodes.filter(code => code.startsWith('MATH ')).length
+  const fensFacultyCompleted = completed
+  const deficits = [Math.max(0, required - completed)]
+
+  if (rules.minMathCodedCourses !== null && rules.minMathCodedCourses !== undefined) {
+    deficits.push(Math.max(0, rules.minMathCodedCourses - mathCompleted))
+  }
+  if (rules.minFensFacultyCourses !== null && rules.minFensFacultyCourses !== undefined) {
+    deficits.push(Math.max(0, rules.minFensFacultyCourses - fensFacultyCompleted))
+  }
+
+  const remainingCourses = Math.max(...deficits)
+  return {
+    completedCourses: Math.max(0, required - remainingCourses),
+    remainingCourses,
+  }
+}
+
+function getCategoryChoiceRules(requirements, categoryName) {
+  const rules = requirements?.category_choice_rules?.[categoryName]
+  return Array.isArray(rules) ? rules : []
+}
+
+function getCourseDefinitionMap(value) {
+  const out = new Map()
+  const walk = node => {
+    if (node && typeof node === 'object' && !Array.isArray(node)) {
+      if (node.course) out.set(normalizeCourseCode(node.course), node)
+      for (const item of Object.values(node)) walk(item)
+    } else if (Array.isArray(node)) {
+      for (const item of node) walk(item)
+    }
+  }
+  walk(value)
+  return out
+}
+
+function buildChoiceOptionSets(categoryDefinition, choiceRules) {
+  if (!choiceRules.length) return []
+
+  const categoryCodes = extractCourseCodes(categoryDefinition || [])
+  const allChoiceCodes = new Set()
+  const pathGroups = []
+
+  for (const rule of choiceRules) {
+    const paths = Array.isArray(rule?.paths) ? rule.paths : []
+    const normalizedPaths = paths
+      .map(path => Array.isArray(path) ? path.map(normalizeCourseCode).filter(Boolean) : [])
+      .filter(path => path.length > 0)
+    if (normalizedPaths.length === 0) continue
+    for (const path of normalizedPaths) {
+      for (const code of path) allChoiceCodes.add(code)
+    }
+    pathGroups.push(normalizedPaths)
+  }
+  if (pathGroups.length === 0) return []
+
+  const fixedCodes = [...categoryCodes].filter(code => !allChoiceCodes.has(code))
+  let variants = [[]]
+  for (const paths of pathGroups) {
+    variants = variants.flatMap(existing => paths.map(path => [...existing, ...path]))
+  }
+
+  return variants.map(path => new Set([...fixedCodes, ...path]))
+}
+
+function optionRequirements(optionCodes, definitionMap, fallbackSu, fallbackCourses) {
+  let requiredSu = 0
+  let hasAllSu = true
+  for (const code of optionCodes) {
+    const su = definitionMap.get(code)?.su_credits
+    if (su == null) {
+      hasAllSu = false
+      continue
+    }
+    requiredSu += Number(su)
+  }
+  return {
+    requiredSu: hasAllSu ? round(requiredSu, 2) : fallbackSu,
+    requiredCourses: optionCodes.size || fallbackCourses,
+  }
+}
+
+function categoryProgressPercent(completedSu, completedEcts, completedCourses, requiredSu, requiredEcts, requiredCourses) {
+  const progressCandidates = []
+  if (requiredSu != null) {
+    const v = safeProgressPct(completedSu, Number(requiredSu))
+    if (v != null) progressCandidates.push(v)
+  }
+  if (requiredEcts != null) {
+    const v = safeProgressPct(completedEcts, Number(requiredEcts))
+    if (v != null) progressCandidates.push(v)
+  }
+  if (requiredCourses != null && Number(requiredCourses) > 0) {
+    progressCandidates.push(round(Math.min(100, (completedCourses / Number(requiredCourses)) * 100), 1))
+  }
+  return progressCandidates.length ? Math.min(...progressCandidates) : null
+}
+
+function betterChoiceOption(current, candidate) {
+  if (!current) return candidate
+  const currentPct = current.progressPercent ?? -1
+  const candidatePct = candidate.progressPercent ?? -1
+  if (candidatePct !== currentPct) return candidatePct > currentPct ? candidate : current
+  const currentRemaining = (current.remainingSu ?? 0) + (current.remainingCourses ?? 0)
+  const candidateRemaining = (candidate.remainingSu ?? 0) + (candidate.remainingCourses ?? 0)
+  return candidateRemaining < currentRemaining ? candidate : current
+}
+
 export async function getCategoryMembership() {
   const requirements = await loadRequirements()
   const categoryDefinitions = requirements?.categories || {}
@@ -86,25 +209,48 @@ function buildCategoryCodeSets(latestAttemptRows, categoryRequirements, category
   const coreCodes = extractCourseCodes(categoryDefinitions['Core Electives'] || [])
   const areaCodes = extractCourseCodes(categoryDefinitions['Area Electives'] || [])
   const fixedCodes = new Set([...universityCodes, ...requiredCodes])
+  const activeElectiveCodes = new Set([...coreCodes, ...areaCodes])
 
   const orderedLatestCodes = latestAttemptRows.map(r => normalizeCourseCode(r.course_code))
   const latestRowsByCode = new Map(orderedLatestCodes.map((code, i) => [code, latestAttemptRows[i]]))
 
-  const bannerwebAllocated = {}
-  for (const name of Object.values(BANNERWEB_PRIMARY_CATEGORIES)) bannerwebAllocated[name] = new Set()
+  // Imported Bannerweb categories are snapshots. Fixed categories can be trusted
+  // when they match the active curriculum, but elective pools must be recomputed
+  // so overflow courses move up or down after manual edits.
+  const bannerwebEligibility = {
+    'University Courses': code => universityCodes.has(code),
+    'Required Courses': code => requiredCodes.has(code),
+  }
+  const fixedBannerwebAllocated = {
+    'University Courses': new Set(),
+    'Required Courses': new Set(),
+  }
+  const bannerwebCoreHints = new Set()
+  const bannerwebAreaHints = new Set()
+  const bannerwebFreeEligible = new Set()
   for (const row of latestAttemptRows) {
     const cat = (row.bannerweb_category || '').trim()
-    if (bannerwebAllocated[cat]) bannerwebAllocated[cat].add(normalizeCourseCode(row.course_code))
+    const code = normalizeCourseCode(row.course_code)
+    if (fixedBannerwebAllocated[cat]) {
+      if (bannerwebEligibility[cat](code)) fixedBannerwebAllocated[cat].add(code)
+      continue
+    }
+    if (cat === 'Core Electives' || cat === 'Area Electives' || cat === 'Free Electives') {
+      bannerwebFreeEligible.add(code)
+    }
+    if (fixedCodes.has(code) || activeElectiveCodes.has(code)) continue
+    if (cat === 'Core Electives') bannerwebCoreHints.add(code)
+    if (cat === 'Area Electives') bannerwebAreaHints.add(code)
   }
 
-  const bannerwebAssigned = new Set()
-  for (const set of Object.values(bannerwebAllocated)) {
-    for (const code of set) bannerwebAssigned.add(code)
+  const fixedBannerwebAssigned = new Set()
+  for (const set of Object.values(fixedBannerwebAllocated)) {
+    for (const code of set) fixedBannerwebAssigned.add(code)
   }
 
-  const assigned = new Set(bannerwebAssigned)
+  const assigned = new Set(fixedBannerwebAssigned)
   for (const code of orderedLatestCodes) {
-    if (fixedCodes.has(code) && !bannerwebAssigned.has(code)) assigned.add(code)
+    if (fixedCodes.has(code) && !fixedBannerwebAssigned.has(code)) assigned.add(code)
   }
 
   const minimumSu = minSuPerCategory(categoryRequirements)
@@ -129,40 +275,37 @@ function buildCategoryCodeSets(latestAttemptRows, categoryRequirements, category
     return allocated
   }
 
-  const coreAllocated = new Set(bannerwebAllocated['Core Electives'])
-  for (const code of allocateUntilSatisfied(
-    orderedLatestCodes.filter(c => coreCodes.has(c) && !fixedCodes.has(c)),
+  const coreEligibleCodes = new Set([...coreCodes, ...bannerwebCoreHints])
+  const coreAllocated = allocateUntilSatisfied(
+    orderedLatestCodes.filter(c => coreEligibleCodes.has(c) && !fixedCodes.has(c)),
     minimumSu['Core Electives'],
-  )) coreAllocated.add(code)
+  )
 
-  const areaAllocated = new Set(bannerwebAllocated['Area Electives'])
-  const areaOrCore = new Set([...areaCodes, ...coreCodes])
-  for (const code of allocateUntilSatisfied(
+  const areaEligibleCodes = new Set([...areaCodes, ...bannerwebAreaHints])
+  const areaOrCore = new Set([...areaEligibleCodes, ...coreEligibleCodes])
+  const areaAllocated = allocateUntilSatisfied(
     orderedLatestCodes.filter(c => areaOrCore.has(c) && !fixedCodes.has(c)),
     minimumSu['Area Electives'],
-  )) areaAllocated.add(code)
+  )
 
   const freeAllocated = new Set()
   for (const code of orderedLatestCodes) {
     if (assigned.has(code)) continue
     if (fixedCodes.has(code)) continue
-    const row = latestRowsByCode.get(code)
-    const codeKey = code
-    const faculty = (latestRowsByCode.get(codeKey)?.faculty || '').toUpperCase()
-    if (FREE_ELECTIVE_FACULTIES.has(faculty)) freeAllocated.add(code)
-    void row
+    const faculty = (latestRowsByCode.get(code)?.faculty || '').toUpperCase()
+    if (FREE_ELECTIVE_FACULTIES.has(faculty) || bannerwebFreeEligible.has(code)) {
+      freeAllocated.add(code)
+    }
   }
-  for (const code of bannerwebAllocated['Free Electives']) freeAllocated.add(code)
-
   return {
-    'University Courses': new Set([...universityCodes, ...bannerwebAllocated['University Courses']]),
-    'Required Courses': new Set([...requiredCodes, ...bannerwebAllocated['Required Courses']]),
+    'University Courses': new Set([...universityCodes, ...fixedBannerwebAllocated['University Courses']]),
+    'Required Courses': new Set([...requiredCodes, ...fixedBannerwebAllocated['Required Courses']]),
     'Core Electives': coreAllocated,
     'Area Electives': areaAllocated,
     'Free Electives': freeAllocated,
     'Faculty Courses': facultyCodes,
-    '_Core Electives Eligible': coreCodes,
-    '_Area Electives Eligible': areaCodes,
+    '_Core Electives Eligible': coreEligibleCodes,
+    '_Area Electives Eligible': areaEligibleCodes,
   }
 }
 
@@ -240,7 +383,51 @@ export async function getGraduationRequirementsProgress(semesters) {
 
   const latestAttemptCodes = new Set(latestRows.map(r => normalizeCourseCode(r.course_code)))
   const latestRowsByCode = new Map(latestRows.map(r => [normalizeCourseCode(r.course_code), r]))
+  const latestOrderByCode = new Map(latestRows.map((r, i) => [normalizeCourseCode(r.course_code), i]))
 
+  const completedCodesFromSet = courseCodes => [...courseCodes]
+    .filter(code => latestAttemptCodes.has(code))
+    .sort((a, b) => (latestOrderByCode.get(a) ?? 0) - (latestOrderByCode.get(b) ?? 0))
+
+  const courseDetailsFor = (codes, categoryName) => codes.map(code => {
+    const row = latestRowsByCode.get(code)
+    const course = catalog[code] || {}
+    let su = null
+    try {
+      su = row ? round(rowSuCredits(row, suCredits), 2) : null
+    } catch {
+      su = null
+    }
+    const ects = row ? rowEctsCredits(row, catalog) : null
+    const countedEcts = categoryName === 'Engineering'
+      ? Number(row?.engineering_ects || 0)
+      : categoryName === 'Basic Science'
+        ? Number(row?.basic_science_ects || 0)
+        : ects
+    return {
+      course_code: code,
+      course_name: course.Name || null,
+      semester_name: row?.semester_name || null,
+      grade: row?.grade ?? null,
+      su_credits: su,
+      ects_credits: ects != null ? round(Number(ects), 2) : null,
+      counted_su: categoryName === 'Engineering' || categoryName === 'Basic Science' ? null : su,
+      counted_ects: countedEcts != null ? round(Number(countedEcts), 2) : null,
+    }
+  })
+
+  const attributionCodeSets = {
+    Engineering: new Set(
+      latestRows
+        .filter(row => Number(row.engineering_ects || 0) > 0)
+        .map(row => normalizeCourseCode(row.course_code)),
+    ),
+    'Basic Science': new Set(
+      latestRows
+        .filter(row => Number(row.basic_science_ects || 0) > 0)
+        .map(row => normalizeCourseCode(row.course_code)),
+    ),
+  }
   const attributionMetrics = {
     Engineering: [0.0, engineeringEcts, engineeringCourses],
     'Basic Science': [0.0, basicScienceEcts, basicScienceCourses],
@@ -267,35 +454,91 @@ export async function getGraduationRequirementsProgress(semesters) {
     const categoryName = item.category
     if (!categoryName) continue
 
-    const requiredSu = item.min_su
+    let requiredSu = item.min_su
     const requiredEcts = item.min_ects
-    const requiredCourses = item.min_courses
+    let requiredCourses = item.min_courses
 
     let completedSu, completedEcts, completedCourses
+    let completedCourseCodes = []
     if (attributionMetrics[categoryName]) {
       [completedSu, completedEcts, completedCourses] = attributionMetrics[categoryName]
+      completedCourseCodes = completedCodesFromSet(attributionCodeSets[categoryName] || new Set())
     } else {
       const courseCodes = categorySets[categoryName] || new Set()
+      completedCourseCodes = completedCodesFromSet(courseCodes)
       ;[completedSu, completedEcts, completedCourses] = computeMetrics(courseCodes)
+      const choiceRules = getCategoryChoiceRules(requirements, categoryName)
+      const choiceOptions = buildChoiceOptionSets(categoryDefinitions[categoryName], choiceRules)
+      if (choiceOptions.length > 0) {
+        const definitionMap = getCourseDefinitionMap(categoryDefinitions[categoryName])
+        let best = null
+        for (const optionCodes of choiceOptions) {
+          const [optionSu, optionEcts, optionCourses] = computeMetrics(optionCodes)
+          const optionCompletedCodes = completedCodesFromSet(optionCodes)
+          const optionReq = optionRequirements(
+            optionCodes,
+            definitionMap,
+            requiredSu != null ? Number(requiredSu) : null,
+            requiredCourses != null ? Math.floor(Number(requiredCourses)) : null,
+          )
+          const progressPercent = categoryProgressPercent(
+            optionSu,
+            optionEcts,
+            optionCourses,
+            optionReq.requiredSu,
+            requiredEcts,
+            optionReq.requiredCourses,
+          )
+          best = betterChoiceOption(best, {
+            completedCodes: optionCompletedCodes,
+            completedSu: optionSu,
+            completedEcts: optionEcts,
+            completedCourses: optionCourses,
+            requiredSu: optionReq.requiredSu,
+            requiredCourses: optionReq.requiredCourses,
+            remainingSu: optionReq.requiredSu != null ? Math.max(0, optionReq.requiredSu - optionSu) : null,
+            remainingCourses: optionReq.requiredCourses != null ? Math.max(0, optionReq.requiredCourses - optionCourses) : null,
+            progressPercent,
+          })
+        }
+        if (best) {
+          completedSu = best.completedSu
+          completedEcts = best.completedEcts
+          completedCourses = best.completedCourses
+          completedCourseCodes = best.completedCodes
+          requiredSu = best.requiredSu
+          requiredCourses = best.requiredCourses
+        }
+      }
+      if (categoryName === 'Faculty Courses') {
+        const completedCodes = completedCodesFromSet(courseCodes)
+        completedCourseCodes = completedCodes
+        completedCourses = applyFacultyCourseRules(
+          completedCodes,
+          requiredCourses,
+          categoryDefinitions,
+        ).completedCourses
+      }
     }
 
     const remainingSu = requiredSu != null ? round(Math.max(0, Number(requiredSu) - completedSu), 2) : null
     const remainingEcts = requiredEcts != null ? round(Math.max(0, Number(requiredEcts) - completedEcts), 2) : null
-    const remainingCourses = requiredCourses != null ? Math.max(0, Math.floor(Number(requiredCourses)) - completedCourses) : null
+    let remainingCourses = requiredCourses != null ? Math.max(0, Math.floor(Number(requiredCourses)) - completedCourses) : null
+    if (categoryName === 'Faculty Courses') {
+      const completedCodes = [...(categorySets[categoryName] || new Set())]
+        .filter(code => latestAttemptCodes.has(code))
+      const adjusted = applyFacultyCourseRules(completedCodes, requiredCourses, categoryDefinitions)
+      remainingCourses = adjusted.remainingCourses
+    }
 
-    const progressCandidates = []
-    if (requiredSu != null) {
-      const v = safeProgressPct(completedSu, Number(requiredSu))
-      if (v != null) progressCandidates.push(v)
-    }
-    if (requiredEcts != null) {
-      const v = safeProgressPct(completedEcts, Number(requiredEcts))
-      if (v != null) progressCandidates.push(v)
-    }
-    if (requiredCourses != null && Number(requiredCourses) > 0) {
-      progressCandidates.push(round(Math.min(100, (completedCourses / Number(requiredCourses)) * 100), 1))
-    }
-    const progressPercent = progressCandidates.length ? Math.min(...progressCandidates) : null
+    const progressPercent = categoryProgressPercent(
+      completedSu,
+      completedEcts,
+      completedCourses,
+      requiredSu,
+      requiredEcts,
+      requiredCourses,
+    )
 
     categoryProgress.push({
       category: categoryName,
@@ -305,6 +548,8 @@ export async function getGraduationRequirementsProgress(semesters) {
       completed_su: completedSu,
       completed_ects: completedEcts,
       completed_courses: completedCourses,
+      completed_course_codes: completedCourseCodes,
+      completed_course_details: courseDetailsFor(completedCourseCodes, categoryName),
       remaining_su: remainingSu,
       remaining_ects: remainingEcts,
       remaining_courses: remainingCourses,
@@ -363,10 +608,6 @@ export async function getProgressSummary(semesters) {
 
   const categorySets = buildCategoryCodeSets(latestRows, categoryRequirements, categoryDefinitions, facultyCodes, suCredits)
 
-  let totalCreditsCompleted = 0.0
-  for (const row of latestRows) totalCreditsCompleted += rowSuCredits(row, suCredits)
-  totalCreditsCompleted = round(totalCreditsCompleted, 2)
-
   const programTotals = requirements?.requirement_summary?.total || {}
   const minSuTotal = programTotals.min_su != null ? Number(programTotals.min_su) : null
 
@@ -378,12 +619,15 @@ export async function getProgressSummary(semesters) {
     const categoryName = item.category
     if (!categoryName) continue
 
-    const requiredSu = item.min_su
+    let requiredSu = item.min_su
     const requiredEcts = item.min_ects
-    const requiredCoursesCount = item.min_courses
+    let requiredCoursesCount = item.min_courses
     const courseCodes = categorySets[categoryName] || new Set()
 
-    const completedCodes = [...courseCodes].filter(c => latestAttemptCodes.has(c)).sort()
+    let completedCodes = [...courseCodes].filter(c => latestAttemptCodes.has(c)).sort()
+    let completedCourseCount = categoryName === 'Faculty Courses'
+      ? applyFacultyCourseRules(completedCodes, requiredCoursesCount, categoryDefinitions).completedCourses
+      : completedCodes.length
     let completedSu = 0.0
     let completedEcts = 0.0
     const catalog = await courseCatalog()
@@ -396,21 +640,67 @@ export async function getProgressSummary(semesters) {
     completedSu = round(completedSu, 2)
     completedEcts = round(completedEcts, 2)
 
-    const progressCandidates = []
-    if (requiredSu != null) {
-      const v = safeProgressPct(completedSu, Number(requiredSu))
-      if (v != null) progressCandidates.push(v)
+    const choiceRules = getCategoryChoiceRules(requirements, categoryName)
+    const choiceOptions = buildChoiceOptionSets(categoryDefinitions[categoryName], choiceRules)
+    if (choiceOptions.length > 0) {
+      const definitionMap = getCourseDefinitionMap(categoryDefinitions[categoryName])
+      let best = null
+      for (const optionCodes of choiceOptions) {
+        const optionCompletedCodes = [...optionCodes].filter(code => latestAttemptCodes.has(code)).sort()
+        let optionSu = 0.0
+        let optionEcts = 0.0
+        for (const code of optionCompletedCodes) {
+          const row = latestRowsByCode.get(code)
+          optionSu += rowSuCredits(row, suCredits)
+          const ects = rowEctsCredits(row, catalog)
+          if (ects != null) optionEcts += ects
+        }
+        optionSu = round(optionSu, 2)
+        optionEcts = round(optionEcts, 2)
+        const optionReq = optionRequirements(
+          optionCodes,
+          definitionMap,
+          requiredSu != null ? Number(requiredSu) : null,
+          requiredCoursesCount != null ? Math.floor(Number(requiredCoursesCount)) : null,
+        )
+        const progressPercent = categoryProgressPercent(
+          optionSu,
+          optionEcts,
+          optionCompletedCodes.length,
+          optionReq.requiredSu,
+          requiredEcts,
+          optionReq.requiredCourses,
+        )
+        best = betterChoiceOption(best, {
+          completedCodes: optionCompletedCodes,
+          completedSu: optionSu,
+          completedEcts: optionEcts,
+          completedCourses: optionCompletedCodes.length,
+          requiredSu: optionReq.requiredSu,
+          requiredCourses: optionReq.requiredCourses,
+          remainingSu: optionReq.requiredSu != null ? Math.max(0, optionReq.requiredSu - optionSu) : null,
+          remainingCourses: optionReq.requiredCourses != null ? Math.max(0, optionReq.requiredCourses - optionCompletedCodes.length) : null,
+          progressPercent,
+        })
+      }
+      if (best) {
+        completedCodes = best.completedCodes
+        completedSu = best.completedSu
+        completedEcts = best.completedEcts
+        completedCourseCount = best.completedCourses
+        requiredSu = best.requiredSu
+        requiredCoursesCount = best.requiredCourses
+      }
     }
-    if (requiredEcts != null) {
-      const v = safeProgressPct(completedEcts, Number(requiredEcts))
-      if (v != null) progressCandidates.push(v)
-    }
-    if (requiredCoursesCount != null && Number(requiredCoursesCount) > 0) {
-      progressCandidates.push(
-        round(Math.min(100, (completedCodes.length / Number(requiredCoursesCount)) * 100), 1),
-      )
-    }
-    const progressPercent = progressCandidates.length ? Math.min(...progressCandidates) : null
+
+    const progressPercent = categoryProgressPercent(
+      completedSu,
+      completedEcts,
+      completedCourseCount,
+      requiredSu,
+      requiredEcts,
+      requiredCoursesCount,
+    )
     if (progressPercent != null) progressPercents.push(progressPercent)
 
     let status = 'NOT_STARTED'
@@ -438,6 +728,9 @@ export async function getProgressSummary(semesters) {
   const overallCompletionPct = progressPercents.length
     ? round(progressPercents.reduce((a, b) => a + b, 0) / progressPercents.length, 1)
     : 0.0
+  let totalCreditsCompleted = 0.0
+  for (const row of latestRows) totalCreditsCompleted += rowSuCredits(row, suCredits)
+  totalCreditsCompleted = round(totalCreditsCompleted, 2)
 
   return {
     overall_completion_pct: overallCompletionPct,
@@ -458,7 +751,12 @@ export async function getRequirementsCourseCatalog() {
     const out = []
     if (node && typeof node === 'object' && !Array.isArray(node)) {
       if (node.course) {
-        out.push({ course: normalizeCourseCode(node.course), name: node.name })
+        out.push({
+          course: normalizeCourseCode(node.course),
+          name: node.name,
+          su_credits: node.su_credits ?? null,
+          ects_credits: node.ects_credits ?? null,
+        })
       }
       for (const v of Object.values(node)) out.push(...extractCourses(v))
     } else if (Array.isArray(node)) {
@@ -479,7 +777,12 @@ export async function getRequirementsCourseCatalog() {
         if (!item || typeof item !== 'object') continue
         const code = normalizeCourseCode(item.code || '')
         if (!code) continue
-        dedup.set(code, { course: code, name: item.name })
+        dedup.set(code, {
+          course: code,
+          name: item.name,
+          su_credits: item.su_credits ?? null,
+          ects_credits: item.ects_credits ?? null,
+        })
       }
     }
     response[name] = [...dedup.values()].sort((a, b) => a.course.localeCompare(b.course))

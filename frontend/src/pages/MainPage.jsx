@@ -4,7 +4,6 @@ import GpaCalculator from './GpaCalculator'
 import OnboardingTour from './OnboardingTour'
 import { useOnboardingTour } from '../hooks/useOnboardingTour'
 import Planner from './Planner'
-import Settings from './Settings'
 import Requirements from './Requirements'
 import { apiRequest } from '../lib/api'
 import './MainPage.css'
@@ -96,10 +95,6 @@ function MainPage({ profile, onProfileUpdated, programs }) {
 
         {activeTab === 'planner' && (
           <Planner courses={courses} coursesLoading={coursesLoading} />
-        )}
-
-        {activeTab === 'settings' && (
-          <Settings />
         )}
       </div>
     </main>

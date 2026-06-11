@@ -15,17 +15,21 @@ function getSafePercent(completed, required) {
   return Math.min(100, (safeCompleted / safeRequired) * 100)
 }
 
-const LETTER_POINTS = { A: 4.0, 'A-': 3.7, 'B+': 3.3, B: 3.0, 'B-': 2.7, 'C+': 2.3, C: 2.0, 'C-': 1.7, 'D+': 1.3, D: 1.0, F: 0.0 }
-const RESULT_TAB = { OVERVIEW: 'overview', DETAILS: 'details' }
-const SECTION_TO_REQUIREMENTS_CATEGORY = {
-  'UNIVERSITY COURSES': 'University Courses',
-  'REQUIRED COURSES': 'Required Courses',
-  'CORE ELECTIVES': 'Core Electives',
-  'AREA ELECTIVES': 'Area Electives',
-  'FREE ELECTIVES': 'Free Electives',
-  'FACULTY COURSES': 'Faculty Courses',
-  ENGINEERING: 'Engineering',
-  'BASIC SCIENCE': 'Basic Science',
+function categoryDomId(category) {
+  const slug = String(category || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+  return slug || 'category'
+}
+
+function countedCreditLabel(course, category) {
+  if (category.required_su != null && course.counted_su != null) {
+    return `${formatValue(course.counted_su)} SU`
+  }
+  if (category.required_ects != null && course.counted_ects != null) {
+    return `${formatValue(course.counted_ects)} ECTS`
+  }
+  if (course.counted_su != null) return `${formatValue(course.counted_su)} SU`
+  if (course.counted_ects != null) return `${formatValue(course.counted_ects)} ECTS`
+  return '-'
 }
 
 function Requirements({ dataVersion = 0, onDataChanged }) {
@@ -36,21 +40,13 @@ function Requirements({ dataVersion = 0, onDataChanged }) {
   const [grError, setGrError] = useState(null)
   const [categories, setCategories] = useState([])
   const [creditTotals, setCreditTotals] = useState({ completed: 0, required: null })
+  const [expandedCategory, setExpandedCategory] = useState(null)
 
   // DRH state
   const [pastedText, setPastedText] = useState('')
-  const [loading, setLoading] = useState(false)
   const [importing, setImporting] = useState(false)
   const [error, setError] = useState(null)
   const [importMessage, setImportMessage] = useState(null)
-  const [analysis, setAnalysis] = useState(null)
-  const [activeResultTab, setActiveResultTab] = useState(RESULT_TAB.OVERVIEW)
-  const [requirementsCatalog, setRequirementsCatalog] = useState({})
-  const [allCourses, setAllCourses] = useState([])
-  const [simulatedSemesters, setSimulatedSemesters] = useState([])
-  const [categoryAdds, setCategoryAdds] = useState([])
-  const [draftBySemester, setDraftBySemester] = useState({})
-  const [categoryDrafts, setCategoryDrafts] = useState({})
 
   // GR computed
   const overview = useMemo(() => {
@@ -68,99 +64,6 @@ function Requirements({ dataVersion = 0, onDataChanged }) {
       totalCount: safeCategories.length,
     }
   }, [categories])
-
-  // DRH computed
-  const sectionEntries = useMemo(() => Object.entries(analysis?.sections || {}), [analysis])
-
-  const courseByCode = useMemo(() => {
-    const map = new Map()
-    allCourses.forEach(course => map.set(String(course.course || '').toUpperCase(), course))
-    return map
-  }, [allCourses])
-
-  const courseCategoryMap = useMemo(() => {
-    const map = new Map()
-    const priority = ['University Courses', 'Required Courses', 'Core Electives', 'Area Electives', 'Free Electives']
-    priority.forEach(category => {
-      ;(requirementsCatalog[category] || []).forEach(item => {
-        const courseCode = String(item.course || '').toUpperCase()
-        if (courseCode && !map.has(courseCode)) map.set(courseCode, category)
-      })
-    })
-    return map
-  }, [requirementsCatalog])
-
-  const importedAttempts = useMemo(() => {
-    if (!analysis?.sections) return []
-    const records = []
-    Object.entries(analysis.sections).forEach(([category, section]) => {
-      ;(section.courses || []).forEach(course => {
-        const su = course.su_credits ?? courseByCode.get(String(course.course).toUpperCase())?.su_credits
-        records.push({ category, course: course.course, grade: course.grade, term: String(course.term || ''), su_credits: Number(su || 0), source_order: 0 })
-      })
-    })
-    return records
-  }, [analysis, courseByCode])
-
-  const simulatedAttempts = useMemo(() => {
-    const semesterAttempts = simulatedSemesters.flatMap((semester, si) =>
-      (semester.courses || []).map((course, ci) => ({ ...course, source_order: 1000 + si * 100 + ci, term: String(990000 + si) })),
-    )
-    const categoryAttempts = categoryAdds.map((course, idx) => ({ ...course, source_order: 900000 + idx, term: String(999000 + idx) }))
-    return [...semesterAttempts, ...categoryAttempts]
-  }, [simulatedSemesters, categoryAdds])
-
-  const takenCourseCodes = useMemo(() => {
-    const set = new Set()
-    ;[...importedAttempts, ...simulatedAttempts].forEach(item => {
-      const code = String(item.course || '').toUpperCase()
-      if (code) set.add(code)
-    })
-    return set
-  }, [importedAttempts, simulatedAttempts])
-
-  const gpaStats = useMemo(() => {
-    const latestByCourse = new Map()
-    ;[...importedAttempts, ...simulatedAttempts].forEach(item => {
-      const code = String(item.course || '').toUpperCase()
-      const current = latestByCourse.get(code)
-      if (!current || String(item.term) > String(current.term) || item.source_order > current.source_order)
-        latestByCourse.set(code, item)
-    })
-    let weighted = 0, total = 0
-    latestByCourse.forEach(item => {
-      const points = LETTER_POINTS[String(item.grade || '').toUpperCase()]
-      if (points === undefined) return
-      const credits = Number(item.su_credits || 0)
-      weighted += points * credits
-      total += credits
-    })
-    return { cgpa: total > 0 ? weighted / total : 0, countedCourses: latestByCourse.size }
-  }, [importedAttempts, simulatedAttempts])
-
-  const overviewRows = useMemo(
-    () => sectionEntries.map(([sectionName, section]) => {
-      const min = section.minimum_required || {}
-      const completed = section.completed || {}
-      const added = simulatedAttempts.filter(item => item.category === sectionName)
-      const completedSu      = Number(completed.su_credits || 0) + added.reduce((sum, item) => sum + Number(item.su_credits || 0), 0)
-      const completedEcts    = Number(completed.ects_credits || 0)
-      const completedCourses = Number(completed.courses || 0) + added.length
-      const minSu      = min.su_credits      != null ? Number(min.su_credits)      : null
-      const minEcts    = min.ects_credits    != null ? Number(min.ects_credits)    : null
-      const minCourses = min.courses         != null ? Number(min.courses)         : null
-      const remainingSu      = minSu      !== null ? Math.max(0, minSu - completedSu)           : null
-      const remainingEcts    = minEcts    !== null ? Math.max(0, minEcts - completedEcts)       : null
-      const remainingCourses = minCourses !== null ? Math.max(0, minCourses - completedCourses) : null
-      const progressCandidates = []
-      if (minSu      && minSu      > 0) progressCandidates.push(Math.min(100, (completedSu      / minSu)      * 100))
-      if (minEcts    && minEcts    > 0) progressCandidates.push(Math.min(100, (completedEcts    / minEcts)    * 100))
-      if (minCourses && minCourses > 0) progressCandidates.push(Math.min(100, (completedCourses / minCourses) * 100))
-      const progressPercent = progressCandidates.length > 0 ? Math.min(...progressCandidates) : null
-      return { sectionName, completedSu, completedEcts, minSu, minEcts, completedCourses, minCourses, remainingSu, remainingEcts, remainingCourses, progressPercent }
-    }),
-    [sectionEntries, simulatedAttempts],
-  )
 
   // GR fetch — re-runs whenever dataVersion changes (e.g. after import)
   useEffect(() => {
@@ -189,26 +92,12 @@ function Requirements({ dataVersion = 0, onDataChanged }) {
     return () => { ignore = true }
   }, [dataVersion])
 
-  async function handleAnalyze() {
-    if (!pastedText.trim()) return setError('Please paste the Bannerweb Degree Evaluation text first.')
-    setLoading(true); setError(null); setImportMessage(null)
-    try {
-      const [result, catalogRes, coursesRes] = await Promise.all([
-        apiRequest('/api/bannerweb/analyze', { method: 'POST', body: JSON.stringify({ raw_text: pastedText }) }),
-        apiRequest('/api/graduation-requirements/catalog'),
-        apiRequest('/courses'),
-      ])
-      setAnalysis(result)
-      setRequirementsCatalog(catalogRes.categories || {})
-      setAllCourses(coursesRes || [])
-      setSimulatedSemesters([]); setCategoryAdds([]); setDraftBySemester({}); setCategoryDrafts({})
-      setActiveResultTab(RESULT_TAB.OVERVIEW)
-    } catch (err) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
+  useEffect(() => {
+    if (!expandedCategory) return
+    if (!categories.some(item => item.category === expandedCategory)) {
+      setExpandedCategory(null)
     }
-  }
+  }, [categories, expandedCategory])
 
   async function handleImport() {
     if (!pastedText.trim()) return setError('Please paste the Bannerweb Degree Evaluation text first.')
@@ -236,7 +125,6 @@ function Requirements({ dataVersion = 0, onDataChanged }) {
     setImporting(true); setError(null); setImportMessage(null)
     try {
       await apiRequest('/api/reset', { method: 'POST' })
-      setAnalysis(null)
       setImportMessage('All semesters and courses cleared.')
       if (onDataChanged) onDataChanged()
     } catch (err) {
@@ -246,35 +134,17 @@ function Requirements({ dataVersion = 0, onDataChanged }) {
     }
   }
 
-  function handleAddSemester() {
-    setSimulatedSemesters(current => [...current, { id: crypto.randomUUID(), name: `Semester ${current.length + 1}`, courses: [] }])
+  function toggleCategory(categoryName) {
+    setExpandedCategory(current => current === categoryName ? null : categoryName)
   }
 
-  function handleAddCourseToSemester(semesterId) {
-    const draft = draftBySemester[semesterId] || {}
-    if (!draft.course || !draft.grade) return
-    const normalizedCode = String(draft.course).toUpperCase()
-    const inferredCategory = courseCategoryMap.get(normalizedCode)
-    if (!inferredCategory) { setError('Course category could not be inferred from requirement mapping.'); return }
-    const catalogCourse = courseByCode.get(normalizedCode)
-    setSimulatedSemesters(current =>
-      current.map(s => s.id !== semesterId ? s : {
-        ...s,
-        courses: [...s.courses, { course: draft.course, grade: draft.grade, category: inferredCategory, su_credits: Number(catalogCourse?.su_credits || 0) }],
-      }),
-    )
-    setDraftBySemester(current => ({ ...current, [semesterId]: {} }))
+  function handleCategoryKeyDown(event, categoryName) {
+    if (event.key !== 'Enter' && event.key !== ' ') return
+    event.preventDefault()
+    toggleCategory(categoryName)
   }
 
-  function handleAddCourseToCategory(categoryName) {
-    const draft = categoryDrafts[categoryName] || {}
-    if (!draft.course || !draft.grade) return
-    const catalogCourse = courseByCode.get(String(draft.course).toUpperCase())
-    setCategoryAdds(current => [...current, { category: categoryName, course: draft.course, grade: draft.grade, su_credits: Number(catalogCourse?.su_credits || 0) }])
-    setCategoryDrafts(current => ({ ...current, [categoryName]: {} }))
-  }
-
-  const busy = loading || importing
+  const busy = importing
 
   return (
     <section className="gr-root drh-root" aria-labelledby="requirements-title">
@@ -303,7 +173,7 @@ function Requirements({ dataVersion = 0, onDataChanged }) {
             <ol className="drh-steps-list">
               <li>In Bannerweb, go to <strong>Student → Degree Audit and Graduation → Degree Evaluation (Summary) → Generate New Request</strong>.</li>
               <li>Select all page content with <kbd>Ctrl/⌘ A</kbd>, then copy with <kbd>Ctrl/⌘ C</kbd>.</li>
-              <li>Paste into the field below and click <strong>Analyze</strong>, then <strong>Import to Profile</strong>.</li>
+              <li>Paste into the field below and click <strong>Import to Profile</strong>.</li>
             </ol>
           </article>
 
@@ -319,14 +189,9 @@ function Requirements({ dataVersion = 0, onDataChanged }) {
               disabled={busy}
             />
             <div className="drh-paste-actions">
-              <button className="drh-btn drh-btn--primary" type="button" onClick={handleAnalyze} disabled={busy}>
-                {loading ? 'Analyzing…' : 'Analyze'}
+              <button className="drh-btn drh-btn--primary" type="button" onClick={handleImport} disabled={busy}>
+                {importing ? 'Importing…' : 'Import to Profile'}
               </button>
-              {analysis && (
-                <button className="drh-btn drh-btn--secondary" type="button" onClick={handleImport} disabled={busy}>
-                  {importing ? 'Importing…' : 'Import to Profile'}
-                </button>
-              )}
               <button className="drh-btn drh-btn--danger" type="button" onClick={handleClearAll} disabled={busy}>
                 Clear All Data
               </button>
@@ -335,7 +200,7 @@ function Requirements({ dataVersion = 0, onDataChanged }) {
             {error        && <p className="drh-feedback drh-feedback--error" role="alert">{error}</p>}
           </div>
 
-          {/* Analysis results (visible after Analyze) */}
+          {/*
           {analysis && (
             <div className="drh-analysis">
               <div className="drh-analysis-meta">
@@ -488,7 +353,7 @@ function Requirements({ dataVersion = 0, onDataChanged }) {
                   <div className="drh-cards-grid">
                     {sectionEntries.map(([sectionName, section]) => {
                       const reqCategoryName = SECTION_TO_REQUIREMENTS_CATEGORY[sectionName] || sectionName
-                      const simulatedInCategory = simulatedAttempts.filter(item => item.category === sectionName)
+                      const simulatedInCategory = simulatedAllocation.get(sectionName) || []
                       const allCoursesInSection = [...(section.courses || []), ...simulatedInCategory]
 
                       return (
@@ -511,7 +376,9 @@ function Requirements({ dataVersion = 0, onDataChanged }) {
                                 <li key={`${sectionName}-sim-${course.course}-${idx}`} className="drh-detail-course drh-detail-course--sim">
                                   <span className="drh-detail-course-code">{course.course}</span>
                                   <span className="drh-detail-course-grade">{course.grade}</span>
-                                  <span className="drh-detail-course-term">simulated</span>
+                                  <span className="drh-detail-course-term">
+                                    {course.category !== sectionName ? 'simulated · overflow' : 'simulated'}
+                                  </span>
                                 </li>
                               ))}
                             </ul>
@@ -552,6 +419,7 @@ function Requirements({ dataVersion = 0, onDataChanged }) {
               )}
             </div>
           )}
+          */}
         </div>
       )}
 
@@ -600,16 +468,30 @@ function Requirements({ dataVersion = 0, onDataChanged }) {
             {categories.map(item => {
               const progressPercent = Number(item.progress_percent || 0)
               const isDone = progressPercent >= 100
+              const isExpanded = expandedCategory === item.category
+              const detailsId = `gr-card-details-${categoryDomId(item.category)}`
+              const countedCourses = item.completed_course_details || []
               return (
                 <article
                   key={item.category}
-                  className={['gr-card', isDone ? 'gr-card--done' : ''].join(' ').trim()}
+                  className={['gr-card', isDone ? 'gr-card--done' : '', isExpanded ? 'gr-card--expanded' : ''].join(' ').trim()}
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={isExpanded}
+                  aria-controls={detailsId}
+                  onClick={() => toggleCategory(item.category)}
+                  onKeyDown={event => handleCategoryKeyDown(event, item.category)}
                 >
                   <div className="gr-card-head">
                     <h3 className="gr-card-title">{item.category}</h3>
-                    <span className={['gr-pct-badge', isDone ? 'gr-pct-badge--done' : ''].join(' ').trim()}>
+                    <div className="gr-card-head-actions">
+                      <span className={['gr-pct-badge', isDone ? 'gr-pct-badge--done' : ''].join(' ').trim()}>
                       {item.progress_percent !== null ? `${progressPercent.toFixed(1)}%` : '—'}
-                    </span>
+                      </span>
+                      <span className="gr-card-toggle" aria-hidden="true">
+                        {isExpanded ? 'Hide' : 'Courses'}
+                      </span>
+                    </div>
                   </div>
 
                   <div className="gr-meter" aria-hidden="true">
@@ -656,6 +538,31 @@ function Requirements({ dataVersion = 0, onDataChanged }) {
                       </span>
                     </div>
                   </div>
+
+                  {isExpanded && (
+                    <div id={detailsId} className="gr-counted-panel">
+                      {countedCourses.length > 0 ? (
+                        <ul className="gr-counted-course-list">
+                          {countedCourses.map(course => (
+                            <li
+                              className="gr-counted-course"
+                              key={`${item.category}-${course.course_code}-${course.semester_name || ''}`}
+                            >
+                              <div className="gr-counted-course-main">
+                                <strong className="gr-counted-course-code">{course.course_code}</strong>
+                                <span className="gr-counted-course-name">{course.course_name || 'Course'}</span>
+                              </div>
+                              <span className="gr-counted-course-credit">{countedCreditLabel(course, item)}</span>
+                              <span className="gr-counted-course-grade">{course.grade || '-'}</span>
+                              <span className="gr-counted-course-term">{course.semester_name || '-'}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="gr-counted-empty">No counted courses.</p>
+                      )}
+                    </div>
+                  )}
                 </article>
               )
             })}
