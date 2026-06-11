@@ -14,6 +14,7 @@ const EMPTY_SUMMARY = {
   total_planned_ects_credits: 0,
   program_required_su_credits: null,
   program_required_ects_credits: null,
+  has_bannerweb_imported_courses: false,
 }
 
 const GRADE_OPTIONS = ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F']
@@ -75,6 +76,7 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
   const cgpa = summary.cgpa ?? summary.cumulative_gpa
   const totalPlannedSuCredits = summary.total_planned_su_credits ?? 0
   const totalPlannedEctsCredits = summary.total_planned_ects_credits ?? 0
+  const hasBannerwebImportedCourses = Boolean(summary.has_bannerweb_imported_courses)
   const semesterHasLatestRetake = useMemo(() => {
     const attemptsByCourse = new Map()
     for (const semester of summary.semesters) {
@@ -274,6 +276,11 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
   }
 
   async function handleAddFirstYearCourses() {
+    if (hasBannerwebImportedCourses) {
+      setError('First-year courses are already included in your Bannerweb import.')
+      return
+    }
+
     const term1 = ['MATH 101', 'TLL 101', 'SPS 101', 'NS 101', 'HIST 191', 'IF 100', 'CIP 101']
     const term2 = ['MATH 102', 'TLL 102', 'SPS 102', 'NS 102', 'HIST 192', 'AL 102']
 
@@ -385,13 +392,13 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
           className="gc-btn gc-btn--ghost"
           type="button"
           onClick={handleAddFirstYearCourses}
-          disabled={saving || loading || coursesLoading || courses.length === 0}
+          disabled={saving || loading || coursesLoading || courses.length === 0 || hasBannerwebImportedCourses}
+          title={hasBannerwebImportedCourses ? 'First-year courses are already included in your Bannerweb import.' : undefined}
         >
           Seed 1st Year Courses
         </button>
       </div>
 
-      
       {loading && <p className="gc-feedback gc-feedback--info">Loading planner…</p>}
       {error && <p className="gc-feedback gc-feedback--error" role="alert">{error}</p>}
 

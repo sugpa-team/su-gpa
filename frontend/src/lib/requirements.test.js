@@ -350,3 +350,60 @@ test('reports raw total SU progress in requirements and GPA summaries', async ()
   assert.equal(progress.total_credits_completed, 15)
   assert.equal(gpaSummary.total_planned_su_credits, 15)
 })
+
+test('marks GPA summary when Bannerweb courses have been imported', async () => {
+  const emptySummary = await apiRequest('/api/gpa')
+  assert.equal(emptySummary.has_bannerweb_imported_courses, false)
+
+  await importBannerwebParseResult({
+    sections: {
+      'UNIVERSITY COURSES': {
+        courses: [
+          bannerwebCourse('UNI 101', '202301'),
+        ],
+      },
+    },
+  })
+
+  const importedSummary = await apiRequest('/api/gpa')
+  assert.equal(importedSummary.has_bannerweb_imported_courses, true)
+})
+
+test('Bannerweb import replaces existing GPA calculator courses', async () => {
+  const manualSummary = await apiRequest('/taken-courses/semesters', {
+    method: 'POST',
+    body: JSON.stringify({ name: 'Manual Semester' }),
+  })
+  const manualSemesterId = manualSummary.semesters[0].id
+
+  await apiRequest('/api/courses', {
+    method: 'POST',
+    body: JSON.stringify({
+      semester_id: manualSemesterId,
+      course_code: 'CORE 101',
+      grade: 'B',
+    }),
+  })
+
+  let gpaSummary = await apiRequest('/api/gpa')
+  assert.ok(findSummaryCourse(gpaSummary, 'CORE 101'))
+
+  const imported = await importBannerwebParseResult({
+    sections: {
+      'UNIVERSITY COURSES': {
+        courses: [
+          bannerwebCourse('UNI 101', '202301'),
+        ],
+      },
+    },
+  })
+
+  assert.equal(imported.replaced_existing_data, true)
+  gpaSummary = await apiRequest('/api/gpa')
+  assert.deepEqual(gpaSummary.semesters.map(semester => semester.name), ['202301'])
+  assert.deepEqual(
+    gpaSummary.semesters.flatMap(semester => semester.courses.map(course => course.course_code)),
+    ['UNI 101'],
+  )
+  assert.equal(findSummaryCourse(gpaSummary, 'CORE 101'), null)
+})

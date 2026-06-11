@@ -107,7 +107,8 @@ function Requirements({ dataVersion = 0, onDataChanged }) {
       const imported = result.imported_courses ?? 0
       const semesters = result.created_semesters ?? 0
       const skippedCount = (result.skipped || []).length
-      let message = `Imported ${imported} course${imported === 1 ? '' : 's'} into ${semesters} new semester${semesters === 1 ? '' : 's'}.`
+      let message = `Imported ${imported} course${imported === 1 ? '' : 's'} into ${semesters} semester${semesters === 1 ? '' : 's'}.`
+      if (result.replaced_existing_data) message += ' Existing GPA Calculator data was replaced.'
       if (skippedCount > 0) message += ` Skipped ${skippedCount} (already present or not in catalog).`
       setImportMessage(message)
       setImportOpen(false)

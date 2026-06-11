@@ -402,8 +402,9 @@ export async function buildSemestersSummary() {
   const catalog = await courseCatalog()
   const suCredits = await suCreditsByCourseCode()
   const prereqMap = await prerequisitesByCourse()
+  const hasBannerwebImport = hasBannerwebImportedCourses(semesters)
 
-  const proj201ForcedIdx = hasBannerwebImportedCourses(semesters)
+  const proj201ForcedIdx = hasBannerwebImport
     ? null
     : enforceProj201BySemesterFour(semesters, suCredits)
   if (proj201ForcedIdx != null) {
@@ -490,6 +491,7 @@ export async function buildSemestersSummary() {
     total_planned_ects_credits: round(totalPlannedEcts, 2),
     program_required_su_credits: minSu,
     program_required_ects_credits: minEcts,
+    has_bannerweb_imported_courses: hasBannerwebImport,
     semester_gpa: semesterGpaMap,
     cgpa: cumulativeGpa,
   }
@@ -683,7 +685,9 @@ export async function importBannerwebParseResult(parsed) {
     }
   }
 
-  const semesters = getSemesters()
+  const previousSemesters = getSemesters()
+  const replacedExistingData = previousSemesters.some(semester => (semester.courses || []).length > 0)
+  const semesters = []
   const catalog = await courseCatalog()
   const suCredits = await suCreditsByCourseCode()
   const skipped = []
@@ -748,12 +752,14 @@ export async function importBannerwebParseResult(parsed) {
     }
   }
 
+  setCourseAttributions({})
   mergeCourseAttributions(learnedAttributions)
   setSemesters(semesters)
   const summary = await buildSemestersSummary()
   return {
     created_semesters: createdSemesters,
     imported_courses: importedCourses,
+    replaced_existing_data: replacedExistingData,
     skipped,
     summary,
   }

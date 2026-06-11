@@ -70,8 +70,11 @@ function Planner({ courses = [], coursesLoading = false }) {
       .then(data => {
         if (ignore) return
         const list = data.terms || []
-        setTerms(list)
-        setActiveTerm(list[list.length - 1] || null)
+        // Only the newest published term is plannable; earlier terms are already
+        // covered by the Bannerweb import on the Requirements page.
+        const latest = list.length > 0 ? [list[list.length - 1]] : []
+        setTerms(latest)
+        setActiveTerm(latest[0] || null)
       })
       .catch(err => !ignore && setError(err.message))
     return () => { ignore = true }
