@@ -92,6 +92,29 @@ function regularTermDistance(fromTerm, toTerm) {
   return b - a
 }
 
+function studentRegularTermDistance(semesters, fromTerm, toTerm) {
+  const fromIdx = regularTermIndex(fromTerm)
+  const toIdx = regularTermIndex(toTerm)
+  if (fromIdx == null || toIdx == null) return null
+
+  const regularTerms = new Map()
+  for (const semester of semesters) {
+    const term = String(semester.name || '').trim()
+    const idx = regularTermIndex(term)
+    if (idx != null) regularTerms.set(term, idx)
+  }
+  regularTerms.set(String(fromTerm).trim(), fromIdx)
+  regularTerms.set(String(toTerm).trim(), toIdx)
+
+  const ordered = [...regularTerms.entries()]
+    .sort((a, b) => a[1] - b[1])
+    .map(([term]) => term)
+  const fromPosition = ordered.indexOf(String(fromTerm).trim())
+  const toPosition = ordered.indexOf(String(toTerm).trim())
+  if (fromPosition === -1 || toPosition === -1) return regularTermDistance(fromTerm, toTerm)
+  return toPosition - fromPosition
+}
+
 function getRetakeEligibility(semesters, targetTerm) {
   const latestByCourse = new Map()
   for (const semester of semesters) {
@@ -107,7 +130,7 @@ function getRetakeEligibility(semesters, targetTerm) {
 
   const out = {}
   for (const [code, { term }] of latestByCourse.entries()) {
-    const distance = regularTermDistance(term, targetTerm)
+    const distance = studentRegularTermDistance(semesters, term, targetTerm)
     const canRetake = distance == null || (distance >= 0 && distance <= 3)
     out[code] = {
       course_code: code,

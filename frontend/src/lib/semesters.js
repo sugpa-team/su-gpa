@@ -50,16 +50,6 @@ function hasBannerwebImportedCourses(semesters) {
   )
 }
 
-function regularTermIndex(name) {
-  const t = String(name || '').trim()
-  if (!/^\d{6}$/.test(t)) return null
-  const year = parseInt(t.slice(0, 4), 10)
-  const suffix = t.slice(4)
-  if (suffix === '01') return year * 2
-  if (suffix === '02') return year * 2 + 1
-  return null
-}
-
 function countsForRetakeWindow(name) {
   const t = String(name || '').trim()
   return !/^\d{4}03$/.test(t)
@@ -69,6 +59,27 @@ let prereqMapCache = null
 
 export function resetPrereqCache() {
   prereqMapCache = null
+}
+
+function parsePrerequisiteGroups(prerequisites) {
+  if (!Array.isArray(prerequisites)) return []
+  return prerequisites
+    .map(item => {
+      const alternatives = String(item || '')
+        .split(/\s*(?:\/|\bor\b)\s*/i)
+        .map(part => normalizeCourseCode(part))
+        .filter(Boolean)
+      return [...new Set(alternatives)]
+    })
+    .filter(group => group.length > 0)
+}
+
+function prerequisiteGroupMet(group, completed) {
+  return group.some(code => completed.has(code))
+}
+
+function formatPrerequisiteGroup(group) {
+  return group.join(' or ')
 }
 
 async function prerequisitesByCourse() {
@@ -82,10 +93,7 @@ async function prerequisitesByCourse() {
       const code = normalizeCourseCode(item.code || '')
       if (!code) continue
       const prereqs = Array.isArray(item.prerequisites) ? item.prerequisites : []
-      mapping.set(
-        code,
-        new Set(prereqs.map(p => normalizeCourseCode(p)).filter(Boolean)),
-      )
+      mapping.set(code, parsePrerequisiteGroups(prereqs))
     }
   }
   prereqMapCache = mapping
@@ -134,16 +142,14 @@ function findSemesterIdxForCourse(semesters, courseCode) {
   return -1
 }
 
-function ensurePrerequisitesMet(semesters, idx, courseCode, prereqMap) {
-  const required = prereqMap.get(courseCode) || new Set()
-  if (required.size === 0) return
+function missingPrerequisiteLabels(semesters, idx, courseCode, prereqMap) {
+  const required = prereqMap.get(courseCode) || []
+  if (required.length === 0) return []
   const completed = previousSemesterCourseCodes(semesters, idx)
-  const missing = [...required].filter(p => !completed.has(p)).sort()
-  if (missing.length > 0) {
-    throw new Error(
-      `${courseCode} cannot be added before completing prerequisites: ${missing.join(', ')}.`,
-    )
-  }
+  return required
+    .filter(group => !prerequisiteGroupMet(group, completed))
+    .map(formatPrerequisiteGroup)
+    .sort()
 }
 
 function ensureGraduationProjectRules(semesters, idx, courseCode, suCredits) {
@@ -195,7 +201,6 @@ function canRetakeInSemester(semesters, idx, courseCode) {
   if (!target) return [false, `Semester not found: ${idx}`]
   if (!countsForRetakeWindow(target.name)) return [true, null]
 
-  const targetTermIdx = regularTermIndex(target.name)
   const countedIndices = []
   semesters.forEach((s, i) => {
     if (countsForRetakeWindow(s.name)) countedIndices.push(i)
@@ -210,15 +215,9 @@ function canRetakeInSemester(semesters, idx, courseCode) {
     if (!countsForRetakeWindow(semesters[i].name)) continue
     if (!(semesters[i].courses || []).some(c => normalizeCourseCode(c.course_code) === code)) continue
 
-    const attemptTermIdx = regularTermIndex(semesters[i].name)
-    let distance =
-      targetTermIdx != null && attemptTermIdx != null
-        ? targetTermIdx - attemptTermIdx
-        : null
-    if (distance == null) {
-      if (!countedIndices.includes(i)) continue
-      distance = targetPosition - countedIndices.indexOf(i)
-    }
+    const attemptPosition = countedIndices.indexOf(i)
+    if (attemptPosition === -1) continue
+    const distance = targetPosition - attemptPosition
     if (distance < 0) continue
     if (latestDistance == null || distance < latestDistance) {
       latestDistance = distance
@@ -238,7 +237,6 @@ function retakeBlockedCourseCodes(semesters, idx) {
   if (!target) return new Set()
   if (!countsForRetakeWindow(target.name)) return new Set()
 
-  const targetTermIdx = regularTermIndex(target.name)
   const countedIndices = []
   semesters.forEach((s, i) => {
     if (countsForRetakeWindow(s.name)) countedIndices.push(i)
@@ -252,15 +250,9 @@ function retakeBlockedCourseCodes(semesters, idx) {
     if (!countsForRetakeWindow(semesters[i].name)) continue
     for (const c of semesters[i].courses || []) {
       const code = normalizeCourseCode(c.course_code)
-      const attemptTermIdx = regularTermIndex(semesters[i].name)
-      let distance =
-        targetTermIdx != null && attemptTermIdx != null
-          ? targetTermIdx - attemptTermIdx
-          : null
-      if (distance == null) {
-        if (!countedIndices.includes(i)) continue
-        distance = targetPosition - countedIndices.indexOf(i)
-      }
+      const attemptPosition = countedIndices.indexOf(i)
+      if (attemptPosition === -1) continue
+      const distance = targetPosition - attemptPosition
       if (distance < 0) continue
       const current = latestDistanceByCourse.get(code)
       if (current == null || distance < current) {
@@ -276,18 +268,11 @@ function retakeBlockedCourseCodes(semesters, idx) {
   return blocked
 }
 
-function eligibleCourseCodesForSemester(semesters, idx, allCodes, prereqMap, suCredits) {
-  const completedBefore = previousSemesterCourseCodes(semesters, idx)
+function eligibleCourseCodesForSemester(semesters, idx, allCodes, suCredits) {
   const retakeBlocked = retakeBlockedCourseCodes(semesters, idx)
   const eligible = []
   for (const code of allCodes) {
     if (retakeBlocked.has(code)) continue
-    const required = prereqMap.get(code) || new Set()
-    let allMet = true
-    for (const p of required) {
-      if (!completedBefore.has(p)) { allMet = false; break }
-    }
-    if (!allMet) continue
     try {
       ensureGraduationProjectRules(semesters, idx, code, suCredits)
     } catch {
@@ -422,6 +407,7 @@ export async function buildSemestersSummary() {
     const courseRecords = (semester.courses || []).map(c => {
       const code = normalizeCourseCode(c.course_code)
       const course = catalog[code] || {}
+      const missingPrerequisites = missingPrerequisiteLabels(semesters, idx, code, prereqMap)
       let su = 0
       try {
         su = rowSuCredits(c, suCredits)
@@ -440,6 +426,11 @@ export async function buildSemestersSummary() {
         grade: c.grade ?? null,
         grade_points: gradeToPoints(c.grade),
         is_overload: !!c.is_overload,
+        missing_prerequisites: missingPrerequisites,
+        prerequisite_warning:
+          missingPrerequisites.length > 0
+            ? `Missing prerequisite${missingPrerequisites.length === 1 ? '' : 's'}: ${missingPrerequisites.join(', ')}.`
+            : null,
       }
     })
 
@@ -448,7 +439,6 @@ export async function buildSemestersSummary() {
       semesters,
       idx,
       allCourseCodes,
-      prereqMap,
       suCredits,
     )
 
@@ -536,8 +526,6 @@ export async function addCourseToSemester(semesterId, courseCode, grade, options
   if (existing) throw new Error(`${code} already exists in semester`)
 
   if (!options.skipValidation) {
-    const prereqMap = await prerequisitesByCourse()
-    ensurePrerequisitesMet(semesters, idx, code, prereqMap)
     ensureGraduationProjectRules(semesters, idx, code, suCredits)
     const [canRetake, retakeReason] = canRetakeInSemester(semesters, idx, code)
     if (!canRetake) throw new Error(retakeReason)

@@ -4,11 +4,37 @@ import { getGraduationRequirementsProgress } from './requirements'
 import { getSemesters } from './storage'
 
 const FREE_ELECTIVE_FACULTIES = new Set(['FASS', 'SBS', 'FENS'])
-const FIXED_LIST_CATEGORIES = new Set(['University Courses', 'Required Courses'])
+const MANDATORY_CATEGORIES = ['University Courses', 'Required Courses']
+
+// Approximate subject-prefix mapping for Engineering / Basic Science ECTS attribution.
+// The official per-course split is not in the static data, so this is only used to
+// order courses within a priority bucket — never to exclude a course.
+const ENGINEERING_PREFIXES = new Set(['CS', 'DSA', 'EE', 'ENS', 'ENRG', 'IE', 'MAT', 'ME'])
+const BASIC_SCIENCE_PREFIXES = new Set(['MATH', 'NS', 'PHYS', 'CHEM', 'BIO'])
+
+const BUCKET_ORDER = ['mandatory', 'core', 'area', 'free']
+const BUCKET_LABELS = {
+  mandatory: 'Required',
+  core: 'Core Electives',
+  area: 'Area Electives',
+  free: 'Free Electives',
+}
 
 function round(value, digits) {
   const factor = 10 ** digits
   return Math.round(value * factor) / factor
+}
+
+function subjectPrefix(code) {
+  return String(code || '').trim().split(/\s+/)[0].toUpperCase()
+}
+
+function describeNeed(need) {
+  if (!need) return null
+  if (need.su > 0) return `${round(need.su, 1)} SU left`
+  if (need.courses > 0) return `${need.courses} course${need.courses === 1 ? '' : 's'} left`
+  if (need.ects > 0) return `${round(need.ects, 1)} ECTS left`
+  return null
 }
 
 export async function getRecommendations(term, limit = 4) {
@@ -20,77 +46,98 @@ export async function getRecommendations(term, limit = 4) {
 
   const taken = new Set((view.taken_course_codes || []).map(normalizeCourseCode))
 
-  const categoryRemaining = {}
+  const remaining = {}
   for (const cat of progress.categories || []) {
-    const remSu = Number(cat.remaining_su || 0)
-    const remEcts = Number(cat.remaining_ects || 0)
-    const remCourses = Number(cat.remaining_courses || 0)
-    if (remSu > 0 || remEcts > 0 || remCourses > 0) {
-      categoryRemaining[cat.category] = { su: remSu, ects: remEcts, courses: remCourses }
+    remaining[cat.category] = {
+      su: Number(cat.remaining_su || 0),
+      ects: Number(cat.remaining_ects || 0),
+      courses: Number(cat.remaining_courses || 0),
     }
   }
+  const hasNeed = name => {
+    const need = remaining[name]
+    return !!need && (need.su > 0 || need.courses > 0 || need.ects > 0)
+  }
+  const engineeringLeft = remaining['Engineering']?.ects || 0
+  const basicScienceLeft = remaining['Basic Science']?.ects || 0
 
-  const scored = []
+  const buckets = { mandatory: [], core: [], area: [], free: [] }
+
   for (const course of view.courses || []) {
     const normalized = normalizeCourseCode(course.code)
     if (taken.has(normalized)) continue
     if (course.retake_allowed === false) continue
 
     const prereqs = (course.prerequisites || []).map(p => normalizeCourseCode(p))
-    const missingPrereqs = prereqs.filter(p => !taken.has(p))
-    if (missingPrereqs.length > 0) continue
+    if (prereqs.some(p => !taken.has(p))) continue
 
-    const credits = Number(course.su_credits || 0)
     const cats = course.requirement_categories || []
+    const faculty = (course.faculty || '').toUpperCase()
+    const isMandatoryCourse = cats.some(c => MANDATORY_CATEGORIES.includes(c))
+
+    // Strict priority: Required/University > Core > Area > Free.
+    // Electives flow down once a pool's minimum is met (core fills area, area fills free).
+    let bucket = null
     const reasons = []
-    let score = 0
-
-    for (const cat of cats) {
-      const remaining = categoryRemaining[cat]
-      if (!remaining) continue
-      if (remaining.su > 0) {
-        const filled = Math.min(credits, remaining.su)
-        score += filled * (FIXED_LIST_CATEGORIES.has(cat) ? 3 : 2)
-        reasons.push(`Fills ${cat} (${round(remaining.su, 1)} SU left)`)
-      } else if (remaining.courses > 0) {
-        score += credits * 2
-        reasons.push(`Fills ${cat} (${remaining.courses} courses left)`)
-      } else if (remaining.ects > 0) {
-        score += credits * 0.5
-        reasons.push(`Fills ${cat}`)
-      }
-    }
-
-    const feRemaining = categoryRemaining['Free Electives']
-    const facultyUpper = (course.faculty || '').toUpperCase()
-    if (
-      feRemaining &&
-      feRemaining.su > 0 &&
-      !cats.includes('Free Electives') &&
-      FREE_ELECTIVE_FACULTIES.has(facultyUpper)
+    const mandatoryCat = cats.find(c => MANDATORY_CATEGORIES.includes(c) && hasNeed(c))
+    if (mandatoryCat) {
+      bucket = 'mandatory'
+      const label = mandatoryCat === 'Required Courses' ? 'Required course' : 'University course'
+      reasons.push(`${label} — ${describeNeed(remaining[mandatoryCat])} in ${mandatoryCat}`)
+    } else if (cats.includes('Core Electives') && hasNeed('Core Electives')) {
+      bucket = 'core'
+      reasons.push(`Core elective (${describeNeed(remaining['Core Electives'])})`)
+    } else if ((cats.includes('Area Electives') || cats.includes('Core Electives')) && hasNeed('Area Electives')) {
+      bucket = 'area'
+      reasons.push(`Counts toward Area Electives (${describeNeed(remaining['Area Electives'])})`)
+    } else if (
+      hasNeed('Free Electives') &&
+      !isMandatoryCourse &&
+      (FREE_ELECTIVE_FACULTIES.has(faculty) || cats.length > 0)
     ) {
-      const filled = Math.min(credits, feRemaining.su)
-      score += filled * 1.2
-      reasons.push(`Counts toward Free Electives (${round(feRemaining.su, 1)} SU left)`)
+      bucket = 'free'
+      reasons.push(`Counts toward Free Electives (${describeNeed(remaining['Free Electives'])})`)
+    }
+    if (!bucket) continue
+
+    // Secondary priority inside the bucket: Engineering / Basic Science ECTS needs.
+    let boost = 0
+    const prefix = subjectPrefix(course.code)
+    if (engineeringLeft > 0 && ENGINEERING_PREFIXES.has(prefix)) {
+      boost = 1
+      reasons.push(`Counts toward Engineering ECTS (~${round(engineeringLeft, 0)} left)`)
+    } else if (basicScienceLeft > 0 && BASIC_SCIENCE_PREFIXES.has(prefix)) {
+      boost = 1
+      reasons.push(`Counts toward Basic Science ECTS (~${round(basicScienceLeft, 0)} left)`)
     }
 
-    if (credits > 0 && score === 0) {
-      score = credits * 0.1
-      reasons.push('Available this term')
-    }
-
-    if (reasons.length === 0) continue
-
-    scored.push({
+    buckets[bucket].push({
       course_code: course.code,
       course_name: course.name,
       su_credits: course.su_credits,
-      score,
+      category: BUCKET_LABELS[bucket],
       reasons: reasons.slice(0, 3),
       feedback: null,
+      _boost: boost,
+      _su: Number(course.su_credits || 0),
     })
   }
 
-  scored.sort((a, b) => b.score - a.score)
-  return { recommendations: scored.slice(0, safeLimit) }
+  const recommendations = []
+  for (const bucketId of BUCKET_ORDER) {
+    if (recommendations.length >= safeLimit) break
+    const items = buckets[bucketId].sort((a, b) =>
+      b._boost - a._boost ||
+      b._su - a._su ||
+      String(a.course_code).localeCompare(String(b.course_code)),
+    )
+    for (const item of items) {
+      if (recommendations.length >= safeLimit) break
+      delete item._boost
+      delete item._su
+      recommendations.push(item)
+    }
+  }
+
+  return { recommendations }
 }

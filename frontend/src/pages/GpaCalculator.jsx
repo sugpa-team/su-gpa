@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import SearchableDropdown from '../components/SearchableDropdown'
 import { apiRequest } from '../lib/api'
+import { normalizeCourseCode } from '../lib/gpa'
 import './GpaCalculator.css'
 
 const EMPTY_SUMMARY = {
@@ -226,16 +227,17 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
   }
 
   function courseOptionsForSemester(semester) {
-    const usedCourseCodes = new Set(semester.courses.map(course => course.course_code))
-    const eligibleCourseCodes = new Set(semester.eligible_course_codes || [])
+    const usedCourseCodes = new Set(semester.courses.map(course => normalizeCourseCode(course.course_code)))
+    const eligibleCourseCodes = new Set((semester.eligible_course_codes || []).map(normalizeCourseCode))
     const remainingCredits = summary.max_semester_su_credits - semester.total_su_credits
     const overloadSlotsRemaining = Math.max(0, 2 - (semester.overload_course_count || 0))
 
     return courses.filter(course => {
+      const courseCode = normalizeCourseCode(course.course)
       if (course.su_credits === null || course.su_credits === undefined) return false
-      if (eligibleCourseCodes.size > 0 && !eligibleCourseCodes.has(course.course)) return false
+      if (eligibleCourseCodes.size > 0 && !eligibleCourseCodes.has(courseCode)) return false
       const credits = Number(course.su_credits || 0)
-      if (usedCourseCodes.has(course.course)) return false
+      if (usedCourseCodes.has(courseCode)) return false
       if (credits <= remainingCredits) return true
       return overloadSlotsRemaining > 0
     })
@@ -245,10 +247,6 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
     const credits =
       course.su_credits === null || course.su_credits === undefined ? '-' : formatNumber(course.su_credits)
     return `${course.course} — ${course.name} (${credits} SU)`
-  }
-
-  function normalizeCourseCode(value) {
-    return String(value || '').trim().toUpperCase().replace(/\s+/g, ' ')
   }
 
   function resolveCourseCode(desiredCode) {
@@ -469,6 +467,9 @@ function GpaCalculator({ profile, onProfileUpdated, programs, courses, coursesLo
                         <strong className="gc-course-code">{course.course_code}</strong>
                         <span className="gc-course-name">{course.course_name || 'Course'}</span>
                         <span className="gc-course-credits">{formatNumber(course.su_credits)} SU</span>
+                        {course.prerequisite_warning && (
+                          <span className="gc-course-warning">{course.prerequisite_warning}</span>
+                        )}
                       </div>
                       <select
                         className="gc-grade-select"

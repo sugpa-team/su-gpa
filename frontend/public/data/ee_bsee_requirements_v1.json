@@ -1844,7 +1844,7 @@
         "code": "CS 455",
         "name": "Large Language Models: Theoretical Foundations and Practical Applications",
         "prerequisites": [
-          "CS 414"
+          "CS 415 / CS 412"
         ],
         "prerequisite_type": "single"
       },

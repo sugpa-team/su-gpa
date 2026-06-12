@@ -44,7 +44,6 @@ function scheduleGridLabel(item) {
 }
 
 function Planner({ courses = [], coursesLoading = false }) {
-  const [terms, setTerms]                             = useState([])
   const [activeTerm, setActiveTerm]                   = useState(null)
   const [planner, setPlanner]                         = useState(null)
   const [loading, setLoading]                         = useState(true)
@@ -72,9 +71,7 @@ function Planner({ courses = [], coursesLoading = false }) {
         const list = data.terms || []
         // Only the newest published term is plannable; earlier terms are already
         // covered by the Bannerweb import on the Requirements page.
-        const latest = list.length > 0 ? [list[list.length - 1]] : []
-        setTerms(latest)
-        setActiveTerm(latest[0] || null)
+        setActiveTerm(list[list.length - 1] || null)
       })
       .catch(err => !ignore && setError(err.message))
     return () => { ignore = true }
@@ -388,19 +385,18 @@ function Planner({ courses = [], coursesLoading = false }) {
           <p className="pl-eyebrow">Next Semester</p>
           <h2 id="pl-title" className="pl-title">Schedule Planner</h2>
         </div>
-        <div className="pl-term-picker">
-          <label className="pl-field-label" htmlFor="planner-term">Term</label>
-          <select id="planner-term" className="pl-select" value={activeTerm || ''} onChange={e => setActiveTerm(e.target.value)}>
-            {terms.map(t => <option key={t} value={t}>{t}</option>)}
-          </select>
+        <div className="pl-header-actions">
+          <span className="pl-term-badge" title="Current registration term">
+            Term {activeTerm || '—'}
+          </span>
+          <button
+            type="button"
+            className="pl-btn pl-btn--ghost"
+            onClick={() => setCatalogOpen(true)}
+          >
+            Course Catalog
+          </button>
         </div>
-        <button
-          type="button"
-          className="pl-btn pl-btn--catalog"
-          onClick={() => setCatalogOpen(true)}
-        >
-          Course Catalog
-        </button>
       </header>
 
       {catalogOpen && (
@@ -413,7 +409,10 @@ function Planner({ courses = [], coursesLoading = false }) {
         >
           <div className="pl-catalog-modal">
             <div className="pl-catalog-modal-header">
-              <h3 className="pl-catalog-modal-title">Course Catalog</h3>
+              <div>
+                <p className="pl-eyebrow">Browse</p>
+                <h3 className="pl-catalog-modal-title">Course Catalog</h3>
+              </div>
               <button
                 type="button"
                 className="pl-catalog-close"
@@ -431,30 +430,26 @@ function Planner({ courses = [], coursesLoading = false }) {
       )}
 
       
-      <div className="pl-totals">
-        {[
-          { label: 'Courses',    value: totals.courseCount },
-          { label: 'SU Credits', value: totals.su.toFixed(1) },
-          { label: 'ECTS',       value: totals.ects.toFixed(1) },
-          { label: 'Proj. GPA',  value: projectedSemesterGpa == null ? '—' : projectedSemesterGpa.toFixed(2) },
-        ].map(({ label, value }) => (
-          <div key={label} className="pl-stat">
-            <span className="pl-stat-label">{label}</span>
-            <strong className="pl-stat-value">{value}</strong>
+      <div className="pl-toolbar">
+        <div className="pl-stats">
+          {[
+            { label: 'Courses',    value: totals.courseCount },
+            { label: 'SU Credits', value: totals.su.toFixed(1) },
+            { label: 'ECTS',       value: totals.ects.toFixed(1) },
+            { label: 'Proj. GPA',  value: projectedSemesterGpa == null ? '—' : projectedSemesterGpa.toFixed(2) },
+          ].map(({ label, value }) => (
+            <div key={label} className="pl-stat">
+              <span className="pl-stat-label">{label}</span>
+              <strong className="pl-stat-value">{value}</strong>
+            </div>
+          ))}
+          <div className={['pl-stat', hasConflicts ? 'pl-stat--bad' : 'pl-stat--ok'].join(' ')}>
+            <span className="pl-stat-label">Conflicts</span>
+            <strong className="pl-stat-value">{hasConflicts ? conflicts.conflictKeys.size : '✓'}</strong>
           </div>
-        ))}
-        <div className={['pl-stat', hasConflicts ? 'pl-stat--bad' : 'pl-stat--ok'].join(' ')}>
-          <span className="pl-stat-label">Conflicts</span>
-          <strong className="pl-stat-value">{hasConflicts ? conflicts.conflictKeys.size : '✓'}</strong>
         </div>
-        <button className="pl-btn pl-btn--ghost" type="button" onClick={copyCrns} disabled={selectedSections.size === 0}>
-          {copiedAt ? '✓ Copied!' : 'Copy CRNs'}
-        </button>
-      </div>
 
-      
-      <div className="pl-plans-bar">
-        <div className="pl-plans-fields">
+        <div className="pl-toolbar-controls">
           <div className="pl-field-group">
             <label className="pl-field-label" htmlFor="planner-plan-name">Plan name</label>
             <input
@@ -472,39 +467,42 @@ function Planner({ courses = [], coursesLoading = false }) {
               </select>
             </div>
           )}
-        </div>
-        <div className="pl-plans-actions">
-          <button className="pl-btn pl-btn--primary" type="button" onClick={handleSavePlan} disabled={busy}>
-            {activePlanId ? 'Update' : 'Save'}
-          </button>
-          {activePlanId && (
-            <button className="pl-btn pl-btn--danger" type="button" onClick={handleDeletePlan} disabled={busy}>Delete</button>
-          )}
-          <button className="pl-btn pl-btn--ghost" type="button" onClick={handleNewPlan}
-            disabled={busy || (!activePlanId && selectedSections.size === 0)}>
-            New
-          </button>
-          <button
-            className="pl-btn pl-btn--promote" type="button" onClick={handlePromoteToSemester}
-            disabled={busy || !activePlanId || missingClassComponents.length > 0 || missingExpectedGrades.length > 0}
-            title={!activePlanId ? 'Save the plan first' : missingExpectedGrades.length > 0 ? 'Choose expected grades first' : missingClassComponents.length > 0 ? 'Complete lecture/recitation selections first' : `Add ${totals.courseCount} courses to "${activeTerm}" semester`}
-          >
-            → GPA Calc
-          </button>
+          <div className="pl-toolbar-actions">
+            <button className="pl-btn pl-btn--primary" type="button" onClick={handleSavePlan} disabled={busy}>
+              {activePlanId ? 'Update' : 'Save'}
+            </button>
+            <button className="pl-btn pl-btn--ghost" type="button" onClick={handleNewPlan}
+              disabled={busy || (!activePlanId && selectedSections.size === 0)}>
+              New
+            </button>
+            {activePlanId && (
+              <button className="pl-btn pl-btn--danger" type="button" onClick={handleDeletePlan} disabled={busy}>Delete</button>
+            )}
+            <button className="pl-btn pl-btn--ghost" type="button" onClick={copyCrns} disabled={selectedSections.size === 0}>
+              {copiedAt ? '✓ Copied!' : 'Copy CRNs'}
+            </button>
+            <button
+              className="pl-btn pl-btn--ghost" type="button" onClick={handlePromoteToSemester}
+              disabled={busy || !activePlanId || missingClassComponents.length > 0 || missingExpectedGrades.length > 0}
+              title={!activePlanId ? 'Save the plan first' : missingExpectedGrades.length > 0 ? 'Choose expected grades first' : missingClassComponents.length > 0 ? 'Complete lecture/recitation selections first' : `Add ${totals.courseCount} courses to "${activeTerm}" semester`}
+            >
+              Add to GPA Calculator
+            </button>
+          </div>
         </div>
       </div>
       {planMessage && <p className="pl-feedback pl-feedback--info" role="status">{planMessage}</p>}
 
-      
+
       {(prereqWarnings.length > 0 || missingClassComponents.length > 0) && (
-        <div className="pl-warnings" role="alert">
+        <div className="pl-warning-stack" role="alert">
           {prereqWarnings.map(w => (
-            <p key={w.course} className="pl-warning-row">
+            <p key={w.course} className="pl-feedback pl-feedback--warning">
               <strong>{w.course}</strong> requires {w.missing.join(', ')} which you have not taken.
             </p>
           ))}
           {missingClassComponents.map(w => (
-            <p key={w.course} className="pl-warning-row">
+            <p key={w.course} className="pl-feedback pl-feedback--warning">
               <strong>{w.course}</strong> also needs {w.missing.join(', ')}.
             </p>
           ))}
@@ -568,7 +566,10 @@ function Planner({ courses = [], coursesLoading = false }) {
             {recommendations.map(item => (
               <article className="pl-rec-card" key={item.course_code}>
                 <div className="pl-rec-main">
-                  <strong className="pl-rec-code">{item.course_code}</strong>
+                  <div className="pl-rec-id">
+                    <strong className="pl-rec-code">{item.course_code}</strong>
+                    {item.category && <span className="pl-tag pl-tag--cat">{item.category}</span>}
+                  </div>
                   <span className="pl-rec-name">{item.course_name || 'Course'}</span>
                 </div>
                 {(item.reasons || []).length > 0 && (
@@ -618,7 +619,6 @@ function Planner({ courses = [], coursesLoading = false }) {
             )}
             {filteredCourses.map(course => {
               const expanded      = !!expandedCourses[course.code]
-              const sectionsTotal = course.classes.reduce((sum, cls) => sum + cls.sections.length, 0)
               const retakeBlocked = course.retake_allowed === false
 
               return (
@@ -630,10 +630,11 @@ function Planner({ courses = [], coursesLoading = false }) {
                     </div>
                     <span className="pl-course-name">{course.name || ''}</span>
                     <div className="pl-course-tags">
-                      {retakeBlocked && <span className="pl-tag pl-tag--blocked">{course.retake_reason || 'Retake expired'}</span>}
+                      {retakeBlocked && (
+                        <span className="pl-tag pl-tag--blocked" title={course.retake_reason || ''}>Retake expired</span>
+                      )}
                       {course.su_credits != null && <span className="pl-tag">{course.su_credits} SU</span>}
-                      <span className="pl-tag">{sectionsTotal}§</span>
-                      {(course.requirement_categories || []).map(cat => (
+                      {(course.requirement_categories || []).slice(0, 1).map(cat => (
                         <span key={cat} className="pl-tag pl-tag--cat">{cat}</span>
                       ))}
                     </div>

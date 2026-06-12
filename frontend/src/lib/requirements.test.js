@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import { beforeEach, test } from 'node:test'
+import fs from 'node:fs'
 
 const REQUIREMENTS_PATH = 'data/test_requirements.json'
 
@@ -12,6 +13,9 @@ const fixtureCourses = [
   { Course: 'AREA 101', Name: 'Area Elective I', 'ECTS Credits': 5, 'SU Credits': 3, Faculty: 'FENS' },
   { Course: 'FREE 101', Name: 'Free Elective I', 'ECTS Credits': 5, 'SU Credits': 3, Faculty: 'FASS' },
   { Course: 'FREE 102', Name: 'Free Elective II', 'ECTS Credits': 5, 'SU Credits': 3, Faculty: 'SBS' },
+  { Course: 'CS 204', Name: 'Advanced Programming', 'ECTS Credits': 6, 'SU Credits': 3, Faculty: 'FENS' },
+  { Course: 'DSA 210', Name: 'Introduction to Data Science', 'ECTS Credits': 6, 'SU Credits': 3, Faculty: 'FENS' },
+  { Course: 'CS 445', Name: 'Natural Language Processing', 'ECTS Credits': 6, 'SU Credits': 3, Faculty: 'FENS' },
 ]
 
 const fixtureRequirements = {
@@ -52,7 +56,16 @@ const fixtureRequirements = {
       min_ects_credits: 4,
     },
   },
-  prerequisites: { courses: [] },
+  prerequisites: {
+    courses: [
+      {
+        code: 'CS 445',
+        name: 'Natural Language Processing',
+        prerequisites: ['CS 204', 'DSA 210 / CS 210'],
+        prerequisite_type: 'multiple',
+      },
+    ],
+  },
 }
 
 const fixturePrograms = {
@@ -106,6 +119,29 @@ function installBrowserMocks() {
       'data/courses_SU.json': fixtureCourses,
       'data/programs.json': fixturePrograms,
       'data/faculty_courses_SU.json': fixtureFacultyCourses,
+      'data/schedule_data/202502.min.json': {
+        courses: [
+          {
+            code: 'CORE 101',
+            name: 'Core Elective I',
+            classes: [
+              {
+                type: '',
+                sections: [
+                  {
+                    crn: '10001',
+                    group: 'A',
+                    instructors: 0,
+                    schedule: [],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        instructors: ['Instructor'],
+        places: [],
+      },
       [REQUIREMENTS_PATH]: fixtureRequirements,
     }
     if (!(path in payloads)) return mockJsonResponse({ error: `Missing fixture: ${path}` }, 404)
@@ -349,6 +385,126 @@ test('reports raw total SU progress in requirements and GPA summaries', async ()
 
   assert.equal(progress.total_credits_completed, 15)
   assert.equal(gpaSummary.total_planned_su_credits, 15)
+})
+
+test('allows manual course add with missing prerequisites and reports warning', async () => {
+  const semesterSummary = await apiRequest('/taken-courses/semesters', {
+    method: 'POST',
+    body: JSON.stringify({ name: '202301' }),
+  })
+  const semesterId = semesterSummary.semesters[0].id
+  assert.ok(semesterSummary.semesters[0].eligible_course_codes.includes('CS 445'))
+
+  await apiRequest('/api/courses', {
+    method: 'POST',
+    body: JSON.stringify({
+      semester_id: semesterId,
+      course_code: 'CS 445',
+      grade: 'A',
+    }),
+  })
+
+  const gpaSummary = await apiRequest('/api/gpa')
+  const course = findSummaryCourse(gpaSummary, 'CS 445')
+  assert.ok(course)
+  assert.deepEqual(course.missing_prerequisites, ['CS 204', 'DSA 210 / CS 210'])
+  assert.equal(course.prerequisite_warning, 'Missing prerequisites: CS 204, DSA 210 / CS 210.')
+})
+
+test('planner retake window ignores summer and deleted regular semesters', async () => {
+  let summary = await apiRequest('/taken-courses/semesters', {
+    method: 'POST',
+    body: JSON.stringify({ name: '202301' }),
+  })
+  const firstSemesterId = summary.semesters[0].id
+
+  await apiRequest('/api/courses', {
+    method: 'POST',
+    body: JSON.stringify({
+      semester_id: firstSemesterId,
+      course_code: 'CORE 101',
+      grade: 'F',
+    }),
+  })
+
+  await apiRequest('/taken-courses/semesters', {
+    method: 'POST',
+    body: JSON.stringify({ name: '202303' }),
+  })
+  await apiRequest('/taken-courses/semesters', {
+    method: 'POST',
+    body: JSON.stringify({ name: '202401' }),
+  })
+  summary = await apiRequest('/taken-courses/semesters', {
+    method: 'POST',
+    body: JSON.stringify({ name: '202402' }),
+  })
+
+  const planner = await apiRequest('/api/schedule/202502/planner')
+  const course = planner.courses.find(item => item.code === 'CORE 101')
+
+  assert.equal(summary.semesters.length, 4)
+  assert.ok(course)
+  assert.notEqual(course.retake_allowed, false)
+  assert.equal(course.retake_reason ?? null, null)
+})
+
+test('ME 425 prerequisite data uses ENS alternatives', () => {
+  const files = [
+    'cs_bscs_requirements_v1.json',
+    'mat_bsmat_requirements_v1.json',
+    'me_bsme_requirements_v1.json',
+    'me_bsme_requirements_2027.json',
+  ]
+
+  for (const file of files) {
+    const data = JSON.parse(fs.readFileSync(`public/data/${file}`, 'utf8'))
+    const course = data.prerequisites?.courses?.find(item => item.code === 'ME 425')
+    assert.ok(course, `${file} should include ME 425 prerequisite data`)
+    assert.deepEqual(course.prerequisites, ['ENS 206 / ENS 211'])
+    assert.equal(course.prerequisite_type, 'single')
+  }
+})
+
+test('MATH 306 prerequisite data is consistent across requirement files', () => {
+  const files = [
+    'bio_bsbio_requirements_v1.json',
+    'cs_bscs_requirements_v1.json',
+    'ee_bsee_requirements_v1.json',
+    'ee_bsee_requirements_2027.json',
+    'ie_bsie_requirements_v1.json',
+    'mat_bsmat_requirements_v1.json',
+    'me_bsme_requirements_v1.json',
+    'me_bsme_requirements_2027.json',
+  ]
+
+  for (const file of files) {
+    const data = JSON.parse(fs.readFileSync(`public/data/${file}`, 'utf8'))
+    const course = data.prerequisites?.courses?.find(item => item.code === 'MATH 306')
+    assert.ok(course, `${file} should include MATH 306 prerequisite data`)
+    assert.deepEqual(course.prerequisites, ['MATH 203'])
+    assert.equal(course.prerequisite_type, 'single')
+  }
+})
+
+test('CS 455 prerequisite data uses CS 415 or CS 412 alternatives', () => {
+  const files = [
+    'cs_bscs_requirements_v1.json',
+    'ee_bsee_requirements_v1.json',
+    'ee_bsee_requirements_2027.json',
+    'ie_bsie_requirements_v1.json',
+    'mat_bsmat_requirements_v1.json',
+    'me_bsme_requirements_v1.json',
+    'me_bsme_requirements_2027.json',
+  ]
+
+  for (const file of files) {
+    const data = JSON.parse(fs.readFileSync(`public/data/${file}`, 'utf8'))
+    const course = data.prerequisites?.courses?.find(item => item.code === 'CS 455')
+    assert.ok(course, `${file} should include CS 455 prerequisite data`)
+    assert.deepEqual(course.prerequisites, ['CS 415 / CS 412'])
+    assert.equal(course.prerequisite_type, 'single')
+  }
 })
 
 test('marks GPA summary when Bannerweb courses have been imported', async () => {

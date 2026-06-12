@@ -2110,10 +2110,9 @@
         "code": "ME 425",
         "name": "Autonomous Mobile Robotics",
         "prerequisites": [
-          "MATH 203",
-          "DSA 210 / CS 210"
+          "ENS 206 / ENS 211"
         ],
-        "prerequisite_type": "multiple"
+        "prerequisite_type": "single"
       },
       {
         "code": "CS 415",
@@ -2191,7 +2190,7 @@
         "code": "CS 455",
         "name": "Large Language Models: Theoretical Foundations and Practical Applications",
         "prerequisites": [
-          "CS 414"
+          "CS 415 / CS 412"
         ],
         "prerequisite_type": "single"
       },

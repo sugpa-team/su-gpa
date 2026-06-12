@@ -520,6 +520,12 @@
   color: var(--gc-text-subtle);
 }
 
+.gc-course-warning {
+  color: #e0a840;
+  font-size: 0.68rem;
+  line-height: 1.35;
+}
+
 .gc-grade-select {
   appearance: none;
   -webkit-appearance: none;
